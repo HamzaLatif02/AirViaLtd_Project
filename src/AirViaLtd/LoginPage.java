@@ -29,15 +29,37 @@ public class LoginPage {
             public void actionPerformed(ActionEvent e) {
                 try{
                     Class.forName("com.mysql.jdbc.Driver");
-                    Connection con= DriverManager.getConnection(
-                            "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
-                            "in2018g16_a",
-                            "FJ7BjC1x");
+                    Connection con;
+
+                    switch (jobTitleComboBox.getSelectedIndex()){
+                        case 1:
+                            con= DriverManager.getConnection(
+                                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                                    "in2018g16_a",
+                                    "FJ7BjC1x");
+                        default:
+                            con= DriverManager.getConnection(
+                                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                                    "in2018g16_d",
+                                    "35cnYJLB");
+                    }
+
 
                     String sql = null;
 
-                    if (jobTitleComboBox.getSelectedIndex() == 0){
-                        sql = "select * from in2018g16.TravelAgent where EmailAddress = ? and Password = ?";
+                    switch (jobTitleComboBox.getSelectedIndex()){
+                        case 0:
+                            sql = "select * from in2018g16.TravelAgent where EmailAddress = ? and Password = ?";
+                            break;
+                        case 1:
+                            sql = "select * from in2018g16.Administrator where EmailAddress = ? and Password = ?";
+                            break;
+                        case 2:
+                            sql = "select * from in2018g16.OfficeManager where EmailAddress = ? and Password = ?";
+                            break;
+                        case 3:
+                            sql = "select * from in2018g16.TravelAdvisor where EmailAddress = ? and Password = ?";
+                            break;
                     }
 
                     PreparedStatement stmt = con.prepareStatement(sql);
@@ -48,6 +70,7 @@ public class LoginPage {
                     ResultSet rs = stmt.executeQuery();
                     //check empty result
                     if (!rs.isBeforeFirst() ) {
+                        JOptionPane.showMessageDialog(getMainPanel(), "This user does not exist", "Invalid Login", JOptionPane.ERROR_MESSAGE);
                         System.out.println("Invalid Login");
                     } else {
                         System.out.println("Successful login");
