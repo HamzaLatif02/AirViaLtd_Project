@@ -15,10 +15,14 @@ public class LoginPage {
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JButton registerButton;
-    private JTextField jobTitleTextField;
     private JLabel jobTitleLabel;
+    private JComboBox jobTitleComboBox;
 
     public LoginPage() {
+
+        addJobTitles();
+
+
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -32,7 +36,7 @@ public class LoginPage {
 
                     String sql = null;
 
-                    if (jobTitleTextField.getText().equals("Travel Agent")){
+                    if (jobTitleComboBox.getSelectedIndex() == 0){
                         sql = "select * from in2018g16.TravelAgent where EmailAddress = ? and Password = ?";
                     }
 
@@ -56,6 +60,13 @@ public class LoginPage {
     }
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addJobTitles(){
+        jobTitleComboBox.addItem("Travel Agent");
+        jobTitleComboBox.addItem("Administrator");
+        jobTitleComboBox.addItem("Office Manager");
+        jobTitleComboBox.addItem("Travel Advisor");
     }
 
 
