@@ -18,9 +18,13 @@ public class LoginPage {
     private JLabel jobTitleLabel;
     private JComboBox jobTitleComboBox;
 
+    private boolean successfulLogin;
+
     public LoginPage() {
 
         addJobTitles();
+
+        successfulLogin = false;
 
 
 
@@ -74,6 +78,7 @@ public class LoginPage {
                         System.out.println("Invalid Login");
                     } else {
                         System.out.println("Successful login");
+                        successfulLogin = true;
                     }
                     con.close();
 
@@ -83,6 +88,14 @@ public class LoginPage {
     }
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public boolean isSuccessfulLogin() {
+        return successfulLogin;
+    }
+
+    public void setSuccessfulLogin(boolean successfulLogin) {
+        this.successfulLogin = successfulLogin;
     }
 
     public void addJobTitles(){

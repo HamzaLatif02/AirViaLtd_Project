@@ -4,8 +4,9 @@ import javax.swing.*;
 
 public class AirViaLtd {
 
-    public static void main(String[] args) {
+    public AirViaLtd() {
         LoginPage loginPage = new LoginPage();
+        OfficeManagerHomePage officeManagerHomePage = new OfficeManagerHomePage();
 
         JFrame frame = new JFrame("AirViaLtd");
 
@@ -15,4 +16,9 @@ public class AirViaLtd {
         frame.setVisible(true);
 
     }
+
+    public static void main(String[] args) {
+        new AirViaLtd();
+    }
+
 }
