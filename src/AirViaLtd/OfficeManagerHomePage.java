@@ -1,6 +1,8 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class OfficeManagerHomePage {
     private JPanel mainPanel;
@@ -11,8 +13,21 @@ public class OfficeManagerHomePage {
     private JButton createReportButton;
     private JButton discountPlanButton;
     private JButton statusButton;
+    private JPanel titlePanel;
+    private JLabel homepageLabel;
+
+    private AirViaLtd app;
 
     public OfficeManagerHomePage(AirViaLtd a) {
+
+        this.app = a;
+
+        allocateBlankButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToAllocateBlankPage();
+            }
+        });
     }
 
     public JPanel getMainPanel() {
