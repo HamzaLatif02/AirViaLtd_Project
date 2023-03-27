@@ -12,7 +12,7 @@ public class OfficeManagerHomePage {
     private JButton discountPlanButton;
     private JButton statusButton;
 
-    public OfficeManagerHomePage() {
+    public OfficeManagerHomePage(AirViaLtd a) {
     }
 
     public JPanel getMainPanel() {

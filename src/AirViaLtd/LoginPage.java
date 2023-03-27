@@ -19,8 +19,11 @@ public class LoginPage {
     private JComboBox jobTitleComboBox;
 
     private boolean successfulLogin;
+    private AirViaLtd app;
 
-    public LoginPage() {
+    public LoginPage(AirViaLtd a) {
+
+        this.app = a;
 
         addJobTitles();
 
@@ -78,7 +81,7 @@ public class LoginPage {
                         System.out.println("Invalid Login");
                     } else {
                         System.out.println("Successful login");
-                        successfulLogin = true;
+                        app.transitionToOfficeManagerHomePage();
                     }
                     con.close();
 
