@@ -22,4 +22,6 @@ public class AllocateBlankPage {
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
+
 }

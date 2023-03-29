@@ -1,6 +1,7 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class AirViaLtd {
 
@@ -18,8 +19,11 @@ public class AirViaLtd {
         frame = new JFrame("AirViaLtd");
 
         frame.add(loginPage.getMainPanel());
-        frame.setSize(850,850);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
         frame.setResizable(false);
+
         frame.setVisible(true);
 
     }
@@ -28,6 +32,7 @@ public class AirViaLtd {
         frame.remove(loginPage.getMainPanel());
         frame.add(officeManagerHomePage.getMainPanel());
         frame.pack();
+
     }
 
     public void transitionToAllocateBlankPage(){
