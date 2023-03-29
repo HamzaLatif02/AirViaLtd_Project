@@ -12,6 +12,7 @@ public class AirViaLtd {
     private AddBlankPage addBlankPage;
     private BlankStockPage blankStockPage;
     private CreateReportPage createReportPage;
+    private DiscountPlanPage discountPlanPage;
 
     public AirViaLtd() {
 
@@ -21,6 +22,7 @@ public class AirViaLtd {
         addBlankPage = new AddBlankPage(this);
         blankStockPage = new BlankStockPage(this);
         createReportPage = new CreateReportPage(this);
+        discountPlanPage = new DiscountPlanPage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -63,6 +65,12 @@ public class AirViaLtd {
     public void transitionToCreateReportPage(){
         frame.remove(officeManagerHomePage.getMainPanel());
         frame.add(createReportPage.getMainPanel());
+        frame.pack();
+    }
+
+    public void transitionToDiscountPlanPage(){
+        frame.remove(officeManagerHomePage.getMainPanel());
+        frame.add(discountPlanPage.getMainPanel());
         frame.pack();
     }
 
