@@ -9,12 +9,14 @@ public class AirViaLtd {
     private LoginPage loginPage;
     private OfficeManagerHomePage officeManagerHomePage;
     private AllocateBlankPage allocateBlankPage;
+    private AddBlankPage addBlankPage;
 
     public AirViaLtd() {
 
         loginPage = new LoginPage(this);
         officeManagerHomePage = new OfficeManagerHomePage(this);
         allocateBlankPage = new AllocateBlankPage(this);
+        addBlankPage = new AddBlankPage(this);
 
         frame = new JFrame("AirViaLtd");
 
@@ -38,6 +40,12 @@ public class AirViaLtd {
     public void transitionToAllocateBlankPage(){
         frame.remove(officeManagerHomePage.getMainPanel());
         frame.add(allocateBlankPage.getMainPanel());
+        frame.pack();
+    }
+
+    public void transitionToAddBlankPage(){
+        frame.remove(officeManagerHomePage.getMainPanel());
+        frame.add(addBlankPage.getMainPanel());
         frame.pack();
     }
 

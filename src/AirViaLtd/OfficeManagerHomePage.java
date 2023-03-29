@@ -28,6 +28,13 @@ public class OfficeManagerHomePage {
                 app.transitionToAllocateBlankPage();
             }
         });
+
+        addBlankButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToAddBlankPage();
+            }
+        });
     }
 
     public JPanel getMainPanel() {
