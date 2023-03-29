@@ -12,7 +12,7 @@ public class OfficeManagerHomePage {
     private JButton blankStockButton;
     private JButton createReportButton;
     private JButton discountPlanButton;
-    private JButton statusButton;
+    private JButton createCustomerAccountButton;
     private JPanel titlePanel;
     private JLabel homepageLabel;
 
@@ -54,6 +54,13 @@ public class OfficeManagerHomePage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.transitionToDiscountPlanPage();
+            }
+        });
+
+        createCustomerAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToCreateCustomerAccountPage();
             }
         });
     }
