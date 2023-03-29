@@ -42,6 +42,13 @@ public class OfficeManagerHomePage {
                 app.transitionToBlankStockPage();
             }
         });
+
+        createReportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToCreateReportPage();
+            }
+        });
     }
 
     public JPanel getMainPanel() {
