@@ -6,7 +6,9 @@ import java.awt.*;
 public class AirViaLtd {
 
     private final JFrame frame;
+
     private LoginPage loginPage;
+
     private OfficeManagerHomePage officeManagerHomePage;
     private AllocateBlankPage allocateBlankPage;
     private AddBlankPage addBlankPage;
@@ -15,9 +17,14 @@ public class AirViaLtd {
     private DiscountPlanPage discountPlanPage;
     private CreateCustomerAccountPage createCustomerAccountPage;
 
+    private TravelAdvisorHomePage travelAdvisorHomePage;
+
+
+
     public AirViaLtd() {
 
         loginPage = new LoginPage(this);
+
         officeManagerHomePage = new OfficeManagerHomePage(this);
         allocateBlankPage = new AllocateBlankPage(this);
         addBlankPage = new AddBlankPage(this);
@@ -25,6 +32,8 @@ public class AirViaLtd {
         createReportPage = new CreateReportPage(this);
         discountPlanPage = new DiscountPlanPage(this);
         createCustomerAccountPage = new CreateCustomerAccountPage(this);
+
+        travelAdvisorHomePage = new TravelAdvisorHomePage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -82,6 +91,11 @@ public class AirViaLtd {
         frame.pack();
     }
 
+    public void transitionToTravelAdvisorHomePage(){
+        frame.remove(loginPage.getMainPanel());
+        frame.add(travelAdvisorHomePage.getMainPanel());
+        frame.pack();
+    }
 
 
 
