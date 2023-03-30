@@ -1,6 +1,8 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TravelAdvisorHomePage {
     private JPanel mainPanel;
@@ -16,6 +18,20 @@ public class TravelAdvisorHomePage {
 
     public TravelAdvisorHomePage(AirViaLtd a) {
         this.app = a;
+
+        createCustomerAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToCreateCustomerAccountPage();
+            }
+        });
+
+        createReportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToCreateReportPage();
+            }
+        });
     }
 
     public JPanel getMainPanel() {

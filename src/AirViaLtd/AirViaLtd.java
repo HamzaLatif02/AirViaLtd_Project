@@ -74,7 +74,11 @@ public class AirViaLtd {
     }
 
     public void transitionToCreateReportPage(){
-        frame.remove(officeManagerHomePage.getMainPanel());
+        if (loginPage.getUser().equals("Office Manager")){
+            frame.remove(officeManagerHomePage.getMainPanel());
+        } else if (loginPage.getUser().equals("Travel Advisor")){
+            frame.remove(travelAdvisorHomePage.getMainPanel());
+        }
         frame.add(createReportPage.getMainPanel());
         frame.pack();
     }
@@ -86,7 +90,11 @@ public class AirViaLtd {
     }
 
     public void transitionToCreateCustomerAccountPage(){
-        frame.remove(officeManagerHomePage.getMainPanel());
+        if (loginPage.getUser().equals("Office Manager")){
+            frame.remove(officeManagerHomePage.getMainPanel());
+        } else if (loginPage.getUser().equals("Travel Advisor")){
+            frame.remove(travelAdvisorHomePage.getMainPanel());
+        }
         frame.add(createCustomerAccountPage.getMainPanel());
         frame.pack();
     }
@@ -96,11 +104,6 @@ public class AirViaLtd {
         frame.add(travelAdvisorHomePage.getMainPanel());
         frame.pack();
     }
-
-
-
-
-
 
 
     public static void main(String[] args) {
