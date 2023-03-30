@@ -26,6 +26,13 @@ public class TravelAdvisorHomePage {
             }
         });
 
+        issueRefundButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToIssueRefundPage();
+            }
+        });
+
         createReportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

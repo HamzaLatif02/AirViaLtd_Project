@@ -18,6 +18,7 @@ public class AirViaLtd {
     private CreateCustomerAccountPage createCustomerAccountPage;
 
     private TravelAdvisorHomePage travelAdvisorHomePage;
+    private IssueRefundPage issueRefundPage;
 
 
 
@@ -34,6 +35,7 @@ public class AirViaLtd {
         createCustomerAccountPage = new CreateCustomerAccountPage(this);
 
         travelAdvisorHomePage = new TravelAdvisorHomePage(this);
+        issueRefundPage = new IssueRefundPage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -102,6 +104,12 @@ public class AirViaLtd {
     public void transitionToTravelAdvisorHomePage(){
         frame.remove(loginPage.getMainPanel());
         frame.add(travelAdvisorHomePage.getMainPanel());
+        frame.pack();
+    }
+
+    public void transitionToIssueRefundPage(){
+        frame.remove(travelAdvisorHomePage.getMainPanel());
+        frame.add(issueRefundPage.getMainPanel());
         frame.pack();
     }
 
