@@ -39,7 +39,7 @@ public class LoginPage {
                     Connection con;
 
                     switch (jobTitleComboBox.getSelectedIndex()){
-                        case 1:
+                        case 0:
                             con= DriverManager.getConnection(
                                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                     "in2018g16_a",
@@ -56,15 +56,12 @@ public class LoginPage {
 
                     switch (jobTitleComboBox.getSelectedIndex()){
                         case 0:
-                            sql = "select * from in2018g16.TravelAgent where EmailAddress = ? and Password = ?";
-                            break;
-                        case 1:
                             sql = "select * from in2018g16.Administrator where EmailAddress = ? and Password = ?";
                             break;
-                        case 2:
+                        case 1:
                             sql = "select * from in2018g16.OfficeManager where EmailAddress = ? and Password = ?";
                             break;
-                        case 3:
+                        case 2:
                             sql = "select * from in2018g16.TravelAdvisor where EmailAddress = ? and Password = ?";
                             break;
                     }
@@ -81,7 +78,18 @@ public class LoginPage {
                         System.out.println("Invalid Login");
                     } else {
                         System.out.println("Successful login");
-                        app.transitionToOfficeManagerHomePage();
+                        switch (jobTitleComboBox.getSelectedIndex()){
+                            case 0:
+                                System.out.println("administrator logged in");
+                                break;
+                            case 1:
+                                app.transitionToOfficeManagerHomePage();
+                                break;
+                            case 2:
+                                System.out.println("travel advisor logged in");
+                                break;
+                        }
+
                     }
                     con.close();
 
@@ -102,7 +110,6 @@ public class LoginPage {
     }
 
     public void addJobTitles(){
-        jobTitleComboBox.addItem("Travel Agent");
         jobTitleComboBox.addItem("Administrator");
         jobTitleComboBox.addItem("Office Manager");
         jobTitleComboBox.addItem("Travel Advisor");
