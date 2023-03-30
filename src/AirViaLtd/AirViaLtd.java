@@ -19,6 +19,7 @@ public class AirViaLtd {
 
     private TravelAdvisorHomePage travelAdvisorHomePage;
     private IssueRefundPage issueRefundPage;
+    private SellTicketPage sellTicketPage;
 
 
 
@@ -36,6 +37,7 @@ public class AirViaLtd {
 
         travelAdvisorHomePage = new TravelAdvisorHomePage(this);
         issueRefundPage = new IssueRefundPage(this);
+        sellTicketPage = new SellTicketPage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -112,6 +114,13 @@ public class AirViaLtd {
         frame.add(issueRefundPage.getMainPanel());
         frame.pack();
     }
+
+    public void transitionToSellTicketPage(){
+        frame.remove(travelAdvisorHomePage.getMainPanel());
+        frame.add(sellTicketPage.getMainPanel());
+        frame.pack();
+    }
+
 
 
     public static void main(String[] args) {

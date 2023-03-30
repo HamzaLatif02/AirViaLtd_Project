@@ -39,6 +39,13 @@ public class TravelAdvisorHomePage {
                 app.transitionToCreateReportPage();
             }
         });
+
+        sellTicketButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToSellTicketPage();
+            }
+        });
     }
 
     public JPanel getMainPanel() {
