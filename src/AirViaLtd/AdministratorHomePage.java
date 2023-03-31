@@ -33,14 +33,14 @@ public class AdministratorHomePage {
             }
         });
 
-        /*commissionButton.addActionListener(new ActionListener() {
+        commissionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToCommission();
+                app.transitionToCommissionPage();
             }
         });
 
-        blankStockButton.addActionListener(new ActionListener() {
+        /*blankStockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.transitionToBlankStock();

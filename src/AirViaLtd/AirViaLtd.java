@@ -23,6 +23,8 @@ public class AirViaLtd {
     private AdministratorHomePage administratorHomePage;
     private CreateTravelAgentAccountPage createTravelAgentAccountPage;
     private SecurityPage securityPage;
+    private CommissionPage commissionPage;
+
 
 
 
@@ -45,6 +47,7 @@ public class AirViaLtd {
         administratorHomePage = new AdministratorHomePage(this);
         createTravelAgentAccountPage = new CreateTravelAgentAccountPage(this);
         securityPage = new SecurityPage(this);
+        commissionPage = new CommissionPage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -145,6 +148,13 @@ public class AirViaLtd {
         frame.add(securityPage.getMainPanel());
         frame.pack();
     }
+
+    public void transitionToCommissionPage(){
+        frame.remove(administratorHomePage.getMainPanel());
+        frame.add(commissionPage.getMainPanel());
+        frame.pack();
+    }
+
 
 
 
