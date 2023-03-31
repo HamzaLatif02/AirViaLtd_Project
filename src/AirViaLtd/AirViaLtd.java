@@ -1,7 +1,6 @@
 package AirViaLtd;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class AirViaLtd {
 
@@ -21,6 +20,8 @@ public class AirViaLtd {
     private IssueRefundPage issueRefundPage;
     private SellTicketPage sellTicketPage;
 
+    private AdministratorHomePage administratorHomePage;
+
 
 
     public AirViaLtd() {
@@ -38,6 +39,8 @@ public class AirViaLtd {
         travelAdvisorHomePage = new TravelAdvisorHomePage(this);
         issueRefundPage = new IssueRefundPage(this);
         sellTicketPage = new SellTicketPage(this);
+
+        administratorHomePage = new AdministratorHomePage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -118,6 +121,12 @@ public class AirViaLtd {
     public void transitionToSellTicketPage(){
         frame.remove(travelAdvisorHomePage.getMainPanel());
         frame.add(sellTicketPage.getMainPanel());
+        frame.pack();
+    }
+
+    public void transitionToAdministratoHomePage(){
+        frame.remove(loginPage.getMainPanel());
+        frame.add(administratorHomePage.getMainPanel());
         frame.pack();
     }
 

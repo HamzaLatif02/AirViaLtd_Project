@@ -95,7 +95,7 @@ public class LoginPage {
                 this.user = jobTitleComboBox.getSelectedItem().toString();
                 switch (jobTitleComboBox.getSelectedIndex()){
                     case 0:
-                        System.out.println("administrator logged in");
+                        app.transitionToAdministratoHomePage();
                         break;
                     case 1:
                         app.transitionToOfficeManagerHomePage();
