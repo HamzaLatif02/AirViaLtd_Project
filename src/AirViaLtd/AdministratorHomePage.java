@@ -40,21 +40,21 @@ public class AdministratorHomePage {
             }
         });
 
-        /*blankStockButton.addActionListener(new ActionListener() {
+        blankStockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToBlankStock();
+                app.transitionToBlankStockPage();
             }
         });
 
         ticketStockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToTicketStock();
+                app.transitionToTicketStockPage();
             }
         });
 
-        updateDetailsButton.addActionListener(new ActionListener() {
+        /*updateDetailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.transitionToUpdateDetails();

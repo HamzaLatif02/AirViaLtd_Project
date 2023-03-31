@@ -24,6 +24,7 @@ public class AirViaLtd {
     private CreateTravelAgentAccountPage createTravelAgentAccountPage;
     private SecurityPage securityPage;
     private CommissionPage commissionPage;
+    private TicketStockPage ticketStockPage;
 
 
 
@@ -48,6 +49,7 @@ public class AirViaLtd {
         createTravelAgentAccountPage = new CreateTravelAgentAccountPage(this);
         securityPage = new SecurityPage(this);
         commissionPage = new CommissionPage(this);
+        ticketStockPage = new TicketStockPage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -82,7 +84,11 @@ public class AirViaLtd {
     }
 
     public void transitionToBlankStockPage(){
-        frame.remove(officeManagerHomePage.getMainPanel());
+        if (loginPage.getUser().equals("Office Manager")){
+            frame.remove(officeManagerHomePage.getMainPanel());
+        } else if (loginPage.getUser().equals("Administrator")){
+            frame.remove(administratorHomePage.getMainPanel());
+        }
         frame.add(blankStockPage.getMainPanel());
         frame.pack();
     }
@@ -152,6 +158,12 @@ public class AirViaLtd {
     public void transitionToCommissionPage(){
         frame.remove(administratorHomePage.getMainPanel());
         frame.add(commissionPage.getMainPanel());
+        frame.pack();
+    }
+
+    public void transitionToTicketStockPage(){
+        frame.remove(administratorHomePage.getMainPanel());
+        frame.add(ticketStockPage.getMainPanel());
         frame.pack();
     }
 
