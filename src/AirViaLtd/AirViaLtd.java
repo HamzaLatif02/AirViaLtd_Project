@@ -21,6 +21,7 @@ public class AirViaLtd {
     private SellTicketPage sellTicketPage;
 
     private AdministratorHomePage administratorHomePage;
+    private CreateTravelAgentAccountPage createTravelAgentAccountPage;
 
 
 
@@ -41,6 +42,7 @@ public class AirViaLtd {
         sellTicketPage = new SellTicketPage(this);
 
         administratorHomePage = new AdministratorHomePage(this);
+        createTravelAgentAccountPage = new CreateTravelAgentAccountPage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -127,6 +129,12 @@ public class AirViaLtd {
     public void transitionToAdministratoHomePage(){
         frame.remove(loginPage.getMainPanel());
         frame.add(administratorHomePage.getMainPanel());
+        frame.pack();
+    }
+
+    public void transitionToCreateTravelAgentAccount(){
+        frame.remove(administratorHomePage.getMainPanel());
+        frame.add(createTravelAgentAccountPage.getMainPanel());
         frame.pack();
     }
 

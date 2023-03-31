@@ -19,14 +19,14 @@ public class AdministratorHomePage {
 
         this.app = a;
 
-        /*createTravelAgentAccountButton.addActionListener(new ActionListener() {
+        createTravelAgentAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.transitionToCreateTravelAgentAccount();
             }
         });
 
-        securityButton.addActionListener(new ActionListener() {
+        /*securityButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.transitionToSecurity();
