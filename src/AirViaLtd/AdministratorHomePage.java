@@ -22,18 +22,18 @@ public class AdministratorHomePage {
         createTravelAgentAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToCreateTravelAgentAccount();
+                app.transitionToCreateTravelAgentAccountPage();
             }
         });
 
-        /*securityButton.addActionListener(new ActionListener() {
+        securityButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToSecurity();
+                app.transitionToSecurityPage();
             }
         });
 
-        commissionButton.addActionListener(new ActionListener() {
+        /*commissionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.transitionToCommission();
