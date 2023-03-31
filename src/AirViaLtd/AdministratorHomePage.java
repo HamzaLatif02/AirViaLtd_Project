@@ -54,12 +54,12 @@ public class AdministratorHomePage {
             }
         });
 
-        /*updateDetailsButton.addActionListener(new ActionListener() {
+        updateDetailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToUpdateDetails();
+                app.transitionToUpdateDetailsPage();
             }
-        });*/
+        });
     }
 
     public JPanel getMainPanel() {

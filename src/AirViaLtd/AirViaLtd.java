@@ -25,6 +25,7 @@ public class AirViaLtd {
     private SecurityPage securityPage;
     private CommissionPage commissionPage;
     private TicketStockPage ticketStockPage;
+    private UpdateDetailsPage updateDetailsPage;
 
 
 
@@ -50,6 +51,7 @@ public class AirViaLtd {
         securityPage = new SecurityPage(this);
         commissionPage = new CommissionPage(this);
         ticketStockPage = new TicketStockPage(this);
+        updateDetailsPage = new UpdateDetailsPage(this);
 
 
         frame = new JFrame("AirViaLtd");
@@ -166,6 +168,16 @@ public class AirViaLtd {
         frame.add(ticketStockPage.getMainPanel());
         frame.pack();
     }
+
+    public void transitionToUpdateDetailsPage(){
+        frame.remove(administratorHomePage.getMainPanel());
+        frame.add(updateDetailsPage.getMainPanel());
+        frame.pack();
+    }
+
+
+
+
 
 
 
