@@ -177,7 +177,6 @@ public class AirViaLtd {
             loginPage = new LoginPage(this);
 
             frame.add(loginPage.getMainPanel());
-            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setVisible(true);
         };
     }
