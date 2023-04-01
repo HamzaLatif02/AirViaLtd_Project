@@ -1,6 +1,7 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class AirViaLtd {
 
@@ -28,8 +29,6 @@ public class AirViaLtd {
     private UpdateDetailsPage updateDetailsPage;
 
 
-
-
     public AirViaLtd() {
 
         loginPage = new LoginPage(this);
@@ -53,7 +52,6 @@ public class AirViaLtd {
         ticketStockPage = new TicketStockPage(this);
         updateDetailsPage = new UpdateDetailsPage(this);
 
-
         frame = new JFrame("AirViaLtd");
 
         frame.add(loginPage.getMainPanel());
@@ -61,7 +59,6 @@ public class AirViaLtd {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setResizable(false);
-
         frame.setVisible(true);
 
     }
@@ -70,7 +67,6 @@ public class AirViaLtd {
         frame.remove(loginPage.getMainPanel());
         frame.add(officeManagerHomePage.getMainPanel());
         frame.pack();
-
     }
 
     public void transitionToAllocateBlankPage(){
@@ -86,21 +82,13 @@ public class AirViaLtd {
     }
 
     public void transitionToBlankStockPage(){
-        if (loginPage.getUser().equals("Office Manager")){
-            frame.remove(officeManagerHomePage.getMainPanel());
-        } else if (loginPage.getUser().equals("Administrator")){
-            frame.remove(administratorHomePage.getMainPanel());
-        }
+        frame.remove(getCurrentHomepage());
         frame.add(blankStockPage.getMainPanel());
         frame.pack();
     }
 
     public void transitionToCreateReportPage(){
-        if (loginPage.getUser().equals("Office Manager")){
-            frame.remove(officeManagerHomePage.getMainPanel());
-        } else if (loginPage.getUser().equals("Travel Advisor")){
-            frame.remove(travelAdvisorHomePage.getMainPanel());
-        }
+        frame.remove(getCurrentHomepage());
         frame.add(createReportPage.getMainPanel());
         frame.pack();
     }
@@ -112,11 +100,7 @@ public class AirViaLtd {
     }
 
     public void transitionToCreateCustomerAccountPage(){
-        if (loginPage.getUser().equals("Office Manager")){
-            frame.remove(officeManagerHomePage.getMainPanel());
-        } else if (loginPage.getUser().equals("Travel Advisor")){
-            frame.remove(travelAdvisorHomePage.getMainPanel());
-        }
+        frame.remove(getCurrentHomepage());
         frame.add(createCustomerAccountPage.getMainPanel());
         frame.pack();
     }
@@ -175,13 +159,26 @@ public class AirViaLtd {
         frame.pack();
     }
 
+    public JPanel getCurrentHomepage(){
+        if (loginPage.getUser().equals("Administrator")){
+            return administratorHomePage.getMainPanel();
+        } else if (loginPage.getUser().equals("Office Manager")){
+            return officeManagerHomePage.getMainPanel();
+        } else return travelAdvisorHomePage.getMainPanel();
+    }
 
+    public void doLogout(){
+        if (JOptionPane.showConfirmDialog(getCurrentHomepage(), "Are you sure you want to log out?", "Logout", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            JOptionPane.showConfirmDialog(getCurrentHomepage(), "You have successfully logged out", "Logout", JOptionPane.PLAIN_MESSAGE);
 
+            frame.remove(getCurrentHomepage());
 
+            loginPage = new LoginPage(this);
 
-
-
-
+            frame.add(loginPage.getMainPanel());
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        };
+    }
 
     public static void main(String[] args) {
         new AirViaLtd();

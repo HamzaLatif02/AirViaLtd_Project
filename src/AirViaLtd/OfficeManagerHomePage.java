@@ -15,12 +15,30 @@ public class OfficeManagerHomePage {
     private JButton createCustomerAccountButton;
     private JPanel titlePanel;
     private JLabel homepageLabel;
+    private JPanel menuPanel;
+    private JButton logOutButton;
 
     private AirViaLtd app;
 
     public OfficeManagerHomePage(AirViaLtd a) {
 
         this.app = a;
+
+        addButtonsListener();
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public void addButtonsListener(){
+
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.doLogout();
+            }
+        });
 
         allocateBlankButton.addActionListener(new ActionListener() {
             @Override
@@ -63,9 +81,5 @@ public class OfficeManagerHomePage {
                 app.transitionToCreateCustomerAccountPage();
             }
         });
-    }
-
-    public JPanel getMainPanel() {
-        return mainPanel;
     }
 }

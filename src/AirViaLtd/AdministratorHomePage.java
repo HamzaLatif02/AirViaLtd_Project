@@ -12,12 +12,29 @@ public class AdministratorHomePage {
     private JButton blankStockButton;
     private JButton ticketStockButton;
     private JButton updateDetailsButton;
+    private JButton logOutButton;
 
     private AirViaLtd app;
 
     public AdministratorHomePage(AirViaLtd a) {
 
         this.app = a;
+
+        addButtonsListener();
+
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public void addButtonsListener(){
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.doLogout();
+            }
+        });
 
         createTravelAgentAccountButton.addActionListener(new ActionListener() {
             @Override
@@ -60,10 +77,6 @@ public class AdministratorHomePage {
                 app.transitionToUpdateDetailsPage();
             }
         });
-    }
-
-    public JPanel getMainPanel() {
-        return mainPanel;
     }
 }
 

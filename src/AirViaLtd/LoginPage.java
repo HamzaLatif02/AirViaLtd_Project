@@ -162,13 +162,13 @@ public class LoginPage {
                 } else {
                     this.user = jobTitleComboBox.getSelectedItem().toString();
                     switch (jobTitleComboBox.getSelectedIndex()){
-                        case 0:
+                        case 1:
                             app.transitionToAdministratoHomePage();
                             break;
-                        case 1:
+                        case 2:
                             app.transitionToOfficeManagerHomePage();
                             break;
-                        case 2:
+                        case 3:
                             app.transitionToTravelAdvisorHomePage();
                             break;
                     }

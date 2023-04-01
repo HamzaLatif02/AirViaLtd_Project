@@ -13,11 +13,28 @@ public class TravelAdvisorHomePage {
     private JButton issueRefundButton;
     private JButton createReportButton;
     private JButton sellTicketButton;
+    private JPanel menuPanel;
+    private JButton logOutButton;
 
     private AirViaLtd app;
 
     public TravelAdvisorHomePage(AirViaLtd a) {
         this.app = a;
+
+        addButtonsListener();
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public void addButtonsListener(){
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.doLogout();
+            }
+        });
 
         createCustomerAccountButton.addActionListener(new ActionListener() {
             @Override
@@ -47,8 +64,5 @@ public class TravelAdvisorHomePage {
             }
         });
     }
-
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
 }
+
