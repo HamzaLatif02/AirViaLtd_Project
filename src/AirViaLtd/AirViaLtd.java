@@ -66,97 +66,97 @@ public class AirViaLtd {
     public void transitionToOfficeManagerHomePage(){
         frame.remove(loginPage.getMainPanel());
         frame.add(officeManagerHomePage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToAllocateBlankPage(){
         frame.remove(officeManagerHomePage.getMainPanel());
         frame.add(allocateBlankPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToAddBlankPage(){
         frame.remove(officeManagerHomePage.getMainPanel());
         frame.add(addBlankPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToBlankStockPage(){
         frame.remove(getCurrentHomepage());
         frame.add(blankStockPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToCreateReportPage(){
         frame.remove(getCurrentHomepage());
         frame.add(createReportPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToDiscountPlanPage(){
         frame.remove(officeManagerHomePage.getMainPanel());
         frame.add(discountPlanPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToCreateCustomerAccountPage(){
         frame.remove(getCurrentHomepage());
         frame.add(createCustomerAccountPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToTravelAdvisorHomePage(){
         frame.remove(loginPage.getMainPanel());
         frame.add(travelAdvisorHomePage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToIssueRefundPage(){
         frame.remove(travelAdvisorHomePage.getMainPanel());
         frame.add(issueRefundPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToSellTicketPage(){
         frame.remove(travelAdvisorHomePage.getMainPanel());
         frame.add(sellTicketPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToAdministratoHomePage(){
         frame.remove(loginPage.getMainPanel());
         frame.add(administratorHomePage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToCreateTravelAgentAccountPage(){
         frame.remove(administratorHomePage.getMainPanel());
         frame.add(createTravelAgentAccountPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToSecurityPage(){
         frame.remove(administratorHomePage.getMainPanel());
         frame.add(securityPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToCommissionPage(){
         frame.remove(administratorHomePage.getMainPanel());
         frame.add(commissionPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToTicketStockPage(){
         frame.remove(administratorHomePage.getMainPanel());
         frame.add(ticketStockPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public void transitionToUpdateDetailsPage(){
         frame.remove(administratorHomePage.getMainPanel());
         frame.add(updateDetailsPage.getMainPanel());
-        frame.pack();
+        frame.setVisible(true);
     }
 
     public JPanel getCurrentHomepage(){
@@ -173,10 +173,12 @@ public class AirViaLtd {
 
             frame.remove(getCurrentHomepage());
 
+
             loginPage = new LoginPage(this);
 
             frame.add(loginPage.getMainPanel());
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setVisible(true);
         };
     }
 
