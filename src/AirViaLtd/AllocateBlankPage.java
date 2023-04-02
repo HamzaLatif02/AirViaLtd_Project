@@ -145,9 +145,9 @@ public class AllocateBlankPage {
 
                         if (rs != 0){
                             changesMade = true;
-                            JOptionPane.showMessageDialog(null, rs + " rows updated", "Successfull update", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, rs + " rows updated", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
                         } else {
-                            JOptionPane.showMessageDialog(null, "No rows were updated, please retry", "Unsuccessfull update", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "No rows were updated, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                         }
 
                         con.close();
