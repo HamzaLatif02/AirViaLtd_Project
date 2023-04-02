@@ -78,8 +78,12 @@ public class AllocateBlankPage {
                 model.addRow(row);
             }
 
-            table = new JTable(model);
-            notAssignedBlanksScrollPane = new JScrollPane(table);
+            table = new JTable();
+            table.setModel(model);
+            table.setDefaultEditor(Object.class, null);
+
+            notAssignedBlanksScrollPane = new JScrollPane();
+            notAssignedBlanksScrollPane.setViewportView(table);
 
             con.close();
 
@@ -150,6 +154,7 @@ public class AllocateBlankPage {
 
                     }catch(Exception ex){ System.out.println(ex);}
 
+                updateTable();
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Please select a blank", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
@@ -172,13 +177,56 @@ public class AllocateBlankPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (changesMade){
-                    addTableData();
-                    app.refreshBlanksNotAssignedTable();
+
+                    updateTable();
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Make some changes first", "No changes", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
+    }
+
+    public void updateTable(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(
+                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                    "in2018g16_d",
+                    "35cnYJLB");
+
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate FROM in2018g16.Blank where AdvisorCode = 1");
+
+            model = new DefaultTableModel();
+            model.addColumn("ID");
+            model.addColumn("Type");
+            model.addColumn("Number");
+            model.addColumn("Newly Received");
+            model.addColumn("Received Date");
+            model.addColumn("Assigned Date");
+            model.addColumn("Used Date");
+
+            while(rs.next()){
+                Object[] row = new Object[7];
+                row[0] = rs.getInt(1);
+                row[1] = rs.getInt(2);
+                row[2] = rs.getInt(3);
+                row[3] = rs.getBoolean(4);
+                row[4] = rs.getDate(5);
+                row[5] = rs.getDate(6);
+                row[6] = rs.getDate(7);
+                model.addRow(row);
+            }
+
+            table.setModel(model);
+            table.setDefaultEditor(Object.class, null);
+
+            notAssignedBlanksScrollPane.repaint();
+
+            con.close();
+
+        }catch (Exception e) { System.out.println(e);}
     }
 
 }
