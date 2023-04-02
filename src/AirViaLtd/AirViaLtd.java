@@ -72,7 +72,9 @@ public class AirViaLtd {
     public void transitionToAllocateBlankPage(){
         frame.remove(officeManagerHomePage.getMainPanel());
         frame.add(allocateBlankPage.getMainPanel());
+        frame.add(allocateBlankPage.getNotAssignedBlanksScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
+
     }
 
     public void transitionToAddBlankPage(){
@@ -179,6 +181,16 @@ public class AirViaLtd {
             frame.add(loginPage.getMainPanel());
             frame.setVisible(true);
         };
+    }
+
+    public void refreshBlanksNotAssignedTable(){
+        frame.add(allocateBlankPage.getNotAssignedBlanksScrollPane());
+        frame.add(allocateBlankPage.getNotAssignedBlanksScrollPane(), BorderLayout.EAST);
+        frame.setVisible(true);
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 
     public static void main(String[] args) {
