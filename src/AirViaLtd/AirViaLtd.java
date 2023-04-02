@@ -86,6 +86,7 @@ public class AirViaLtd {
     public void transitionToBlankStockPage(){
         frame.remove(getCurrentHomepage());
         frame.add(blankStockPage.getMainPanel());
+        frame.add(blankStockPage.getBlankStockScrollPane(), BorderLayout.SOUTH);
         frame.setVisible(true);
     }
 
