@@ -52,7 +52,7 @@ public class AddBlankPage {
 
                 String date = java.time.LocalDate.now().toString();
 
-                if (checkComboBoxValue()){
+                if (checkSingleValues()){
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
                         Connection con= DriverManager.getConnection(
@@ -97,7 +97,7 @@ public class AddBlankPage {
             public void actionPerformed(ActionEvent e) {
                 String date = java.time.LocalDate.now().toString();
 
-                if (checkComboBoxValue() && checkMultipleNumberValue()){
+                if (checkMultipleValues()){
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
                         Connection con= DriverManager.getConnection(
@@ -176,24 +176,42 @@ public class AddBlankPage {
 
     }
 
-    public boolean checkComboBoxValue(){
-
-        if (singleBlankTypeComboBox.getSelectedIndex() != 0){
-            return true;
-        } else if (multipleEndBlankTypeComboBox.getSelectedIndex() != 0 && multipleStartBlankTypeComboBox.getSelectedIndex() != 0 && multipleStartBlankTypeComboBox.getSelectedIndex() == multipleEndBlankTypeComboBox.getSelectedIndex()) {
-            return true;
+    public boolean checkSingleValues(){
+        if (singleBlankTypeComboBox.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Please select a blank type", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
 
-        JOptionPane.showMessageDialog(null, "Please select a blank type", "Error", JOptionPane.ERROR_MESSAGE);
-        return false;
+        if (singleBlankNumberTextField.getText().toString().equals("") ){
+            JOptionPane.showMessageDialog(null, "Please enter a blank number", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
 
-    public boolean checkMultipleNumberValue(){
-        if (Integer.valueOf(multipleStartBlankNumberTextField.getText()) <= Integer.valueOf(multipleEndBlankNumberTextField.getText())){
-            return true;
+    public boolean checkMultipleValues() {
+
+        if (multipleEndBlankTypeComboBox.getSelectedIndex() == 0 || multipleStartBlankTypeComboBox.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Please select a blank type", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
 
-        JOptionPane.showMessageDialog(null, "Please make sure the end blank number is higher than the start blank number", "Error", JOptionPane.ERROR_MESSAGE);
-        return false;
+        if (multipleStartBlankTypeComboBox.getSelectedIndex() != multipleEndBlankTypeComboBox.getSelectedIndex()){
+            JOptionPane.showMessageDialog(null, "Please make sure the blank types are the same", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (multipleStartBlankNumberTextField.getText().toString().equals("") || multipleEndBlankNumberTextField.getText().toString().equals("")){
+            JOptionPane.showMessageDialog(null, "Please enter a blank number", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (Integer.valueOf(multipleStartBlankNumberTextField.getText()) > Integer.valueOf(multipleEndBlankNumberTextField.getText())){
+            JOptionPane.showMessageDialog(null, "Please make sure the end blank number is higher than the start blank number", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
 }
