@@ -43,7 +43,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="name"/>
+              <text value="Name"/>
             </properties>
           </component>
           <component id="599d0" class="javax.swing.JTextField" binding="surnameTextField" default-binding="true">
@@ -53,7 +53,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="surname"/>
+              <text value="Surname"/>
             </properties>
           </component>
           <component id="c1354" class="javax.swing.JTextField" binding="emailAddressTextField" default-binding="true">
@@ -63,17 +63,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="email address"/>
-            </properties>
-          </component>
-          <component id="83537" class="javax.swing.JTextField" binding="regularOrValuedTextField" default-binding="true">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="regular or valued"/>
+              <text value="Email Address"/>
             </properties>
           </component>
           <component id="87921" class="javax.swing.JButton" binding="createButton" default-binding="true">
@@ -83,6 +73,12 @@
             <properties>
               <text value="Create"/>
             </properties>
+          </component>
+          <component id="5736f" class="javax.swing.JComboBox" binding="regularValuedComboBox">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
           </component>
         </children>
       </grid>
