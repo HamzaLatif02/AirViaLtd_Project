@@ -184,6 +184,10 @@ public class AirViaLtd {
         };
     }
 
+    public void addReportToPage(){
+        frame.add(createReportPage.getReportScrollPane(), BorderLayout.EAST);
+        frame.setVisible(true);
+    }
 
     public static void main(String[] args) {
         new AirViaLtd();

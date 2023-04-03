@@ -31,7 +31,8 @@ public class BlankStockPage {
     public BlankStockPage(AirViaLtd a) {
         this.app = a;
 
-        addTableData(null, null);
+
+        addTableData();
         addIDButtonListener();
         addTypeButtonListener();
         addDateButtonListener();
@@ -49,7 +50,7 @@ public class BlankStockPage {
         return blankStockScrollPane;
     }
 
-    public void addTableData(String filter, String ascOrDesc){
+    public void addTableData(){
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
