@@ -184,15 +184,6 @@ public class AirViaLtd {
         };
     }
 
-    public void refreshBlanksNotAssignedTable(){
-        frame.add(allocateBlankPage.getNotAssignedBlanksScrollPane());
-        frame.add(allocateBlankPage.getNotAssignedBlanksScrollPane(), BorderLayout.EAST);
-        frame.setVisible(true);
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
 
     public static void main(String[] args) {
         new AirViaLtd();
