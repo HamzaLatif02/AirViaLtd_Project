@@ -144,6 +144,8 @@ public class DiscountPlanPage {
                 String[] splitCuSelected = cu.split("\\s+");
                 String email = (splitCuSelected[0]);
 
+
+
                 try{
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection con= DriverManager.getConnection(
@@ -151,18 +153,30 @@ public class DiscountPlanPage {
                             "in2018g16_d",
                             "35cnYJLB");
 
-                    String sql = "update in2018g16.Customer Set ? = ? Where EmailAddress = ?";
+                    String sql = "";
+
+                    if (discountPlanComboBox.getSelectedIndex() == 1){
+                        sql = "update in2018g16.Customer Set FixedDiscount = ? Where EmailAddress = ?";
+                    } else {
+                        sql = "update in2018g16.Customer Set FlexibleDiscount = ? Where EmailAddress = ?";
+                    }
+
                     PreparedStatement stmt=con.prepareStatement(sql);
 
-                    stmt.setString(1, discountPlanComboBox.getSelectedItem().toString() + "Discount");
-                    stmt.setInt(2, Integer.valueOf(discountPercentageTextField.getText()));
-                    stmt.setString(3, email);
+                    stmt.setInt(1, Integer.valueOf(discountPercentageTextField.getText()));
+                    stmt.setString(2, email);
 
 
                     int rs=stmt.executeUpdate();
 
                     if (rs != 0){
-                        JOptionPane.showMessageDialog(null, "Discount added successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Discount added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        customerComboBox.setSelectedIndex(0);
+                        monthComboBox.setSelectedIndex(0);
+                        yearComboBox.setSelectedIndex(0);
+                        salesTextField.setText("");
+                        discountPlanComboBox.setSelectedIndex(0);
+                        discountPercentageLabel.setText("");
                     } else {
                         JOptionPane.showMessageDialog(null, "Could not add discount at the moment, please retry", "Error", JOptionPane.ERROR_MESSAGE);
                     }
