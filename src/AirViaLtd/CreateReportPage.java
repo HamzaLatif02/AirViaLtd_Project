@@ -2,6 +2,8 @@ package AirViaLtd;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -32,6 +34,18 @@ public class CreateReportPage {
     private JScrollPane reportScrollPane;
     private DefaultTableModel model;
     private JTable table;
+    private DefaultTableModel model1;
+    private JTable table1;
+
+    private DefaultTableModel model2;
+    private JTable table2;
+
+    private DefaultTableModel model3;
+    private JTable table3;
+    private DefaultTableModel model4;
+    private JTable table4;
+    private DefaultTableModel model5;
+    private JTable table5;
 
     private AirViaLtd app;
 
@@ -52,6 +66,7 @@ public class CreateReportPage {
     public JScrollPane getReportScrollPane() {
         return reportScrollPane;
     }
+
 
     public void addDateComboBoxData(){
 
@@ -161,38 +176,127 @@ public class CreateReportPage {
                     "35cnYJLB");
 
 
-            String sql = "SELECT Blank.Type AS BlankType ,CONCAT ( Blank.Type ,Blank.Number ) AS BlankNumber ,SUM(CASE WHEN Blank.NewlyReceived = 1 THEN 1 ELSE 0 END) AS ReceivedBlanks ,SUM(CASE WHEN Blank.UsedDate IS NOT NULL THEN 1 ELSE 0 END) AS AssignedUsedBlanks ,SUM(CASE WHEN Blank.NewlyReceived = 1 THEN 1 ELSE 0 END) - SUM(CASE WHEN Blank.UsedDate IS NOT NULL THEN 1 ELSE 0 END) AS FinalAmount ,GROUP_CONCAT(DISTINCT TravelAdvisor.AdvisorCode ORDER BY Blank.ID SEPARATOR ', ') AS UsedBy FROM Blank LEFT JOIN TravelAdvisor ON Blank.AdvisorCode = TravelAdvisor.AdvisorCode WHERE Blank.AssignedDate BETWEEN '2023-04-01' AND '2023-04-02' GROUP BY Blank.Type ORDER BY Blank.Type;";
+            String sql = "select Type,Number From in2018g16.Blank Where NewlyReceived = 1 And ReceivedDate BETWEEN '2017-01-01' and '2024-01-01' order by Type";
+            String sql1 = "select Type,Number From in2018g16.Blank Where NewlyReceived = 1 And ReceivedDate BETWEEN '2017-01-01' and '2024-01-01' And AdvisorCode != 1 order by Type";
+            String sql2 = "select AdvisorCode,Type,Number From in2018g16.Blank Where NewlyReceived = 0 And AssignedDate BETWEEN '2017-01-01' and '2024-01-01' And AdvisorCode != 1";
+            String sql3 = "select Type,Number From in2018g16.Blank Where UsedDate BETWEEN '2017-01-01' and '2024-01-01' And AdvisorCode != 1";
+            String sql4 = "select Type,Number From in2018g16.Blank Where ReceivedDate <= '2024-01-01' And UsedDate IS NULL";
+            String sql5 = "select AdvisorCode,Type,Number From in2018g16.Blank Where ReceivedDate <= '2024-01-01' And UsedDate IS NULL";
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
-            model = new DefaultTableModel();
-            model.addColumn("Blank Type");
-            model.addColumn("Blank Number");
-            model.addColumn("Received Blanks");
-            model.addColumn("Assigned Used Blanks");
-            model.addColumn("Final Amount");
-            model.addColumn("Used By");
+            Statement stmt1 = con.createStatement();
+            ResultSet rs1 = stmt1.executeQuery(sql1);
 
+            Statement stmt2 = con.createStatement();
+            ResultSet rs2 = stmt2.executeQuery(sql2);
+
+            Statement stmt3 = con.createStatement();
+            ResultSet rs3 = stmt3.executeQuery(sql3);
+
+            Statement stmt4 = con.createStatement();
+            ResultSet rs4 = stmt4.executeQuery(sql4);
+
+            Statement stmt5 = con.createStatement();
+            ResultSet rs5 = stmt5.executeQuery(sql5);
+
+            model = new DefaultTableModel();
+            model.addColumn("Received Blank Type");
+            model.addColumn("Received Blank Number");
+
+            model1 = new DefaultTableModel();
+            model1.addColumn("Assigned Blank Type");
+            model1.addColumn("Assigned Blank Number");
+
+            model2 = new DefaultTableModel();
+            model2.addColumn("Advisor Code");
+            model2.addColumn("Existing Assigned Blank Type");
+            model2.addColumn("Existing Assigned Blank Number");
+
+            model3 = new DefaultTableModel();
+            model3.addColumn("Used Blank Type");
+            model3.addColumn("Used Blank Number");
+
+            model4 = new DefaultTableModel();
+            model4.addColumn("Available Blank Type");
+            model4.addColumn("Available Blank Number");
+
+            model5 = new DefaultTableModel();
+            model5.addColumn("Advisor Code");
+            model5.addColumn("Used Blank Type");
+            model5.addColumn("Used Blank Number");
 
             while(rs.next()){
-                Object[] row = new Object[6];
+                Object[] row = new Object[2];
                 row[0] = rs.getInt(1);
                 row[1] = rs.getInt(2);
-                row[2] = rs.getInt(3);
-                row[3] = rs.getInt(4);
-                row[4] = rs.getInt(5);
-                row[5] = rs.getInt(6);
                 model.addRow(row);
             }
 
+            while (rs1.next()){
+                Object[] row = new Object[2];
+                row[0] = rs1.getInt(1);
+                row[1] = rs1.getInt(2);
+                model1.addRow(row);
+            }
+
+            while (rs2.next()){
+                Object[] row = new Object[3];
+                row[0] = rs2.getInt(1);
+                row[1] = rs2.getInt(2);
+                row[2] = rs2.getInt(3);
+                model2.addRow(row);
+            }
+
+            while (rs3.next()){
+                Object[] row = new Object[2];
+                row[0] = rs3.getInt(1);
+                row[1] = rs3.getInt(2);
+                model3.addRow(row);
+            }
+
+            while (rs4.next()){
+                Object[] row = new Object[2];
+                row[0] = rs4.getInt(1);
+                row[1] = rs4.getInt(2);
+                model4.addRow(row);
+            }
+
+            while (rs5.next()){
+                Object[] row = new Object[3];
+                row[0] = rs5.getInt(1);
+                row[1] = rs5.getInt(2);
+                row[2] = rs5.getInt(3);
+                model5.addRow(row);
+            }
 
             table = new JTable();
             table.setModel(model);
             table.setDefaultEditor(Object.class, null);
 
+            table1 = new JTable();
+            table1.setModel(model1);
+            table1.setDefaultEditor(Object.class, null);
+
+            table2 = new JTable();
+            table2.setModel(model2);
+            table2.setDefaultEditor(Object.class, null);
+
+            table3 = new JTable();
+            table3.setModel(model3);
+            table3.setDefaultEditor(Object.class, null);
+
+            table4 = new JTable();
+            table4.setModel(model4);
+            table4.setDefaultEditor(Object.class, null);
+
+            table5 = new JTable();
+            table5.setModel(model5);
+            table5.setDefaultEditor(Object.class, null);
+
             reportScrollPane = new JScrollPane();
-            reportScrollPane.setViewportView(table);
+            reportScrollPane.setViewportView(table5);
 
             con.close();
 
