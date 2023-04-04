@@ -609,7 +609,7 @@ public class BlankStockPage {
                             "in2018g16_d",
                             "35cnYJLB");
 
-                    String sql = "select * FROM in2018g16.Blank WHERE UsedDate != null";
+                    String sql = "select * FROM in2018g16.Blank WHERE UsedDate is not null";
 
 
                     Statement stmt = con.createStatement();
