@@ -36,14 +36,6 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="f4196" class="javax.swing.JButton" binding="createCustomerAccountButton" default-binding="true">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Create Customer Account"/>
-            </properties>
-          </component>
           <component id="2638" class="javax.swing.JButton" binding="issueRefundButton" default-binding="true">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -62,10 +54,18 @@
           </component>
           <component id="83392" class="javax.swing.JButton" binding="sellTicketButton" default-binding="true">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Sell Ticket"/>
+            </properties>
+          </component>
+          <component id="f4196" class="javax.swing.JButton" binding="createCustomerAccountButton" default-binding="true">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Create Customer Account"/>
             </properties>
           </component>
         </children>

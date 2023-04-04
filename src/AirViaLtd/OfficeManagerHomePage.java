@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 public class OfficeManagerHomePage {
     private JPanel mainPanel;
     private JPanel buttonsPanel;
-    private JButton allocateBlankButton;
-    private JButton addBlankButton;
     private JButton blankStockButton;
     private JButton createReportButton;
     private JButton discountPlanButton;
@@ -17,6 +15,7 @@ public class OfficeManagerHomePage {
     private JLabel homepageLabel;
     private JPanel menuPanel;
     private JButton logOutButton;
+    private JButton manageBlanksButton;
 
     private AirViaLtd app;
 
@@ -40,19 +39,13 @@ public class OfficeManagerHomePage {
             }
         });
 
-        allocateBlankButton.addActionListener(new ActionListener() {
+        manageBlanksButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToAllocateBlankPage();
+                app.transitionToBlankManagerPage();
             }
         });
 
-        addBlankButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                app.transitionToAddBlankPage();
-            }
-        });
 
         blankStockButton.addActionListener(new ActionListener() {
             @Override

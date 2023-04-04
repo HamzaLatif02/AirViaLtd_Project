@@ -10,8 +10,12 @@ public class AirViaLtd {
     private LoginPage loginPage;
 
     private OfficeManagerHomePage officeManagerHomePage;
+
+    private BlankManagerPage blankManagerPage;
     private AllocateBlankPage allocateBlankPage;
     private AddBlankPage addBlankPage;
+
+    private RemoveBlankPage removeBlankPage;
     private BlankStockPage blankStockPage;
     private CreateReportPage createReportPage;
     private DiscountPlanPage discountPlanPage;
@@ -34,8 +38,10 @@ public class AirViaLtd {
         loginPage = new LoginPage(this);
 
         officeManagerHomePage = new OfficeManagerHomePage(this);
+        blankManagerPage = new BlankManagerPage(this);
         allocateBlankPage = new AllocateBlankPage(this);
         addBlankPage = new AddBlankPage(this);
+        removeBlankPage = new RemoveBlankPage(this);
         blankStockPage = new BlankStockPage(this);
         createReportPage = new CreateReportPage(this);
         discountPlanPage = new DiscountPlanPage(this);
@@ -69,17 +75,29 @@ public class AirViaLtd {
         frame.setVisible(true);
     }
 
-    public void transitionToAllocateBlankPage(){
+    public void transitionToBlankManagerPage(){
         frame.remove(officeManagerHomePage.getMainPanel());
+        frame.add(blankManagerPage.getMainPanel());
+        frame.setVisible(true);
+    }
+
+    public void transitionToAllocateBlankPage(){
+        frame.remove(blankManagerPage.getMainPanel());
         frame.add(allocateBlankPage.getMainPanel());
         frame.add(allocateBlankPage.getNotAssignedBlanksScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
-
     }
 
     public void transitionToAddBlankPage(){
-        frame.remove(officeManagerHomePage.getMainPanel());
+        frame.remove(blankManagerPage.getMainPanel());
         frame.add(addBlankPage.getMainPanel());
+        frame.setVisible(true);
+    }
+
+    public void transitionToRemoveBlankPage(){
+        frame.remove(blankManagerPage.getMainPanel());
+        frame.add(removeBlankPage.getMainPanel());
+        frame.add(removeBlankPage.getBlankStockScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
     }
 
