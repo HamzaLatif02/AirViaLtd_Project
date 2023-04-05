@@ -27,25 +27,35 @@ public class SearchBlankPage {
     private JLabel flightCouponsLabel;
     private JComboBox typeComboBox;
     private JComboBox numberComboBox;
-    private JComboBox fcIDComboBox;
-    private JComboBox departureCityComboBox;
-    private JComboBox arrivalCityComboBox;
-    private JComboBox departureDateComboBox;
-    private JComboBox arrivalDateComboBox;
-    private JComboBox departureTimeComboBox;
-    private JComboBox arrivalTimeComboBox;
+    private JTextField fcIDTextField;
+    private JTextField departureCityTextField;
+    private JTextField arrivalCityTextField;
+    private JTextField departureDateTextField;
+    private JTextField arrivalDateTextField;
+    private JTextField departureTimeTextField;
+    private JTextField arrivalTimeTextField;
+    private JButton previousButton;
+    private JButton nextButton;
 
-    private boolean dataAdded;
+    private DefaultTableModel fcModel;
+    private JTable fcTable;
+
+    private int tLength;
+    private int tCurrent;
+
+    private int searchedBlankID;
 
     private AirViaLtd app;
 
     public SearchBlankPage(AirViaLtd a) {
         this.app = a;
-        this.dataAdded = false;
 
         addSearchTypeData();
         addSearchNumberData();
         addSearchButtonListener();
+        addNextButtonListener();
+        addPreviousButtonListener();
+
     }
 
     public JPanel getMainPanel() {
@@ -103,7 +113,6 @@ public class SearchBlankPage {
             public void actionPerformed(ActionEvent e) {
                addSearchedBlankData();
                addSearchedFlightCouponData();
-               addFcIDComboBoxListener();
             }
         });
     }
@@ -126,15 +135,16 @@ public class SearchBlankPage {
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                IDTextField.setText("" + rs.getInt(1));
-                typeTextField.setText("" + rs.getInt(2));
-                numberTextField.setText("" + rs.getInt(3));
-                newlyReceivedTextField.setText("" + rs.getBoolean(4));
-                receivedDateTextField.setText("" + rs.getDate(5));
-                assignedDateTextField.setText("" + rs.getDate(6));
-                usedDateTextField.setText("" + rs.getDate(7));
-                advisorCodeTextField.setText("" + rs.getInt(8));
-                auditCouponIDTextField.setText("" + rs.getInt(9));
+                searchedBlankID = rs.getInt(1);
+                IDTextField.setText("ID: " + rs.getInt(1));
+                typeTextField.setText("Type: " + rs.getInt(2));
+                numberTextField.setText("Number: " + rs.getInt(3));
+                newlyReceivedTextField.setText("Newly Received: " + rs.getBoolean(4));
+                receivedDateTextField.setText("Received Date:" + rs.getDate(5));
+                assignedDateTextField.setText("Assigned Date: " + rs.getDate(6));
+                usedDateTextField.setText("Used Date: " + rs.getDate(7));
+                advisorCodeTextField.setText("Advisor Code: " + rs.getInt(8));
+                auditCouponIDTextField.setText("Audit Coupon ID: " + rs.getInt(9));
             }
 
             con.close();
@@ -143,7 +153,14 @@ public class SearchBlankPage {
     }
 
     public void addSearchedFlightCouponData(){
-        dataAdded = false;
+
+        fcIDTextField.setText("ID: ");
+        departureCityTextField.setText("Departure City: ");
+        arrivalCityTextField.setText("Arrival City: ");
+        departureDateTextField.setText("Departure Date: ");
+        arrivalDateTextField.setText("Arrival Date: ");
+        departureTimeTextField.setText("Departure Time: ");
+        arrivalTimeTextField.setText("Arrival Time: ");
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -156,49 +173,58 @@ public class SearchBlankPage {
 
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, Integer.valueOf(Integer.valueOf(IDTextField.getText())));
+            stmt.setInt(1, searchedBlankID);
 
             ResultSet rs = stmt.executeQuery();
 
-            int length = 0;
+            tLength = 0;
 
             while (rs.next()){
-                length = rs.getInt(1);
+                tLength = rs.getInt(1);
             }
 
-            fcIDComboBox.removeAllItems();
-            departureCityComboBox.removeAllItems();
-            arrivalCityComboBox.removeAllItems();
-            departureDateComboBox.removeAllItems();
-            arrivalDateComboBox.removeAllItems();
-            departureTimeComboBox.removeAllItems();
-            arrivalTimeComboBox.removeAllItems();
-
-            if (length > 0){
-                flightCouponsLabel.setText("Flight Coupons: " + length);
+            if (tLength > 0){
+                flightCouponsLabel.setText("Flight Coupons: " + tLength);
 
                 String sql1 = "select * from in2018g16.FlightCoupon where BlankID = ?";
 
                 PreparedStatement stmt1 = con.prepareStatement(sql1);
 
-                stmt1.setInt(1, Integer.valueOf(Integer.valueOf(IDTextField.getText())));
+                stmt1.setInt(1, searchedBlankID);
 
                 ResultSet rs1 = stmt1.executeQuery();
 
+                fcModel = new DefaultTableModel();
+                fcModel.addColumn("ID");
+                fcModel.addColumn("Departure City");
+                fcModel.addColumn("Arrival City");
+                fcModel.addColumn("Departure Date");
+                fcModel.addColumn("Arrival Date");
+                fcModel.addColumn("Departure Time");
+                fcModel.addColumn("Arrival Time");
+
                 while(rs1.next()){
-                    fcIDComboBox.addItem(rs1.getInt(1));
-                    departureCityComboBox.addItem(rs1.getString(2));
-                    arrivalCityComboBox.addItem(rs1.getString(3));
-                    departureDateComboBox.addItem(rs1.getDate(4));
-                    arrivalDateComboBox.addItem(rs1.getDate(5));
-                    departureTimeComboBox.addItem(rs1.getInt(6));
-                    arrivalTimeComboBox.addItem(rs1.getInt(7));
+                    Object[] row = new Object[7];
+                    row[0] = rs1.getInt(1);
+                    row[1] = rs1.getString(2);
+                    row[2] = rs1.getString(3);
+                    row[3] = rs1.getDate(4);
+                    row[4] = rs1.getDate(5);
+                    row[5] = rs1.getInt(6);
+                    row[6] = rs1.getInt(7);
+                    fcModel.addRow(row);
                 }
 
-                dataAdded = true;
+                fcTable = new JTable();
+                fcTable.setModel(fcModel);
+                fcTable.setDefaultEditor(Object.class, null);
+
+                tCurrent = 0;
+
+                addFCData(tCurrent);
 
             } else {
-                flightCouponsLabel.setText("Flight Coupons: " + length);
+                flightCouponsLabel.setText("Flight Coupons: " + tLength);
                 JOptionPane.showMessageDialog(null, "This blank has no flight coupon associated with it", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
 
@@ -210,22 +236,51 @@ public class SearchBlankPage {
 
     }
 
-    public void addFcIDComboBoxListener(){
-
-        fcIDComboBox.addActionListener(new ActionListener() {
+    public void addNextButtonListener(){
+        nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (dataAdded = true){
-                    int selectedIndex = fcIDComboBox.getSelectedIndex();
-                    departureCityComboBox.setSelectedIndex(selectedIndex);
-                    arrivalCityComboBox.setSelectedIndex(selectedIndex);
-                    departureDateComboBox.setSelectedIndex(selectedIndex);
-                    arrivalDateComboBox.setSelectedIndex(selectedIndex);
-                    departureTimeComboBox.setSelectedIndex(selectedIndex);
-                    arrivalTimeComboBox.setSelectedIndex(selectedIndex);
+                if (tLength > 0){
+                    if (tCurrent + 1 == tLength){
+                        JOptionPane.showMessageDialog(null, "no more flight coupons", "error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        tCurrent++;
+                        addFCData(tCurrent);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "no flight coupons", "error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
+    }
+
+    public void addPreviousButtonListener(){
+        previousButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (tLength > 0){
+                    if (tCurrent - 1 < 0){
+                        JOptionPane.showMessageDialog(null, "no previous flight coupons", "error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        tCurrent--;
+                        addFCData(tCurrent);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "no flight coupons", "error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        });
+    }
+
+    public void addFCData(int i){
+        fcIDTextField.setText("ID: " + fcTable.getValueAt(i, 0).toString());
+        departureCityTextField.setText("Departure City: " + fcTable.getValueAt(i,1).toString());
+        arrivalCityTextField.setText("Arrival City: " + fcTable.getValueAt(i,2).toString());
+        departureDateTextField.setText("Departure Date: " + fcTable.getValueAt(i,3).toString());
+        arrivalDateTextField.setText("Arrival Date: " + fcTable.getValueAt(i, 4).toString());
+        departureTimeTextField.setText("Departure Time: " + fcTable.getValueAt(i,5).toString());
+        arrivalTimeTextField.setText("Arrival Time: " + fcTable.getValueAt(i, 6).toString());
     }
 
 }

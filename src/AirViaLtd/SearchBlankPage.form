@@ -164,58 +164,90 @@
               <enabled value="true"/>
             </properties>
           </component>
-          <component id="9853f" class="javax.swing.JComboBox" binding="fcIDComboBox">
+          <component id="a3b4e" class="javax.swing.JButton" binding="nextButton" default-binding="true">
             <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="b805b" class="javax.swing.JComboBox" binding="departureCityComboBox">
-            <constraints>
-              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <enabled value="false"/>
+              <text value="Next"/>
             </properties>
           </component>
-          <component id="200bf" class="javax.swing.JComboBox" binding="arrivalCityComboBox">
+          <component id="8dd06" class="javax.swing.JTextField" binding="fcIDTextField">
             <constraints>
-              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
             </constraints>
             <properties>
-              <enabled value="false"/>
+              <editable value="false"/>
             </properties>
           </component>
-          <component id="15dae" class="javax.swing.JComboBox" binding="departureDateComboBox">
+          <component id="da41d" class="javax.swing.JTextField" binding="departureCityTextField">
             <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
             </constraints>
             <properties>
-              <enabled value="false"/>
+              <editable value="false"/>
             </properties>
           </component>
-          <component id="3cd2f" class="javax.swing.JComboBox" binding="arrivalDateComboBox">
+          <component id="d8f4a" class="javax.swing.JTextField" binding="arrivalCityTextField">
             <constraints>
-              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
             </constraints>
             <properties>
-              <enabled value="false"/>
+              <editable value="false"/>
             </properties>
           </component>
-          <component id="fe9af" class="javax.swing.JComboBox" binding="departureTimeComboBox">
+          <component id="dae3f" class="javax.swing.JTextField" binding="departureDateTextField">
             <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
             </constraints>
             <properties>
-              <enabled value="false"/>
+              <editable value="false"/>
             </properties>
           </component>
-          <component id="15d57" class="javax.swing.JComboBox" binding="arrivalTimeComboBox">
+          <component id="5e18e" class="javax.swing.JTextField" binding="arrivalDateTextField">
             <constraints>
-              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
             </constraints>
             <properties>
-              <enabled value="false"/>
+              <editable value="false"/>
+            </properties>
+          </component>
+          <component id="536ce" class="javax.swing.JTextField" binding="departureTimeTextField">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <editable value="false"/>
+            </properties>
+          </component>
+          <component id="889d4" class="javax.swing.JTextField" binding="arrivalTimeTextField">
+            <constraints>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <editable value="false"/>
+            </properties>
+          </component>
+          <component id="865f7" class="javax.swing.JButton" binding="previousButton" default-binding="true">
+            <constraints>
+              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Previous"/>
             </properties>
           </component>
         </children>
