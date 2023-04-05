@@ -53,7 +53,7 @@ public class AllocateBlankPage {
                     "35cnYJLB");
 
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate FROM in2018g16.Blank where AdvisorCode = 1");
+            ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate FROM in2018g16.Blank where AdvisorCode = 1 and UsedDate is null");
 
             model = new DefaultTableModel();
             model.addColumn("ID");
@@ -99,7 +99,7 @@ public class AllocateBlankPage {
                     "35cnYJLB");
 
             Statement stmt=con.createStatement();
-            ResultSet rs=stmt.executeQuery("select AdvisorCode, FirstName, LastName FROM in2018g16.TravelAdvisor WHERE AdvisorCode != 1");
+            ResultSet rs=stmt.executeQuery("select AdvisorCode, FirstName, LastName FROM in2018g16.TravelAdvisor WHERE AdvisorCode != 1 and UsedDate is null");
 
             while (rs.next()){
                 travelAdvisorComboBox.addItem(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getString(3));

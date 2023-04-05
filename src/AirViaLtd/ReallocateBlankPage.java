@@ -51,7 +51,7 @@ public class ReallocateBlankPage {
                     "35cnYJLB");
 
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate, AdvisorCode FROM in2018g16.Blank where AdvisorCode != 1");
+            ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate, AdvisorCode FROM in2018g16.Blank where AdvisorCode != 1 and UsedDate is null");
 
             model = new DefaultTableModel();
             model.addColumn("ID");
@@ -160,7 +160,7 @@ public class ReallocateBlankPage {
                     "35cnYJLB");
 
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate, AdvisorCode FROM in2018g16.Blank where AdvisorCode != 1");
+            ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate, AdvisorCode FROM in2018g16.Blank where AdvisorCode != 1 and UsedDate is null");
 
             model = new DefaultTableModel();
             model.addColumn("ID");
