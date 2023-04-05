@@ -16,6 +16,7 @@ public class AirViaLtd {
     private AddBlankPage addBlankPage;
     private RemoveBlankPage removeBlankPage;
     private EditBlankPage editBlankPage;
+    private ReallocateBlankPage reallocateBlankPage;
     private BlankStockPage blankStockPage;
     private CreateReportPage createReportPage;
     private DiscountPlanPage discountPlanPage;
@@ -33,6 +34,8 @@ public class AirViaLtd {
     private UpdateDetailsPage updateDetailsPage;
 
 
+
+
     public AirViaLtd() {
 
         loginPage = new LoginPage(this);
@@ -41,6 +44,7 @@ public class AirViaLtd {
         blankManagerPage = new BlankManagerPage(this);
         allocateBlankPage = new AllocateBlankPage(this);
         addBlankPage = new AddBlankPage(this);
+        reallocateBlankPage = new ReallocateBlankPage(this);
         removeBlankPage = new RemoveBlankPage(this);
         editBlankPage = new EditBlankPage(this);
         blankStockPage = new BlankStockPage(this);
@@ -106,6 +110,13 @@ public class AirViaLtd {
         frame.remove(blankManagerPage.getMainPanel());
         frame.add(editBlankPage.getMainPanel());
         frame.add(editBlankPage.getBlankStockScrollPane(), BorderLayout.EAST);
+        frame.setVisible(true);
+    }
+
+    public void transitionToReallocateBlankPage(){
+        frame.remove(blankManagerPage.getMainPanel());
+        frame.add(reallocateBlankPage.getMainPanel());
+        frame.add(reallocateBlankPage.getAssignedBlanksScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
     }
 
