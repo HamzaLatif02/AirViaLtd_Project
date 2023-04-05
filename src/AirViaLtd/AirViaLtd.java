@@ -17,6 +17,7 @@ public class AirViaLtd {
     private RemoveBlankPage removeBlankPage;
     private EditBlankPage editBlankPage;
     private ReallocateBlankPage reallocateBlankPage;
+    private SearchBlankPage searchBlankPage;
     private BlankStockPage blankStockPage;
     private CreateReportPage createReportPage;
     private DiscountPlanPage discountPlanPage;
@@ -47,6 +48,7 @@ public class AirViaLtd {
         reallocateBlankPage = new ReallocateBlankPage(this);
         removeBlankPage = new RemoveBlankPage(this);
         editBlankPage = new EditBlankPage(this);
+        searchBlankPage = new SearchBlankPage(this);
         blankStockPage = new BlankStockPage(this);
         createReportPage = new CreateReportPage(this);
         discountPlanPage = new DiscountPlanPage(this);
@@ -117,6 +119,12 @@ public class AirViaLtd {
         frame.remove(blankManagerPage.getMainPanel());
         frame.add(reallocateBlankPage.getMainPanel());
         frame.add(reallocateBlankPage.getAssignedBlanksScrollPane(), BorderLayout.EAST);
+        frame.setVisible(true);
+    }
+
+    public void transitionToSearchBlankPage(){
+        frame.remove(officeManagerHomePage.getMainPanel());
+        frame.add(searchBlankPage.getMainPanel());
         frame.setVisible(true);
     }
 

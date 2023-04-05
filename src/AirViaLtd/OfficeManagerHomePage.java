@@ -16,6 +16,7 @@ public class OfficeManagerHomePage {
     private JPanel menuPanel;
     private JButton logOutButton;
     private JButton manageBlanksButton;
+    private JButton searchBlankButton;
 
     private AirViaLtd app;
 
@@ -43,6 +44,13 @@ public class OfficeManagerHomePage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.transitionToBlankManagerPage();
+            }
+        });
+
+        searchBlankButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToSearchBlankPage();
             }
         });
 
