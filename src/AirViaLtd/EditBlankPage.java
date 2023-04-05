@@ -8,28 +8,32 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.*;
 
-public class RemoveBlankPage {
+public class EditBlankPage {
     private JPanel mainPanel;
     private JPanel titlePanel;
-    private JPanel buttonsPanel;
-    private JLabel removeBlankLabel;
-    private JTextField blankSelectedTextField;
-    private JLabel blankSelectedLabel;
-    private JButton removeButton;
-
+    private JPanel functionsPanel;
+    private JLabel editBlankPanel;
+    private JTextField IDTextField;
+    private JTextField typeTextField;
+    private JTextField numberTextField;
+    private JTextField newlyReceivedTextField;
+    private JTextField receivedDateTextField;
+    private JTextField assignedDateTextField;
+    private JTextField usedDateTextField;
+    private JTextField advisorCodeTextField;
+    private JTextField auditCouponIDTextField;
+    private JButton applyChangesButton;
+    private JLabel selectedBlankLabel;
     private JScrollPane blankStockScrollPane;
     private DefaultTableModel model;
     private JTable table;
-
     private AirViaLtd app;
-
-    public RemoveBlankPage(AirViaLtd a) {
+    public EditBlankPage(AirViaLtd a) {
         this.app = a;
 
         addTableData();
-        addRemoveButtonListener();
-        addBlankSelectedText();
-
+        addBlankSelectedFieldsText();
+        addApplyChangesButtonListener();
     }
 
     public JPanel getMainPanel() {
@@ -94,17 +98,46 @@ public class RemoveBlankPage {
 
     }
 
-    public void addRemoveButtonListener(){
-        removeButton.addActionListener(new ActionListener() {
+    public void addApplyChangesButtonListener(){
+        applyChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 if (validSelectedItems()){
-                    int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this blank?", "Confirm", JOptionPane.YES_NO_OPTION);
+                    int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to edit this blank?", "Confirm", JOptionPane.YES_NO_OPTION);
 
                     if (reply == JOptionPane.YES_OPTION) {
 
-                        int blankID = (int) table.getValueAt(table.getSelectedRow(), 0);
+                        int selectedID = (int) table.getValueAt(table.getSelectedRow(), 0);
+
+                        int id = Integer.valueOf(IDTextField.getText());
+                        int type = Integer.valueOf(typeTextField.getText());
+                        int number = Integer.valueOf(numberTextField.getText());
+
+                        boolean newlyReceived = true;
+                        if (newlyReceivedTextField.getText().equals("true")){
+                            newlyReceived = true;
+                        } else if (newlyReceivedTextField.getText().equals("false")){
+                            newlyReceived = false;
+                        }
+
+                        String receivedDate = null;
+                        String assignedDate = null;
+                        String usedDate = null;
+
+                        if (receivedDateTextField.getText().equals("null") == false){
+                            receivedDate = receivedDateTextField.getText();
+                        }
+
+                        if (assignedDateTextField.getText().equals("null") == false){
+                            receivedDate = assignedDateTextField.getText();
+                        }
+
+                        if (usedDateTextField.getText().equals("null") == false){
+                            receivedDate = usedDateTextField.getText();
+                        }
+
+                        int advisorCode = Integer.valueOf(advisorCodeTextField.getText());
+                        int auditCouponID = Integer.valueOf(auditCouponIDTextField.getText());
 
                         try{
                             Class.forName("com.mysql.jdbc.Driver");
@@ -113,18 +146,27 @@ public class RemoveBlankPage {
                                     "in2018g16_d",
                                     "35cnYJLB");
 
-                            String sql = "delete from in2018g16.Blank where ID = ? ";
+                            String sql = "update in2018g16.Blank Set ID = ?, Type = ?, Number = ?, NewlyReceived = ?, ReceivedDate = ?, AssignedDate = ?, UsedDate = ?, AdvisorCode = ?, AuditCouponID = ? WHERE ID = ?";
 
                             PreparedStatement stmt = con.prepareStatement(sql);
 
-                            stmt.setInt(1, blankID);
+                            stmt.setInt(1, id);
+                            stmt.setInt(2, type);
+                            stmt.setInt(3, number);
+                            stmt.setBoolean(4, newlyReceived);
+                            stmt.setString(5, receivedDate);
+                            stmt.setString(6, assignedDate);
+                            stmt.setString(7, usedDate);
+                            stmt.setInt(8, advisorCode);
+                            stmt.setInt(9, auditCouponID);
+                            stmt.setInt(10, selectedID);
 
                             int rs = stmt.executeUpdate();
 
                             if (rs != 0){
-                                JOptionPane.showMessageDialog(null, rs + " blank deleted", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null, rs + " blank updated", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
                             } else {
-                                JOptionPane.showMessageDialog(null, "No rows were deleted, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "No rows were updated, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                             }
 
                             con.close();
@@ -195,24 +237,46 @@ public class RemoveBlankPage {
         }catch (Exception e) { System.out.println(e);}
     }
 
-    public void addBlankSelectedText(){
+
+    public void addBlankSelectedFieldsText(){
         table.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int blankID = (int) table.getValueAt(table.getSelectedRow(), 0);
-                int blankType = (int) table.getValueAt(table.getSelectedRow(), 1);
-                int blankNumber = (int) table.getValueAt(table.getSelectedRow(), 2);
 
-                blankSelectedTextField.setText("ID: " + blankID + " Type: " + blankType + " Number: " + blankNumber);
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                int blankID = (int) table.getValueAt(table.getSelectedRow(), 0);
-                int blankType = (int) table.getValueAt(table.getSelectedRow(), 1);
-                int blankNumber = (int) table.getValueAt(table.getSelectedRow(), 2);
+                int ID = (int) table.getValueAt(table.getSelectedRow(), 0);
+                int Type = (int) table.getValueAt(table.getSelectedRow(), 1);
+                int Number = (int) table.getValueAt(table.getSelectedRow(), 2);
+                boolean NewlyReceived = (boolean) table.getValueAt(table.getSelectedRow(), 3);
+                Date ReceivedDate = (Date) table.getValueAt(table.getSelectedRow(), 4);
+                Date AssignedDate = (Date) table.getValueAt(table.getSelectedRow(), 5);
+                Date UsedDate = (Date) table.getValueAt(table.getSelectedRow(), 6);
+                int AdvisorCode = (int) table.getValueAt(table.getSelectedRow(), 7);
+                int AuditCouponID = (int) table.getValueAt(table.getSelectedRow(), 8);
 
-                blankSelectedTextField.setText("ID: " + blankID + " Type: " + blankType + " Number: " + blankNumber);
+                IDTextField.setEditable(true);
+                typeTextField.setEditable(true);
+                numberTextField.setEditable(true);
+                newlyReceivedTextField.setEditable(true);
+                receivedDateTextField.setEditable(true);
+                assignedDateTextField.setEditable(true);
+                usedDateTextField.setEditable(true);
+                advisorCodeTextField.setEditable(true);
+                auditCouponIDTextField.setEditable(true);
+
+                IDTextField.setText("" + ID);
+                typeTextField.setText("" + Type);
+                numberTextField.setText("" + Number);
+                newlyReceivedTextField.setText("" + NewlyReceived);
+                receivedDateTextField.setText("" + ReceivedDate);
+                assignedDateTextField.setText("" + AssignedDate);
+                usedDateTextField.setText("" + UsedDate);
+                advisorCodeTextField.setText("" + AdvisorCode);
+                auditCouponIDTextField.setText("" + AuditCouponID);
+
             }
 
             @Override
@@ -231,4 +295,6 @@ public class RemoveBlankPage {
             }
         });
     }
+
+
 }

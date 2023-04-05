@@ -45,12 +45,12 @@ public class BlankManagerPage {
             }
         });
 
-        /*editBlankButton.addActionListener(new ActionListener() {
+        editBlankButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.transitionToEditBlankPage();
             }
-        });*/
+        });
 
         allocateBlankButton.addActionListener(new ActionListener() {
             @Override
