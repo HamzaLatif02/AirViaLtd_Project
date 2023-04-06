@@ -21,7 +21,9 @@ public class AirViaLtd {
     private BlankStockPage blankStockPage;
     private CreateReportPage createReportPage;
     private DiscountPlanPage discountPlanPage;
+    private ManageCustomerPage manageCustomerPage;
     private CreateCustomerAccountPage createCustomerAccountPage;
+    private EditCustomerAccountPage editCustomerAccountPage;
 
     private TravelAdvisorHomePage travelAdvisorHomePage;
     private IssueRefundPage issueRefundPage;
@@ -52,7 +54,9 @@ public class AirViaLtd {
         blankStockPage = new BlankStockPage(this);
         createReportPage = new CreateReportPage(this);
         discountPlanPage = new DiscountPlanPage(this);
+        manageCustomerPage = new ManageCustomerPage(this);
         createCustomerAccountPage = new CreateCustomerAccountPage(this);
+        editCustomerAccountPage =new EditCustomerAccountPage(this);
 
         travelAdvisorHomePage = new TravelAdvisorHomePage(this);
         issueRefundPage = new IssueRefundPage(this);
@@ -147,9 +151,21 @@ public class AirViaLtd {
         frame.setVisible(true);
     }
 
+    public void transitionToManageCustomerPage(){
+        frame.remove(officeManagerHomePage.getMainPanel());
+        frame.add(manageCustomerPage.getMainPanel());
+        frame.setVisible(true);
+    }
+
     public void transitionToCreateCustomerAccountPage(){
-        frame.remove(getCurrentHomepage());
+        frame.remove(manageCustomerPage.getMainPanel());
         frame.add(createCustomerAccountPage.getMainPanel());
+        frame.setVisible(true);
+    }
+
+    public void transitionToEditCustomerAccountPage(){
+        frame.remove(manageCustomerPage.getMainPanel());
+        frame.add(editCustomerAccountPage.getMainPanel());
         frame.setVisible(true);
     }
 

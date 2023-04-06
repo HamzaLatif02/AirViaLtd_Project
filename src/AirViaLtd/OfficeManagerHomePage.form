@@ -42,14 +42,6 @@
               <text value="Discount Plan"/>
             </properties>
           </component>
-          <component id="c18d8" class="javax.swing.JButton" binding="createCustomerAccountButton" default-binding="true">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Create Customer Account"/>
-            </properties>
-          </component>
           <component id="5ff4c" class="javax.swing.JButton" binding="manageBlanksButton">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -64,6 +56,14 @@
             </constraints>
             <properties>
               <text value="Search Blank"/>
+            </properties>
+          </component>
+          <component id="779e0" class="javax.swing.JButton" binding="manageCustomerButton" default-binding="true">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Manage Customer"/>
             </properties>
           </component>
         </children>

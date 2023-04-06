@@ -10,13 +10,13 @@ public class OfficeManagerHomePage {
     private JButton blankStockButton;
     private JButton createReportButton;
     private JButton discountPlanButton;
-    private JButton createCustomerAccountButton;
     private JPanel titlePanel;
     private JLabel homepageLabel;
     private JPanel menuPanel;
     private JButton logOutButton;
     private JButton manageBlanksButton;
     private JButton searchBlankButton;
+    private JButton manageCustomerButton;
 
     private AirViaLtd app;
 
@@ -76,11 +76,12 @@ public class OfficeManagerHomePage {
             }
         });
 
-        createCustomerAccountButton.addActionListener(new ActionListener() {
+        manageCustomerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToCreateCustomerAccountPage();
+                app.transitionToManageCustomerPage();
             }
         });
+
     }
 }
