@@ -6,13 +6,15 @@ import java.awt.event.ActionListener;
 
 public class AdministratorHomePage {
     private JPanel mainPanel;
-    private JButton createTravelAgentAccountButton;
+    private JPanel menuPanel;
+    private JPanel titlePanel;
+    private JPanel buttonsPanel;
     private JButton securityButton;
     private JButton commissionButton;
     private JButton blankStockButton;
-    private JButton ticketStockButton;
-    private JButton updateDetailsButton;
     private JButton logOutButton;
+    private JLabel homepageLabel;
+    private JButton manageUsersButton;
 
     private AirViaLtd app;
 
@@ -36,24 +38,10 @@ public class AdministratorHomePage {
             }
         });
 
-        createTravelAgentAccountButton.addActionListener(new ActionListener() {
+        manageUsersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToCreateTravelAgentAccountPage();
-            }
-        });
-
-        securityButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                app.transitionToSecurityPage();
-            }
-        });
-
-        commissionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                app.transitionToCommissionPage();
+                app.transitionToManageUsersPage();
             }
         });
 
@@ -64,19 +52,20 @@ public class AdministratorHomePage {
             }
         });
 
-        ticketStockButton.addActionListener(new ActionListener() {
+        commissionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToTicketStockPage();
+                app.transitionToCommissionPage();
             }
         });
 
-        updateDetailsButton.addActionListener(new ActionListener() {
+        securityButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.transitionToUpdateDetailsPage();
+                app.transitionToSecurityPage();
             }
         });
+
     }
 }
 

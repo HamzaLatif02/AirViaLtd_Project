@@ -31,11 +31,19 @@ public class AirViaLtd {
     private SellTicketPage sellTicketPage;
 
     private AdministratorHomePage administratorHomePage;
-    private CreateTravelAgentAccountPage createTravelAgentAccountPage;
+    private ManageUsersPage manageUsersPage;
     private SecurityPage securityPage;
     private CommissionPage commissionPage;
-    private TicketStockPage ticketStockPage;
-    private UpdateDetailsPage updateDetailsPage;
+
+    private ManageOfficeManagerPage manageOfficeManagerPage;
+    private CreateOfficeManagerAccountPage createOfficeManagerAccountPage;
+    private EditOfficeManagerAccountPage editOfficeManagerAccountPage;
+    private RemoveOfficeManagerAccountPage removeOfficeManagerAccountPage;
+
+    private ManageTravelAdvisorPage manageTravelAdvisorPage;
+    private CreateTravelAdvisorAccountPage createTravelAdvisorAccountPage;
+    private EditTravelAdvisorAccountPage editTravelAdvisorAccountPage;
+    private RemoveTravelAdvisorAccountPage removeTravelAdvisorAccountPage;
 
 
 
@@ -65,11 +73,20 @@ public class AirViaLtd {
         sellTicketPage = new SellTicketPage(this);
 
         administratorHomePage = new AdministratorHomePage(this);
-        createTravelAgentAccountPage = new CreateTravelAgentAccountPage(this);
+        manageUsersPage = new ManageUsersPage(this);
         securityPage = new SecurityPage(this);
         commissionPage = new CommissionPage(this);
-        ticketStockPage = new TicketStockPage(this);
-        updateDetailsPage = new UpdateDetailsPage(this);
+
+        manageOfficeManagerPage = new ManageOfficeManagerPage(this);
+        createOfficeManagerAccountPage = new CreateOfficeManagerAccountPage(this);
+        editOfficeManagerAccountPage = new EditOfficeManagerAccountPage(this);
+        removeOfficeManagerAccountPage = new RemoveOfficeManagerAccountPage(this);
+
+        manageTravelAdvisorPage = new ManageTravelAdvisorPage(this);
+        createTravelAdvisorAccountPage = new CreateTravelAdvisorAccountPage(this);
+        editTravelAdvisorAccountPage = new EditTravelAdvisorAccountPage(this);
+        removeTravelAdvisorAccountPage = new RemoveTravelAdvisorAccountPage(this);
+
 
         frame = new JFrame("AirViaLtd");
 
@@ -154,7 +171,13 @@ public class AirViaLtd {
     }
 
     public void transitionToManageCustomerPage(){
-        frame.remove(officeManagerHomePage.getMainPanel());
+        if (loginPage.getUser().equals("Office Manager")){
+            frame.remove(officeManagerHomePage.getMainPanel());
+        } else if (loginPage.getUser().equals("Administrator")){
+            frame.remove(manageUsersPage.getMainPanel());
+        } else {
+            frame.remove(travelAdvisorHomePage.getMainPanel());
+        }
         frame.add(manageCustomerPage.getMainPanel());
         frame.setVisible(true);
     }
@@ -201,11 +224,12 @@ public class AirViaLtd {
         frame.setVisible(true);
     }
 
-    public void transitionToCreateTravelAgentAccountPage(){
+    public void transitionToManageUsersPage(){
         frame.remove(administratorHomePage.getMainPanel());
-        frame.add(createTravelAgentAccountPage.getMainPanel());
+        frame.add(manageUsersPage.getMainPanel());
         frame.setVisible(true);
     }
+
 
     public void transitionToSecurityPage(){
         frame.remove(administratorHomePage.getMainPanel());
@@ -219,17 +243,56 @@ public class AirViaLtd {
         frame.setVisible(true);
     }
 
-    public void transitionToTicketStockPage(){
-        frame.remove(administratorHomePage.getMainPanel());
-        frame.add(ticketStockPage.getMainPanel());
+    public void transitionToManageOfficeManagerPage(){
+        frame.remove(manageUsersPage.getMainPanel());
+        frame.add(manageOfficeManagerPage.getMainPanel());
         frame.setVisible(true);
     }
 
-    public void transitionToUpdateDetailsPage(){
-        frame.remove(administratorHomePage.getMainPanel());
-        frame.add(updateDetailsPage.getMainPanel());
+    public void transitionToCreateOfficeManagerAccountPage(){
+        frame.remove(manageOfficeManagerPage.getMainPanel());
+        frame.add(createOfficeManagerAccountPage.getMainPanel());
         frame.setVisible(true);
     }
+
+    public void transitionToEditOfficeManagerAccountPage(){
+        frame.remove(manageOfficeManagerPage.getMainPanel());
+        frame.add(editOfficeManagerAccountPage.getMainPanel());
+        frame.setVisible(true);
+    }
+
+    public void transitionToRemoveOfficeManagerAccountPage(){
+        frame.remove(manageOfficeManagerPage.getMainPanel());
+        frame.add(removeOfficeManagerAccountPage.getMainPanel());
+        frame.setVisible(true);
+    }
+
+
+    public void transitionToManageTravelAdvisorPage(){
+        frame.remove(manageUsersPage.getMainPanel());
+        frame.add(manageTravelAdvisorPage.getMainPanel());
+        frame.setVisible(true);
+    }
+
+    public void transitionToCreateTravelAdvisorAccountPage(){
+        frame.remove(manageTravelAdvisorPage.getMainPanel());
+        frame.add(createTravelAdvisorAccountPage.getMainPanel());
+        frame.setVisible(true);
+    }
+    public void transitionToEditTravelAdvisorAccountPage(){
+        frame.remove(manageTravelAdvisorPage.getMainPanel());
+        frame.add(editTravelAdvisorAccountPage.getMainPanel());
+        frame.setVisible(true);
+    }
+    public void transitionToRemoveTravelAdvisorAccountPage(){
+        frame.remove(manageTravelAdvisorPage.getMainPanel());
+        frame.add(removeTravelAdvisorAccountPage.getMainPanel());
+        frame.setVisible(true);
+    }
+
+
+
+
 
     public JPanel getCurrentHomepage(){
         if (loginPage.getUser().equals("Administrator")){
