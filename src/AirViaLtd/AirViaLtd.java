@@ -290,10 +290,6 @@ public class AirViaLtd {
         frame.setVisible(true);
     }
 
-
-
-
-
     public JPanel getCurrentHomepage(){
         if (loginPage.getUser().equals("Administrator")){
             return administratorHomePage.getMainPanel();
