@@ -37,5 +37,12 @@ public class ManageCustomerPage {
                 app.transitionToEditCustomerAccountPage();
             }
         });
+
+        removeCustomerAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToRemoveCustomerAccountPage();
+            }
+        });
     }
 }
