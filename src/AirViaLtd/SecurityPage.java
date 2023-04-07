@@ -6,10 +6,12 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
@@ -26,6 +28,7 @@ public class SecurityPage {
 
         this.app = a;
         addBackupButtonListener();
+        //addRestoreButtonListener();
 
     }
 
@@ -37,68 +40,24 @@ public class SecurityPage {
         backUpDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    //BackupDB();
 
-                /*try {
-                    backup("server smcse-stuproj00.city.ac.uk", "3306", "in2018g16", "in2018g16_a", "FJ7BjC1x", "backupp");
+                try {
+                    backup("smcse-stuproj00.city.ac.uk", "3306", "in2018g16","in2018g16_a", "FJ7BjC1x", "db_backup");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
-                }*/
-                //backup1("in2018g16", "in2018g16_a", "FJ7BjC1x", "/Users/rd/IdeaProjects/AirViaLtd_Project");
-
+                }
 
             }
         });
     }
 
-    public static void BackupDB() {
-        try {
-
-            /*NOTE: Getting path to the Jar file being executed*/
-            /*NOTE: YourImplementingClass-> replace with the class executing the code*/
-            CodeSource codeSource = SecurityPage.class.getProtectionDomain().getCodeSource();
-            File jarFile = new File(codeSource.getLocation().toURI().getPath());
-            String jarDir = jarFile.getParentFile().getPath();
-
-            System.out.println(jarDir);
-
-
-            /*NOTE: Creating Database Constraints*/
-            String dbName = "in2018g16";
-            String dbUser = "in2018g16_a";
-            String dbPass = "FJ7BjC1x";
-
-            /*NOTE: Creating Path Constraints for folder saving*/
-            /*NOTE: Here the backup folder is created for saving inside it*/
-            String folderPath = jarDir + "/backup";
-
-            /*NOTE: Creating Folder if it does not exist*/
-            File f1 = new File(folderPath);
-            f1.mkdir();
-
-            /*NOTE: Creating Path Constraints for backup saving*/
-            /*NOTE: Here the backup is saved in a folder called backup with the name backup.sql*/
-            String savePath = "/" + jarDir + "/backup" + "/backup.sql/";
-
-            /*NOTE: Used to create a cmd command*/
-            String executeCmd = "/usr/local/mysql-8.0.32-macos13-x86_64/bin/mysqldump -u" + dbUser + " -p" + dbPass + " --database " + dbName + " -r " + savePath;
-
-            /*NOTE: Executing the command here*/
-            Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
-            int processComplete = runtimeProcess.waitFor();
-
-            /*NOTE: processComplete=0 if correctly executed, will contain other values if not*/
-            if (processComplete == 0) {
-                System.out.println("Backup Complete");
-            } else {
-                System.out.println("Backup Failure");
+    public void addRestoreButtonListener(){
+        restoreDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                restore("in2018g16", "in2018g16_a", "FJ7BjC1x", "/Users/rd/IdeaProjects/AirViaLtd_Project/in2018g16_2023-04-08_00-52-56.sql");
             }
-
-        } catch (URISyntaxException | IOException | InterruptedException ex) {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Error at Backup: " + ex.getMessage());
-        }
-
+        });
     }
 
     public static void backup(String host, String port, String database, String user, String password, String filename) throws IOException {
@@ -106,13 +65,13 @@ public class SecurityPage {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
         String timestamp = formatter.format(new Date());
 
-        // Build MySQL command to dump database to file
+        // Build MySQL command to dump all databases and tables to file
         String[] command = new String[]{"/usr/local/mysql-8.0.32-macos13-x86_64/bin/mysqldump", "--host=" + host, "--port=" + port, "--user=" + user, "--password=" + password, "--databases", database};
 
-        // Execute command and redirect output to gzip file
+        // Execute command and redirect output to SQL file
         Process process = Runtime.getRuntime().exec(command);
         InputStream inputStream = process.getInputStream();
-        OutputStream outputStream = new GZIPOutputStream(new FileOutputStream(filename + "-" + timestamp + ".sql.gz"));
+        OutputStream outputStream = new FileOutputStream(filename + "-" + timestamp + ".sql");
         byte[] buffer = new byte[1024];
         int bytesRead;
         while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -122,36 +81,50 @@ public class SecurityPage {
         inputStream.close();
     }
 
-    public static void backup1(String dbName, String dbUserName, String dbPassword, String path) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-        LocalDateTime currentDateTime = LocalDateTime.now();
 
-        String fileName = dbName + "_" + currentDateTime.format(dateTimeFormatter) + ".sql";
-
-        File file = new File(path + File.separator + fileName);
-
-        List<String> command = new ArrayList<>();
-        command.add("/usr/local/mysql-8.0.32-macos13-x86_64/bin/mysqldump");
-        command.add("-u" + dbUserName);
-        command.add("-p" + dbPassword);
-        command.add(dbName);
-        command.add("-r" + file.getAbsolutePath());
-
-        ProcessBuilder pb = new ProcessBuilder(command);
-        pb.environment().put("MYSQL_PWD", dbPassword);
-
+    public static void restore(String dbName, String dbUser, String dbPass, String filePath) {
         try {
-            Process process = pb.start();
-            int exitCode = process.waitFor();
+            /*Establishing MySQL Connection*/
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/" + dbName, dbUser, dbPass);
+            Statement stmt = con.createStatement();
 
-            if (exitCode == 0) {
-                System.out.println("Backup completed successfully. Backup file: " + fileName);
-            } else {
-                System.out.println("Backup failed. Exit code: " + exitCode);
+            /*Creating file reader stream*/
+            FileReader fr = new FileReader(new File(filePath));
+
+            /*Creating buffered reader*/
+            BufferedReader br = new BufferedReader(fr);
+
+            /*Building SQL Script*/
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
             }
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+
+            /*Splitting SQL Script into individual statements*/
+            String[] commands = sb.toString().split(";");
+
+            /*Executing each individual statement*/
+            for (String command : commands) {
+                if (!command.trim().equals("")) {
+                    stmt.execute(command);
+                }
+            }
+
+            /*Closing Streams*/
+            br.close();
+            fr.close();
+            stmt.close();
+            con.close();
+            System.out.println("Database restored successfully from " + filePath);
+
+        } catch (ClassNotFoundException | SQLException | IOException e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error at restoreDB: " + e.getMessage());
         }
     }
+
+
 
 }
