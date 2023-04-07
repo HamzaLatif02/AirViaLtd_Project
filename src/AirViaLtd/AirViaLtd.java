@@ -2,6 +2,8 @@ package AirViaLtd;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.security.CodeSource;
 
 public class AirViaLtd {
 
@@ -317,7 +319,7 @@ public class AirViaLtd {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         new AirViaLtd();
     }
 
