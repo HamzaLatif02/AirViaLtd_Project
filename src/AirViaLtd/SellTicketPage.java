@@ -1,6 +1,10 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.*;
 
 public class SellTicketPage {
@@ -39,13 +43,20 @@ public class SellTicketPage {
     private String taEmail;
     private int taCode;
 
+    private int selectedBlankType;
+    private int selectedBlankNumber;
+
     public SellTicketPage(AirViaLtd a) {
         this.app = a;
+        addBlankComboBoxListener();
+        addCalculateButtonTotalListener();
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
+
 
 
     public void addAdvisorCode(String email){
@@ -89,7 +100,7 @@ public class SellTicketPage {
                     "in2018g16_d",
                     "35cnYJLB");
 
-            String sql = "select ID, Type, Number FROM in2018g16.Blank INNER JOIN in2018g16.Ticket on in2018g16.Blank.ID = in2018g16.Ticket.BlankID where in2018g16.Blank.AdvisorCode = ? and in2018g16.Blank.UsedDate is null";
+            String sql = "select Type, Number FROM in2018g16.Blank INNER JOIN in2018g16.Ticket on in2018g16.Blank.ID = in2018g16.Ticket.BlankID where in2018g16.Blank.AdvisorCode = ? and in2018g16.Blank.UsedDate is null";
 
             PreparedStatement stmt=con.prepareStatement(sql);
             stmt.setInt(1, taCode);
@@ -97,9 +108,82 @@ public class SellTicketPage {
             ResultSet rs=stmt.executeQuery();
 
             while (rs.next()){
-                blankComboBox.addItem(rs.getInt(2) + " " + rs.getInt(3));
+                blankComboBox.addItem(rs.getInt(1) + " " + rs.getInt(2));
             }
             con.close();
         } catch (Exception e) { System.out.println(e);}
     }
+
+    public void addBlankComboBoxListener(){
+        blankComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (blankComboBox.getSelectedIndex() == 0){
+                    interlineDomesticTextField.setText("Interline/Domestic");
+                    basePriceTextField.setText("Base Price");
+                } else {
+                    addBlankDetails();
+                }
+            }
+        });
+    }
+
+    public void addBlankDetails(){
+        String b = (String) blankComboBox.getSelectedItem();
+        String[] splitBSelected = b.split("\\s+");
+        selectedBlankType = Integer.valueOf(splitBSelected[0]);
+        selectedBlankNumber = Integer.valueOf(splitBSelected[1]);
+
+        if (selectedBlankType == 444 || selectedBlankType == 440 || selectedBlankType == 420){
+            interlineDomesticTextField.setText("Interline");
+        } else if (selectedBlankType == 201 || selectedBlankType == 101){
+            interlineDomesticTextField.setText("Domestic");
+        } else if (selectedBlankType == 451 || selectedBlankType == 452){
+            interlineDomesticTextField.setText("MCO");
+        }
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                    "in2018g16_d",
+                    "35cnYJLB");
+
+            String sql = "select Price FROM in2018g16.Ticket INNER JOIN in2018g16.Blank on in2018g16.Ticket.BlankID = in2018g16.Blank.ID where in2018g16.Blank.Type = ? and in2018g16.Blank.Number = ?";
+
+            PreparedStatement stmt=con.prepareStatement(sql);
+            stmt.setInt(1, selectedBlankType);
+            stmt.setInt(2, selectedBlankNumber);
+
+            ResultSet rs=stmt.executeQuery();
+
+            while (rs.next()){
+                basePriceTextField.setText("" + rs.getInt(1));
+            }
+            con.close();
+        } catch (Exception e) { System.out.println(e);}
+
+    }
+
+    public void addCalculateButtonTotalListener(){
+        calculateTotalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (localTaxesTextField.getText().equals("") && otherTaxesTextField.getText().equals("")){
+                    totalPriceTextField.setText(basePriceTextField.getText());
+                } else if (localTaxesTextField.getText().equals("") && !otherTaxesTextField.getText().equals("")){
+                    int totalPrice = Integer.valueOf(basePriceTextField.getText()) + Integer.valueOf(localTaxesTextField.getText());
+                    totalPriceTextField.setText(""+ totalPrice);
+                } else if (!localTaxesTextField.getText().equals("") && otherTaxesTextField.getText().equals("")) {
+                    int totalPrice = Integer.valueOf(basePriceTextField.getText()) + Integer.valueOf(otherTaxesTextField.getText());
+                    totalPriceTextField.setText("" + totalPrice);
+                } else if (!localTaxesTextField.getText().equals("") && !otherTaxesTextField.getText().equals("")) {
+                    int totalPrice = Integer.valueOf(basePriceTextField.getText()) + Integer.valueOf(localTaxesTextField.getText()) + Integer.valueOf(otherTaxesTextField.getText());
+                    totalPriceTextField.setText("" + totalPrice);
+                }
+            }
+        });
+
+    }
+
 }
