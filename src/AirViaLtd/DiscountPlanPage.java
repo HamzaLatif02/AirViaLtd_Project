@@ -3,6 +3,8 @@ package AirViaLtd;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.*;
 
 public class DiscountPlanPage {
@@ -23,6 +25,11 @@ public class DiscountPlanPage {
     private JComboBox yearComboBox;
     private JLabel selectYearLabel;
     private JButton getSalesButton;
+    private JComboBox flexibleDiscountComboBox;
+    private JLabel selectFlexibleDiscountPlanLabel;
+
+    private int salesAmount;
+    private int fdID;
 
 
     private AirViaLtd app;
@@ -35,6 +42,7 @@ public class DiscountPlanPage {
         addGetSalesListener();
         addDiscountPlanComboBoxData();
         addSetDiscountButtonListener();
+        addDiscountPlanComboBoxListener();
     }
 
     public JPanel getMainPanel() {
@@ -155,17 +163,23 @@ public class DiscountPlanPage {
 
                     String sql = "";
 
+
                     if (discountPlanComboBox.getSelectedIndex() == 1){
                         sql = "update in2018g16.Customer Set FixedDiscount = ? Where EmailAddress = ?";
-                    } else {
-                        sql = "update in2018g16.Customer Set FlexibleDiscount = ? Where EmailAddress = ?";
+                    } else if (discountPlanComboBox.getSelectedIndex() == 2){
+                        sql = "update in2018g16.Customer Set FlexibleDiscountID = ? Where EmailAddress = ?";
                     }
 
                     PreparedStatement stmt=con.prepareStatement(sql);
 
-                    stmt.setInt(1, Integer.valueOf(discountPercentageTextField.getText()));
-                    stmt.setString(2, email);
 
+                    if (discountPlanComboBox.getSelectedIndex() == 1){
+                        stmt.setInt(1, Integer.valueOf(discountPercentageTextField.getText()));
+                        stmt.setString(2, email);
+                    } else if (discountPlanComboBox.getSelectedIndex() == 2){
+                        stmt.setInt(1, fdID);
+                        stmt.setString(2, email);
+                    }
 
                     int rs=stmt.executeUpdate();
 
@@ -176,7 +190,7 @@ public class DiscountPlanPage {
                         yearComboBox.setSelectedIndex(0);
                         salesTextField.setText("");
                         discountPlanComboBox.setSelectedIndex(0);
-                        discountPercentageLabel.setText("");
+                        discountPercentageTextField.setText("");
                     } else {
                         JOptionPane.showMessageDialog(null, "Could not add discount at the moment, please retry", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -184,5 +198,73 @@ public class DiscountPlanPage {
                 } catch (Exception x) { System.out.println(x);}
             }
         });
+    }
+
+    public void addDiscountPlanComboBoxListener(){
+        discountPlanComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (discountPlanComboBox.getSelectedIndex() == 2){
+                    flexibleDiscountComboBox.removeAllItems();
+                    addFlexiblePlans();
+                    addDiscountPercentageText();
+                } else {
+                    flexibleDiscountComboBox.removeAllItems();
+                    discountPercentageTextField.setEditable(true);
+                }
+            }
+        });
+    }
+
+    public void addFlexiblePlans(){
+
+        flexibleDiscountComboBox.addItem("-- View --");
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                    "in2018g16_d",
+                    "35cnYJLB");
+
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("select ID, LowerBound, UpperBound, Rate FROM in2018g16.FlexibleDiscount");
+
+            while (rs.next()){
+                flexibleDiscountComboBox.addItem(rs.getInt(1) + " LowerBound: " + rs.getInt(2) + " UpperBound: " + rs.getInt(3) + " Rate: " + rs.getInt(4));
+            }
+            con.close();
+        } catch (Exception e) { System.out.println(e);}
+    }
+
+    public void addDiscountPercentageText(){
+
+        salesAmount = Integer.valueOf(salesTextField.getText());
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                    "in2018g16_d",
+                    "35cnYJLB");
+
+            String sql = "select * from in2018g16.FlexibleDiscount where LowerBound <= ? And UpperBound >= ?";
+
+            PreparedStatement stmt=con.prepareStatement(sql);
+
+            stmt.setInt(1, salesAmount);
+            stmt.setInt(2, salesAmount);
+
+            ResultSet rs=stmt.executeQuery();
+
+            while (rs.next()){
+                fdID = rs.getInt(1);
+                discountPercentageTextField.setText(rs.getInt(1) + " LowerBound: " + rs.getInt(2) + " UpperBound: " + rs.getInt(3) + " Rate: " + rs.getInt(4));
+            }
+            con.close();
+        } catch (Exception e) { System.out.println(e);}
+
+        discountPercentageTextField.setEditable(false);
+
     }
 }
