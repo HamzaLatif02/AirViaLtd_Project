@@ -41,7 +41,6 @@ public class SellTicketPage {
 
     public SellTicketPage(AirViaLtd a) {
         this.app = a;
-
     }
 
     public JPanel getMainPanel() {
@@ -61,7 +60,7 @@ public class SellTicketPage {
                     "35cnYJLB");
 
 
-            String sql = "select AdvisorCode from in2018g16.TravelAdvisor where EmailAddress = ? ";
+            String sql = "select AdvisorCode from in2018g16.TravelAdvisor where EmailAddress = ?";
 
             PreparedStatement stmt= con.prepareStatement(sql);
 
@@ -78,5 +77,29 @@ public class SellTicketPage {
         }catch(Exception x){ System.out.println(x);}
 
         advisorCodeTextField.setText("" + taCode);
+    }
+
+    public void addBlanks(){
+        blankComboBox.addItem("-- Select Blank --");
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                    "in2018g16_d",
+                    "35cnYJLB");
+
+            String sql = "select ID, Type, Number FROM in2018g16.Blank INNER JOIN in2018g16.Ticket on in2018g16.Blank.ID = in2018g16.Ticket.BlankID where in2018g16.Blank.AdvisorCode = ? and in2018g16.Blank.UsedDate is null";
+
+            PreparedStatement stmt=con.prepareStatement(sql);
+            stmt.setInt(1, taCode);
+
+            ResultSet rs=stmt.executeQuery();
+
+            while (rs.next()){
+                blankComboBox.addItem(rs.getInt(2) + " " + rs.getInt(3));
+            }
+            con.close();
+        } catch (Exception e) { System.out.println(e);}
     }
 }

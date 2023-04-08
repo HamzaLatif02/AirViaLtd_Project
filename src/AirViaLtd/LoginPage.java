@@ -168,6 +168,7 @@ public class LoginPage {
                     JOptionPane.showMessageDialog(getMainPanel(), "Invalid login, please try again", "Invalid Login", JOptionPane.ERROR_MESSAGE);
                 } else {
                     app.getSellTicketPage().addAdvisorCode(emailTextField.getText());
+                    app.getSellTicketPage().addBlanks();
                     this.user = jobTitleComboBox.getSelectedItem().toString();
                     switch (jobTitleComboBox.getSelectedIndex()){
                         case 1:
