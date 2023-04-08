@@ -1,10 +1,7 @@
 package AirViaLtd;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.sql.*;
 
 public class SellTicketPage {
@@ -57,6 +54,7 @@ public class SellTicketPage {
         addCommissions();
         addCommissionAmount();
         addSearchButtonListener();
+        addPaymentDetails();
     }
 
     public JPanel getMainPanel() {
@@ -280,6 +278,83 @@ public class SellTicketPage {
 
                     con.close();
                 } catch (Exception ex) { System.out.println(ex);}
+            }
+        });
+
+    }
+
+    public void addPaymentDetails(){
+            paymentTypeComboBox.addItem("-- Select Payment Type --");
+            paymentTypeComboBox.addItem("Cash");
+            paymentTypeComboBox.addItem("Card");
+
+            cardTypeTextField.setText("Card Type:");
+            cardNumberTextField.setText("Card Number:");
+            cardTypeTextField.setEditable(false);
+            cardNumberTextField.setEditable(false);
+
+            paymentTypeComboBox.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (paymentTypeComboBox.getSelectedIndex() != 2){
+                        cardTypeTextField.setEditable(false);
+                        cardNumberTextField.setEditable(false);
+                    } else {
+                        addCardDetailsTextFieldListener();
+                        cardTypeTextField.setEditable(true);
+                        cardNumberTextField.setEditable(true);
+                    }
+                }
+            });
+
+        addCardDetailsTextFieldListener();
+    }
+    public void addCardDetailsTextFieldListener(){
+        cardTypeTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+
+                if (cardTypeTextField.getText().equals("Card Type:") && paymentTypeComboBox.getSelectedIndex() == 2){
+                    cardTypeTextField.setText("");
+                } else if (!cardTypeTextField.getText().equals("Card Type:") && paymentTypeComboBox.getSelectedIndex() != 2){
+                    cardTypeTextField.setText("Card Type:");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (cardTypeTextField.getText().equals("") && paymentTypeComboBox.getSelectedIndex() == 2){
+                    cardTypeTextField.setText("Card Type:");
+                } else if (!cardTypeTextField.getText().equals("") && paymentTypeComboBox.getSelectedIndex() != 2){
+                    cardTypeTextField.setText("Card Type:");
+                }
+            }
+        });
+
+        cardNumberTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+
+                if (cardNumberTextField.getText().equals("Card Number:") && paymentTypeComboBox.getSelectedIndex() == 2){
+                    cardNumberTextField.setText("");
+                } else if (!cardNumberTextField.getText().equals("Card Number:") && paymentTypeComboBox.getSelectedIndex() != 2){
+                    cardNumberTextField.setText("Card Number:");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (cardNumberTextField.getText().equals("") && paymentTypeComboBox.getSelectedIndex() == 2){
+                    cardNumberTextField.setText("Card Number:");
+                } else if (!cardNumberTextField.getText().equals("") && paymentTypeComboBox.getSelectedIndex() != 2){
+                    cardNumberTextField.setText("Card Number:");
+                }
             }
         });
     }
