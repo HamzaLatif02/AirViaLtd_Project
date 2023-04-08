@@ -41,6 +41,8 @@ public class SecurityPage {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                //openWebPage("https://smcse.city.ac.uk/phpmyadmin/index.php?route=/database/export&db=in2018g16");
+
                 try {
                     backup("smcse-stuproj00.city.ac.uk", "3306", "in2018g16","in2018g16_a", "FJ7BjC1x", "db_backup");
                 } catch (IOException ex) {
@@ -50,6 +52,15 @@ public class SecurityPage {
             }
         });
     }
+
+    /*public void openWebPage(String url){
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        }
+        catch (java.io.IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }*/
 
     public void addRestoreButtonListener(){
         restoreDataButton.addActionListener(new ActionListener() {
@@ -80,7 +91,6 @@ public class SecurityPage {
         outputStream.close();
         inputStream.close();
     }
-
 
     public static void restore(String dbName, String dbUser, String dbPass, String filePath) {
         try {

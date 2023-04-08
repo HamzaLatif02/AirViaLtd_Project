@@ -3,10 +3,7 @@ package AirViaLtd;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
 
 public class AddBlankPage {
     private JPanel mainPanel;
@@ -31,6 +28,8 @@ public class AddBlankPage {
     private JComboBox multipleStartBlankTypeComboBox;
     private JTextField multipleStartBlankNumberTextField;
     private JComboBox multipleEndBlankTypeComboBox;
+
+    private int selectedID;
 
     private AirViaLtd app;
 
@@ -72,12 +71,20 @@ public class AddBlankPage {
                         stmt.setInt(2, Integer.valueOf(singleBlankNumberTextField.getText()));
                         stmt.setString(3, date);
 
+
                         int rs=stmt.executeUpdate();
+
+
 
                         if (rs != 0){
                             JOptionPane.showMessageDialog(null, rs + " blank added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
+
+                            addTicket(con);
+
                             singleBlankTypeComboBox.setSelectedIndex(0);
                             singleBlankNumberTextField.setText("");
+
+
                         } else {
                             JOptionPane.showMessageDialog(null, "Could not add blank, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                         }
@@ -90,6 +97,33 @@ public class AddBlankPage {
             }
         });
     }
+
+    public void addTicket(Connection con) throws SQLException {
+        String sql1 = "select ID from in2018g16.Blank where Type = ? and Number = ?";
+        PreparedStatement stmt2 = con.prepareStatement(sql1);
+        stmt2.setInt(1, Integer.valueOf(singleBlankTypeComboBox.getSelectedItem().toString()));
+        stmt2.setInt(2, Integer.valueOf(singleBlankNumberTextField.getText()));
+
+        ResultSet rs2 = stmt2.executeQuery();
+
+        while (rs2.next()){
+            selectedID = rs2.getInt(1);
+        }
+
+        String sql3 = "insert into in2018g16.Ticket (Price, BlankID) values (?,?)";
+        PreparedStatement stmt3 = con.prepareStatement(sql3);
+        stmt3.setInt(1, 0);
+        stmt3.setInt(2, selectedID);
+
+        int rs3 = stmt3.executeUpdate();
+
+        if (rs3 != 0){
+            JOptionPane.showMessageDialog(null, "Ticket created", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "could not create ticket, please retry", "Unsuccessfull", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
     public void addMultipleButtonListener(){
         addMultipleButton.addActionListener(new ActionListener() {

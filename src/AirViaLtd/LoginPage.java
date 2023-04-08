@@ -23,6 +23,8 @@ public class LoginPage {
     private AirViaLtd app;
     private String user;
 
+    private String loginEmail;
+
     private ImageIcon userIcon;
     private ImageIcon lockIcon;
 
@@ -51,6 +53,7 @@ public class LoginPage {
     }
 
     public String getUser() { return user; }
+
 
     public void addJobTitles(){
         jobTitleComboBox.addItem("-- Select --");
@@ -111,6 +114,7 @@ public class LoginPage {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 login();
             }
         });
@@ -118,6 +122,9 @@ public class LoginPage {
     public void login(){
 
         if (validInput()){
+
+
+
             try{
 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -160,6 +167,7 @@ public class LoginPage {
                 if (!rs.isBeforeFirst() ) {
                     JOptionPane.showMessageDialog(getMainPanel(), "Invalid login, please try again", "Invalid Login", JOptionPane.ERROR_MESSAGE);
                 } else {
+                    app.getSellTicketPage().addAdvisorCode(emailTextField.getText());
                     this.user = jobTitleComboBox.getSelectedItem().toString();
                     switch (jobTitleComboBox.getSelectedIndex()){
                         case 1:

@@ -323,6 +323,10 @@ public class AirViaLtd {
         frame.setVisible(true);
     }
 
+    public SellTicketPage getSellTicketPage() {
+        return sellTicketPage;
+    }
+
     public static void main(String[] args){
         new AirViaLtd();
     }
