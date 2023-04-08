@@ -46,10 +46,14 @@ public class SellTicketPage {
     private int selectedBlankType;
     private int selectedBlankNumber;
 
+    private int commissionAmount;
+
     public SellTicketPage(AirViaLtd a) {
         this.app = a;
         addBlankComboBoxListener();
         addCalculateButtonTotalListener();
+        addCommissions();
+        addCommissionAmount();
     }
 
     public JPanel getMainPanel() {
@@ -186,4 +190,46 @@ public class SellTicketPage {
 
     }
 
+    public void addCommissions(){
+
+        commissionRateComboBox.addItem("-- Select Commission --");
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                    "in2018g16_d",
+                    "35cnYJLB");
+
+            String sql = "select CommissionRate FROM in2018g16.Commission where TravelAgentID = 1 ";
+
+            Statement stmt = con.createStatement();
+
+            ResultSet rs=stmt.executeQuery(sql);
+
+            while (rs.next()){
+                commissionRateComboBox.addItem(rs.getInt(1));
+            }
+            con.close();
+        } catch (Exception e) { System.out.println(e);}
+    }
+
+
+    public void addCommissionAmount(){
+        commissionRateComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (commissionRateComboBox.getSelectedIndex() == 0){
+                    commissionAmountTextField.setText("Select a Commission Rate");
+                } else {
+                    if (totalPriceTextField.getText().equals("Total Price")){
+                        commissionAmountTextField.setText("Calculate Total Price");
+                    } else {
+                        commissionAmount = (Integer.valueOf(totalPriceTextField.getText()) * Integer.valueOf(commissionRateComboBox.getSelectedItem().toString())) / 100;
+                        commissionAmountTextField.setText("" + commissionAmount);
+                    }
+                }
+            }
+        });
+    }
 }
