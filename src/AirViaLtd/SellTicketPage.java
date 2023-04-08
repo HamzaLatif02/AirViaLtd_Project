@@ -37,6 +37,8 @@ public class SellTicketPage {
     private JTextField discountedPriceTextField;
     private JButton sellButton;
     private JComboBox blankComboBox;
+    private JTextField cardTypeTextField;
+    private JTextField cardNumberTextField;
 
     private AirViaLtd app;
 
@@ -54,6 +56,7 @@ public class SellTicketPage {
         addCalculateButtonTotalListener();
         addCommissions();
         addCommissionAmount();
+        addSearchButtonListener();
     }
 
     public JPanel getMainPanel() {
@@ -229,6 +232,54 @@ public class SellTicketPage {
                         commissionAmountTextField.setText("" + commissionAmount);
                     }
                 }
+            }
+        });
+    }
+
+    public void addSearchButtonListener(){
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection con= DriverManager.getConnection(
+                            "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                            "in2018g16_d",
+                            "35cnYJLB");
+
+                    String sql = "select FirstName, LastName, Type, FixedDiscount, Rate FROM in2018g16.Customer inner join in2018g16.FlexibleDiscount on in2018g16.Customer.FlexibleDiscountID = in2018g16.FlexibleDiscount.ID where EmailAddress = ?";
+
+                    PreparedStatement stmt = con.prepareStatement(sql);
+                    stmt.setString(1, customerEmailAddressTextField.getText());
+                    ResultSet rs=stmt.executeQuery();
+
+                    if (!rs.isBeforeFirst() ) {
+                        JOptionPane.showMessageDialog(null, "This is not an existing customer", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        payLaterComboBox.removeAllItems();
+                        payLaterComboBox.addItem("-- Pay Later Not Available --");
+                        discountAvailableComboBox.removeAllItems();
+                        discountAvailableComboBox.addItem("-- Discount Not Available -- ");
+                        firstNameTextField.setText("");
+                        lastNameTextField.setText("");
+
+                    } else {
+                        while (rs.next()){
+                            firstNameTextField.setText(rs.getString(1));
+                            lastNameTextField.setText(rs.getString(2));
+                            payLaterComboBox.removeAllItems();
+                            payLaterComboBox.addItem("-- Pay Later --");
+                            payLaterComboBox.addItem("Yes");
+                            payLaterComboBox.addItem("No");
+                            discountAvailableComboBox.removeAllItems();
+                            discountAvailableComboBox.addItem("-- Select Discount Percentage --");
+                            discountAvailableComboBox.addItem(rs.getInt(4));
+                            discountAvailableComboBox.addItem(rs.getInt(5));
+                        }
+                    }
+
+                    con.close();
+                } catch (Exception ex) { System.out.println(ex);}
             }
         });
     }
