@@ -185,7 +185,11 @@ public class AirViaLtd {
     }
 
     public void transitionToCreateCustomerAccountPage(){
-        frame.remove(manageCustomerPage.getMainPanel());
+        if (loginPage.getUser().equals("Travel Advisor")){
+            frame.remove(travelAdvisorHomePage.getMainPanel());
+        } else {
+            frame.remove(manageCustomerPage.getMainPanel());
+        }
         frame.add(createCustomerAccountPage.getMainPanel());
         frame.setVisible(true);
     }
