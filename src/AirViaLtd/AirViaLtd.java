@@ -327,6 +327,10 @@ public class AirViaLtd {
         return sellTicketPage;
     }
 
+    public IssueRefundPage getIssueRefundPage() {
+        return issueRefundPage;
+    }
+
     public static void main(String[] args){
         new AirViaLtd();
     }

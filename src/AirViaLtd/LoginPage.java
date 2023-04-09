@@ -169,6 +169,8 @@ public class LoginPage {
                 } else {
                     app.getSellTicketPage().addAdvisorCode(emailTextField.getText());
                     app.getSellTicketPage().addBlanks();
+                    app.getIssueRefundPage().addAdvisorCode(emailTextField.getText());
+                    app.getIssueRefundPage().addBlanks();
                     this.user = jobTitleComboBox.getSelectedItem().toString();
                     switch (jobTitleComboBox.getSelectedIndex()){
                         case 1:
