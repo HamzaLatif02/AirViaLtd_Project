@@ -47,6 +47,8 @@ public class SellTicketPage {
 
     private int commissionAmount;
 
+    private int discountedTotal;
+
     public SellTicketPage(AirViaLtd a) {
         this.app = a;
         addBlankComboBoxListener();
@@ -55,6 +57,7 @@ public class SellTicketPage {
         addCommissionAmount();
         addSearchButtonListener();
         addPaymentDetails();
+        addDiscountedPrice();
     }
 
     public JPanel getMainPanel() {
@@ -220,13 +223,17 @@ public class SellTicketPage {
         commissionRateComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
+
                 if (commissionRateComboBox.getSelectedIndex() == 0){
                     commissionAmountTextField.setText("Select a Commission Rate");
                 } else {
                     if (totalPriceTextField.getText().equals("Total Price")){
                         commissionAmountTextField.setText("Calculate Total Price");
-                    } else {
+                    } else if (discountedPriceTextField.getText().equals("No discount applied") || discountedPriceTextField.getText().equals("Calculate Total Price")){
                         commissionAmount = (Integer.valueOf(totalPriceTextField.getText()) * Integer.valueOf(commissionRateComboBox.getSelectedItem().toString())) / 100;
+                        commissionAmountTextField.setText("" + commissionAmount);
+                    } else {
+                        commissionAmount = (Integer.valueOf(discountedPriceTextField.getText()) * Integer.valueOf(commissionRateComboBox.getSelectedItem().toString())) / 100;
                         commissionAmountTextField.setText("" + commissionAmount);
                     }
                 }
@@ -357,5 +364,28 @@ public class SellTicketPage {
                 }
             }
         });
+
+    }
+
+
+    public void addDiscountedPrice(){
+
+        discountAvailableComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+                if (!totalPriceTextField.getText().equals("Total Price")){
+                    if (discountAvailableComboBox.getSelectedIndex() == 0){
+                        discountedPriceTextField.setText("No discount applied");
+                    } else {
+                        discountedTotal = Integer.valueOf(totalPriceTextField.getText()) - Integer.valueOf(totalPriceTextField.getText()) * Integer.valueOf(discountAvailableComboBox.getSelectedItem().toString()) / 100;
+                        discountedPriceTextField.setText("" + discountedTotal);
+                    }
+                } else {
+                    discountedPriceTextField.setText("Calculate Total Price");
+                }
+            }
+        });
+
     }
 }
