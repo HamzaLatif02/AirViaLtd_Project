@@ -1,5 +1,6 @@
 package AirViaLtd;
 
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.*;
@@ -36,6 +37,8 @@ public class SellTicketPage {
     private JComboBox blankComboBox;
     private JTextField cardTypeTextField;
     private JTextField cardNumberTextField;
+    private JTextField conversionRateTextField;
+    private JLabel conversionRateLabel;
 
     private AirViaLtd app;
 
@@ -49,6 +52,8 @@ public class SellTicketPage {
 
     private int discountedTotal;
 
+    private int selectedTicketNumber;
+
     public SellTicketPage(AirViaLtd a) {
         this.app = a;
         addBlankComboBoxListener();
@@ -58,6 +63,7 @@ public class SellTicketPage {
         addSearchButtonListener();
         addPaymentDetails();
         addDiscountedPrice();
+        addSellButtonListener();
     }
 
     public JPanel getMainPanel() {
@@ -387,5 +393,107 @@ public class SellTicketPage {
             }
         });
 
+    }
+
+    public void addSellButtonListener(){
+
+        conversionRateTextField.setText("0");
+
+        sellButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String date = java.time.LocalDate.now().toString();
+
+
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection con = DriverManager.getConnection(
+                            "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                            "in2018g16_d",
+                            "35cnYJLB");
+
+
+                    String sql = "select TicketNumber from in2018g16.Ticket inner join in2018g16.Blank on in2018g16.Ticket.BlankID = in2018g16.Blank.ID where in2018g16.Blank.Type = ? and in2018g16.Blank.Number = ?";
+
+                    PreparedStatement stmt = con.prepareStatement(sql);
+                    stmt.setInt(1, selectedBlankType);
+                    stmt.setInt(2, selectedBlankNumber);
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    while(rs.next()){
+                        selectedTicketNumber = rs.getInt(1);
+                    }
+
+                    String sql1 = "insert into in2018g16.Sale values (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+                    PreparedStatement stmt1 = con.prepareStatement(sql1);
+                    stmt1.setInt(1, Integer.valueOf(advisorCodeTextField.getText()));
+                    stmt1.setInt(2, selectedTicketNumber);
+                    stmt1.setString(3, date);
+                    stmt1.setString(4, interlineDomesticTextField.getText());
+                    stmt1.setInt(5, Integer.valueOf(basePriceTextField.getText()));
+                    stmt1.setDouble(6, Double.valueOf(conversionRateTextField.getText()));
+                    stmt1.setInt(7, Integer.valueOf(localTaxesTextField.getText()) + Integer.valueOf(otherTaxesTextField.getText()));
+                    stmt1.setInt(8, Integer.valueOf(totalPriceTextField.getText()));
+                    stmt1.setInt(9, commissionAmount);
+                    stmt1.setInt(10, Integer.valueOf(commissionRateComboBox.getSelectedItem().toString()));
+                    stmt1.setInt(11, 1);
+                    stmt1.setString(12, customerEmailAddressTextField.getText());
+
+                    int rs1 = stmt1.executeUpdate();
+
+                    String sql2 = "insert into in2018g16.Payment values (?,?,?,?,?)";
+
+                    PreparedStatement stmt2 = con.prepareStatement(sql2);
+                    stmt2.setInt(1, Integer.valueOf(advisorCodeTextField.getText()));
+                    stmt2.setInt(2, selectedTicketNumber);
+                    stmt2.setString(3, paymentTypeComboBox.getSelectedItem().toString());
+
+                    if (payLaterComboBox.getSelectedIndex() == 1){
+                        stmt2.setBoolean(4, true);
+                    } else {
+                        stmt2.setBoolean(4, false);
+                    }
+
+                    if (payLaterComboBox.getSelectedIndex() == 1){
+                        stmt2.setBoolean(5, false);
+                    } else {
+                        stmt2.setBoolean(5, true);
+                    }
+
+                    int rs2 = stmt2.executeUpdate();
+
+                    String sql3 = "update in2018g16.Blank set UsedDate = ? where Type = ? and Number = ?";
+
+                    PreparedStatement stmt3 = con.prepareStatement(sql3);
+                    stmt3.setString(1, date);
+                    stmt3.setInt(2, selectedBlankType);
+                    stmt3.setInt(3, selectedBlankNumber);
+
+                    int rs3 = stmt3.executeUpdate();
+
+                    if (rs1 != 0) {
+                        JOptionPane.showMessageDialog(null, "Sale made", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Could not make sale, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    if (rs2 == 0){
+                        JOptionPane.showMessageDialog(null, "Could not record payment", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    if (rs3 == 0){
+                        JOptionPane.showMessageDialog(null, "Could not update blank", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    con.close();
+
+                } catch (Exception x) {
+                    System.out.println(x);
+                }
+            }
+
+        });
     }
 }
