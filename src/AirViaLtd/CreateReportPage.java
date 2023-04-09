@@ -2,8 +2,6 @@ package AirViaLtd;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -30,6 +28,8 @@ public class CreateReportPage {
     private JComboBox startMonthComboBox;
     private JComboBox endYearComboBox;
     private JComboBox endMonthComboBox;
+    private JButton nextButton;
+    private JButton previousButton;
 
     private JScrollPane reportScrollPane;
     private DefaultTableModel model;
@@ -47,16 +47,23 @@ public class CreateReportPage {
     private DefaultTableModel model5;
     private JTable table5;
 
+    private boolean reportCreated;
+
+    private int index;
+
     private AirViaLtd app;
 
     public CreateReportPage(AirViaLtd a) {
         this.app = a;
+        this.reportCreated = false;
 
         addDateComboBoxData();
         addSelectReportData();
         addIndividualOrGlobal();
         addTravelAdvisorData();
         addCreateButtonListener();
+        addNextButtonListener();
+        addPreviousButtonListener();
     }
 
     public JPanel getMainPanel() {
@@ -156,6 +163,7 @@ public class CreateReportPage {
             public void actionPerformed(ActionEvent e) {
                 createReport();
                 app.addReportToPage();
+                reportCreated = true;
             }
         });
     }
@@ -163,6 +171,7 @@ public class CreateReportPage {
     public void createReport(){
         if (selectReportComboBox.getSelectedIndex() == 1){
             createTicketStockReport();
+            index = 1;
         }
 
     }
@@ -296,10 +305,64 @@ public class CreateReportPage {
             table5.setDefaultEditor(Object.class, null);
 
             reportScrollPane = new JScrollPane();
-            reportScrollPane.setViewportView(table5);
+            reportScrollPane.setViewportView(table1);
 
             con.close();
 
         }catch (Exception e) { System.out.println(e);}
+    }
+
+    public void addNextButtonListener(){
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (selectReportComboBox.getSelectedIndex() == 1){
+                    if (reportCreated = true && index < 5){
+                        index++;
+                        switch (index){
+                            case 2:
+                                reportScrollPane.setViewportView(table2);
+                                break;
+                            case 3:
+                                reportScrollPane.setViewportView(table3);
+                                break;
+                            case 4:
+                                reportScrollPane.setViewportView(table4);
+                                break;
+                            case 5:
+                                reportScrollPane.setViewportView(table5);
+                                break;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void addPreviousButtonListener(){
+        previousButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (selectReportComboBox.getSelectedIndex() == 1){
+                    if (reportCreated = true && index > 1){
+                        index--;
+                        switch (index){
+                            case 1:
+                                reportScrollPane.setViewportView(table1);
+                                break;
+                            case 2:
+                                reportScrollPane.setViewportView(table2);
+                                break;
+                            case 3:
+                                reportScrollPane.setViewportView(table3);
+                                break;
+                            case 4:
+                                reportScrollPane.setViewportView(table4);
+                                break;
+                        }
+                    }
+                }
+            }
+        });
     }
 }
