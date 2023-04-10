@@ -246,8 +246,10 @@ public class CreateReportPage {
             index = 0;
         } else if (selectReportComboBox.getSelectedIndex() == 3 && individualGlobalComboBox.getSelectedIndex() == 1){
             createDomesticIndividualSalesReport();
+            index = 0;
         } else if (selectReportComboBox.getSelectedIndex() == 3 && individualGlobalComboBox.getSelectedIndex() == 2){
             createDomesticGlobalSalesReport();
+            index = 0;
         }
 
     }
