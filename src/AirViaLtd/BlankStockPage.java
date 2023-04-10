@@ -18,7 +18,9 @@ public class BlankStockPage {
     private JButton notAssignedButton;
     private JButton dateButton;
     private JButton usedButton;
-    private JPanel tablePanel;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private JScrollPane blankStockScrollPane;
     private DefaultTableModel model;
@@ -31,7 +33,7 @@ public class BlankStockPage {
     public BlankStockPage(AirViaLtd a) {
         this.app = a;
 
-
+        addMenuButtonsListener();
         addTableData();
         addIDButtonListener();
         addTypeButtonListener();
@@ -39,6 +41,7 @@ public class BlankStockPage {
         addTravelAdvisorButtonListener();
         addNotAssignedButtonListener();
         addUsedButtonListener();
+
 
     }
 
@@ -48,6 +51,22 @@ public class BlankStockPage {
 
     public JScrollPane getBlankStockScrollPane() {
         return blankStockScrollPane;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addTableData(){
@@ -652,10 +671,5 @@ public class BlankStockPage {
                 }catch (Exception x) { System.out.println(x);}
             }
         });
-    }
-
-    public void updateTable(String filter, String order){
-
-
     }
 }

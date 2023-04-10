@@ -4,22 +4,20 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.URISyntaxException;
-import java.security.CodeSource;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.zip.GZIPOutputStream;
 
 public class SecurityPage {
     private JButton restoreDataButton;
     private JButton backUpDataButton;
     private JPanel mainPanel;
+    private JLabel securityLabel;
+    private JPanel menuPanel;
+    private JPanel buttonsPanel;
+    private JPanel titlePanel;
+    private JButton homeButton;
+    private JButton backButton;
 
 
     private AirViaLtd app;
@@ -27,6 +25,7 @@ public class SecurityPage {
     public SecurityPage(AirViaLtd a) {
 
         this.app = a;
+        addMenuButtonsListener();
         addBackupButtonListener();
         //addRestoreButtonListener();
 
@@ -34,6 +33,22 @@ public class SecurityPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addBackupButtonListener(){

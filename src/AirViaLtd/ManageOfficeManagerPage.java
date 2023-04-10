@@ -12,6 +12,9 @@ public class ManageOfficeManagerPage {
     private JButton createOfficeManagerAccountButton;
     private JButton editOfficeManagerAccountButton;
     private JButton removeOfficeManagerAccountButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
@@ -25,6 +28,21 @@ public class ManageOfficeManagerPage {
     }
 
     public void addButtonsListener(){
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         createOfficeManagerAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

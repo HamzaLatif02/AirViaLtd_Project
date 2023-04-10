@@ -16,6 +16,9 @@ public class RemoveBlankPage {
     private JTextField blankSelectedTextField;
     private JLabel blankSelectedLabel;
     private JButton removeButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private JScrollPane blankStockScrollPane;
     private DefaultTableModel model;
@@ -26,6 +29,7 @@ public class RemoveBlankPage {
     public RemoveBlankPage(AirViaLtd a) {
         this.app = a;
 
+        addMenuButtonsListener();
         addTableData();
         addRemoveButtonListener();
         addBlankSelectedText();
@@ -38,6 +42,22 @@ public class RemoveBlankPage {
 
     public JScrollPane getBlankStockScrollPane() {
         return blankStockScrollPane;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addTableData(){

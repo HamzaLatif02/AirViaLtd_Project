@@ -16,17 +16,37 @@ public class CreateOfficeManagerAccountPage {
     private JTextField emailAddressTextField;
     private JTextField passwordTextField;
     private JButton createButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
     public CreateOfficeManagerAccountPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addCreateButtonListener();
         addTextListener();
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addCreateButtonListener(){

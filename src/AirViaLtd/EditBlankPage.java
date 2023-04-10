@@ -24,6 +24,9 @@ public class EditBlankPage {
     private JTextField auditCouponIDTextField;
     private JButton applyChangesButton;
     private JLabel selectedBlankLabel;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
     private JScrollPane blankStockScrollPane;
     private DefaultTableModel model;
     private JTable table;
@@ -31,6 +34,7 @@ public class EditBlankPage {
     public EditBlankPage(AirViaLtd a) {
         this.app = a;
 
+        addMenuButtonsListener();
         addTableData();
         addBlankSelectedFieldsText();
         addApplyChangesButtonListener();
@@ -42,6 +46,22 @@ public class EditBlankPage {
 
     public JScrollPane getBlankStockScrollPane() {
         return blankStockScrollPane;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addTableData(){

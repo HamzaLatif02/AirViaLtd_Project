@@ -12,6 +12,9 @@ public class ManageTravelAdvisorPage {
     private JButton createTravelAdvisorAccountButton;
     private JButton editTravelAdvisorAccountButton;
     private JButton removeTravelAdvisorAccountButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
@@ -25,6 +28,21 @@ public class ManageTravelAdvisorPage {
     }
 
     public void addButtonsListener(){
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         createTravelAdvisorAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

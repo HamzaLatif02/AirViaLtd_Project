@@ -22,6 +22,9 @@ public class EditTravelAdvisorAccountPage {
     private JButton editButton;
     private JLabel selectTravelAdvisorLabel;
     private JLabel selectedTravelAdvisorDetailsLabel;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private int selectedAdvisorCode;
 
@@ -29,6 +32,7 @@ public class EditTravelAdvisorAccountPage {
 
     public EditTravelAdvisorAccountPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addTravelAdvisors();
         addTravelAdvisorComboBoxListener();
         addEditButtonListener();
@@ -36,6 +40,22 @@ public class EditTravelAdvisorAccountPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addTravelAdvisors(){

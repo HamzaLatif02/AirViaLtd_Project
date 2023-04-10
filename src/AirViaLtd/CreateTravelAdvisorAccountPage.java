@@ -21,17 +21,37 @@ public class CreateTravelAdvisorAccountPage {
     private JTextField advisorCodeTextField;
     private JTextField officeManagerIDTextField;
     private JButton createButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
     public CreateTravelAdvisorAccountPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addCreateButtonListener();
         addTextListener();
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addCreateButtonListener(){

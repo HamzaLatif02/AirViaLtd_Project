@@ -12,6 +12,9 @@ public class ManageCustomerPage {
     private JButton createCustomerAccountButton;
     private JButton editCustomerAccountButton;
     private JButton removeCustomerAccountButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
     private AirViaLtd app;
 
     public ManageCustomerPage(AirViaLtd a) {
@@ -24,6 +27,20 @@ public class ManageCustomerPage {
     }
 
     public void addButtonsListener(){
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         createCustomerAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

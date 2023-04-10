@@ -39,6 +39,9 @@ public class SellTicketPage {
     private JTextField cardNumberTextField;
     private JTextField conversionRateTextField;
     private JLabel conversionRateLabel;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
@@ -56,6 +59,7 @@ public class SellTicketPage {
 
     public SellTicketPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addBlankComboBoxListener();
         addCalculateButtonTotalListener();
         addCommissions();
@@ -70,7 +74,21 @@ public class SellTicketPage {
         return mainPanel;
     }
 
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
 
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
 
 
     public void addAdvisorCode(String email){

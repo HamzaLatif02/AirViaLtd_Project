@@ -14,11 +14,15 @@ public class CommissionPage {
     private JButton addButton;
     private JButton deleteButton;
     private JComboBox commissionComboBox;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
     public CommissionPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addCommissionRates();
         addAddButtonListener();
         addDeleteButtonListener();
@@ -27,6 +31,15 @@ public class CommissionPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
     }
 
     public void addCommissionRates(){

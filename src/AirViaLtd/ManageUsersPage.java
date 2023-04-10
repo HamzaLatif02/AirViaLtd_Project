@@ -12,6 +12,9 @@ public class ManageUsersPage {
     private JButton travelAdvisorButton;
     private JButton customerButton;
     private JButton officeManagerButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
@@ -25,6 +28,21 @@ public class ManageUsersPage {
     }
 
     public void addButtonsListener(){
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         officeManagerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

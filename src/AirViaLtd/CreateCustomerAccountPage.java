@@ -19,12 +19,15 @@ public class CreateCustomerAccountPage {
     private JTextField emailAddressTextField;
     private JButton createButton;
     private JComboBox regularValuedComboBox;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
     public CreateCustomerAccountPage(AirViaLtd a) {
         this.app = a;
-
+        addMenuButtonsListener();
         addNameTextListener();
         addSurnameTextListener();
         addEmailTextListener();
@@ -34,6 +37,22 @@ public class CreateCustomerAccountPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addCreateButtonListener(){

@@ -31,6 +31,9 @@ public class CreateReportPage {
     private JButton previousButton;
     private JComboBox startDayComboBox;
     private JComboBox endDayComboBox;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private JScrollPane reportScrollPane;
     private DefaultTableModel model;
@@ -67,6 +70,7 @@ public class CreateReportPage {
         this.app = a;
         this.reportCreated = false;
 
+        addMenuButtonsListener();
         addDateComboBoxData();
         addDaysComboBoxData();
         addSelectReportData();
@@ -83,6 +87,22 @@ public class CreateReportPage {
 
     public JScrollPane getReportScrollPane() {
         return reportScrollPane;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
 

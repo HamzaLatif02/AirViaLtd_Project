@@ -21,6 +21,9 @@ public class EditOfficeManagerAccountPage {
     private JButton editButton;
     private JLabel selectOfficeManagerLabel;
     private JLabel selectedOfficeManagerDetailsLabel;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private int selectedID;
 
@@ -28,6 +31,7 @@ public class EditOfficeManagerAccountPage {
 
     public EditOfficeManagerAccountPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addOfficeManagers();
         addOfficeManagerComboBoxListener();
         addEditButtonListener();
@@ -35,6 +39,22 @@ public class EditOfficeManagerAccountPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addOfficeManagers(){

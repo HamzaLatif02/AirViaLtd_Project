@@ -47,7 +47,8 @@ public class AirViaLtd {
     private EditTravelAdvisorAccountPage editTravelAdvisorAccountPage;
     private RemoveTravelAdvisorAccountPage removeTravelAdvisorAccountPage;
 
-
+    private JPanel currentPanel;
+    private JPanel homepage;
 
 
     public AirViaLtd() {
@@ -89,6 +90,8 @@ public class AirViaLtd {
         editTravelAdvisorAccountPage = new EditTravelAdvisorAccountPage(this);
         removeTravelAdvisorAccountPage = new RemoveTravelAdvisorAccountPage(this);
 
+        currentPanel = new JPanel();
+        homepage = new JPanel();
 
         frame = new JFrame("AirViaLtd");
 
@@ -99,201 +102,262 @@ public class AirViaLtd {
         frame.setResizable(false);
         frame.setVisible(true);
 
+        currentPanel = loginPage.getMainPanel();
+
     }
 
     public void transitionToOfficeManagerHomePage(){
+        //frame.dispose();
         frame.remove(loginPage.getMainPanel());
+        officeManagerHomePage = new OfficeManagerHomePage(this);
         frame.add(officeManagerHomePage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = officeManagerHomePage.getMainPanel();
     }
 
     public void transitionToBlankManagerPage(){
-        frame.remove(officeManagerHomePage.getMainPanel());
+        frame.remove(currentPanel);
+        blankManagerPage = new BlankManagerPage(this);
         frame.add(blankManagerPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = blankManagerPage.getMainPanel();
     }
 
     public void transitionToAllocateBlankPage(){
-        frame.remove(blankManagerPage.getMainPanel());
+        frame.remove(currentPanel);
+        allocateBlankPage = new AllocateBlankPage(this);
         frame.add(allocateBlankPage.getMainPanel());
         frame.add(allocateBlankPage.getNotAssignedBlanksScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
+        currentPanel = allocateBlankPage.getMainPanel();
     }
 
     public void transitionToAddBlankPage(){
-        frame.remove(blankManagerPage.getMainPanel());
+        frame.remove(currentPanel);
+        addBlankPage = new AddBlankPage(this);
         frame.add(addBlankPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = addBlankPage.getMainPanel();
     }
 
     public void transitionToRemoveBlankPage(){
-        frame.remove(blankManagerPage.getMainPanel());
+        frame.remove(currentPanel);
+        removeBlankPage = new RemoveBlankPage(this);
         frame.add(removeBlankPage.getMainPanel());
         frame.add(removeBlankPage.getBlankStockScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
+        currentPanel = removeBlankPage.getMainPanel();
     }
 
     public void transitionToEditBlankPage(){
-        frame.remove(blankManagerPage.getMainPanel());
+        frame.remove(currentPanel);
+        editBlankPage = new EditBlankPage(this);
         frame.add(editBlankPage.getMainPanel());
         frame.add(editBlankPage.getBlankStockScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
+        currentPanel = editBlankPage.getMainPanel();
     }
 
     public void transitionToReallocateBlankPage(){
-        frame.remove(blankManagerPage.getMainPanel());
+        frame.remove(currentPanel);
+        reallocateBlankPage = new ReallocateBlankPage(this);
         frame.add(reallocateBlankPage.getMainPanel());
         frame.add(reallocateBlankPage.getAssignedBlanksScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
+        currentPanel = reallocateBlankPage.getMainPanel();
     }
 
     public void transitionToSearchBlankPage(){
-        frame.remove(officeManagerHomePage.getMainPanel());
+        frame.remove(currentPanel);
+        searchBlankPage = new SearchBlankPage(this);
         frame.add(searchBlankPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = searchBlankPage.getMainPanel();
     }
 
     public void transitionToBlankStockPage(){
-        frame.remove(getCurrentHomepage());
+        frame.remove(currentPanel);
+        blankStockPage = new BlankStockPage(this);
         frame.add(blankStockPage.getMainPanel());
         frame.add(blankStockPage.getBlankStockScrollPane(), BorderLayout.SOUTH);
         frame.setVisible(true);
+        currentPanel = blankStockPage.getMainPanel();
     }
 
     public void transitionToCreateReportPage(){
-        frame.remove(getCurrentHomepage());
+        frame.remove(currentPanel);
+        createReportPage = new CreateReportPage(this);
         frame.add(createReportPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = createReportPage.getMainPanel();
     }
 
     public void transitionToDiscountPlanPage(){
-        frame.remove(officeManagerHomePage.getMainPanel());
+        frame.remove(currentPanel);
+        discountPlanPage = new DiscountPlanPage(this);
         frame.add(discountPlanPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = discountPlanPage.getMainPanel();
     }
 
     public void transitionToManageCustomerPage(){
-        if (loginPage.getUser().equals("Office Manager")){
-            frame.remove(officeManagerHomePage.getMainPanel());
-        } else if (loginPage.getUser().equals("Administrator")){
-            frame.remove(manageUsersPage.getMainPanel());
-        } else {
-            frame.remove(travelAdvisorHomePage.getMainPanel());
-        }
+        frame.remove(currentPanel);
+        manageCustomerPage = new ManageCustomerPage(this);
         frame.add(manageCustomerPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = manageCustomerPage.getMainPanel();
     }
 
     public void transitionToCreateCustomerAccountPage(){
-        if (loginPage.getUser().equals("Travel Advisor")){
-            frame.remove(travelAdvisorHomePage.getMainPanel());
-        } else {
-            frame.remove(manageCustomerPage.getMainPanel());
-        }
+        frame.remove(currentPanel);
+        createCustomerAccountPage = new CreateCustomerAccountPage(this);
         frame.add(createCustomerAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = createCustomerAccountPage.getMainPanel();
     }
 
     public void transitionToEditCustomerAccountPage(){
-        frame.remove(manageCustomerPage.getMainPanel());
+        frame.remove(currentPanel);
+        editCustomerAccountPage = new EditCustomerAccountPage(this);
         frame.add(editCustomerAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = editCustomerAccountPage.getMainPanel();
     }
 
     public void transitionToRemoveCustomerAccountPage(){
-        frame.remove(manageCustomerPage.getMainPanel());
+        frame.remove(currentPanel);
+        removeCustomerAccountPage = new RemoveCustomerAccountPage(this);
         frame.add(removeCustomerAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = removeCustomerAccountPage.getMainPanel();
     }
 
     public void transitionToTravelAdvisorHomePage(){
-        frame.remove(loginPage.getMainPanel());
+        frame.remove(currentPanel);
         frame.add(travelAdvisorHomePage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = travelAdvisorHomePage.getMainPanel();
     }
 
     public void transitionToIssueRefundPage(){
-        frame.remove(travelAdvisorHomePage.getMainPanel());
+        frame.remove(currentPanel);
+        issueRefundPage = new IssueRefundPage(this);
         frame.add(issueRefundPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = issueRefundPage.getMainPanel();
     }
 
     public void transitionToSellTicketPage(){
-        frame.remove(travelAdvisorHomePage.getMainPanel());
+        frame.remove(currentPanel);
+        sellTicketPage = new SellTicketPage(this);
         frame.add(sellTicketPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = sellTicketPage.getMainPanel();
     }
 
-    public void transitionToAdministratoHomePage(){
-        frame.remove(loginPage.getMainPanel());
+    public void transitionToAdministratorHomePage(){
+        frame.remove(currentPanel);
         frame.add(administratorHomePage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = administratorHomePage.getMainPanel();
     }
 
     public void transitionToManageUsersPage(){
-        frame.remove(administratorHomePage.getMainPanel());
+        frame.remove(currentPanel);
+        manageUsersPage = new ManageUsersPage(this);
         frame.add(manageUsersPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = manageUsersPage.getMainPanel();
+
     }
 
-
     public void transitionToSecurityPage(){
-        frame.remove(administratorHomePage.getMainPanel());
+        frame.remove(currentPanel);
+        securityPage = new SecurityPage(this);
         frame.add(securityPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = securityPage.getMainPanel();
     }
 
     public void transitionToCommissionPage(){
-        frame.remove(administratorHomePage.getMainPanel());
+        frame.remove(currentPanel);
+        commissionPage = new CommissionPage(this);
         frame.add(commissionPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = commissionPage.getMainPanel();
     }
 
     public void transitionToManageOfficeManagerPage(){
-        frame.remove(manageUsersPage.getMainPanel());
+        frame.remove(currentPanel);
+        manageOfficeManagerPage = new ManageOfficeManagerPage(this);
         frame.add(manageOfficeManagerPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = manageOfficeManagerPage.getMainPanel();
     }
 
     public void transitionToCreateOfficeManagerAccountPage(){
-        frame.remove(manageOfficeManagerPage.getMainPanel());
+        frame.remove(currentPanel);
+        createOfficeManagerAccountPage = new CreateOfficeManagerAccountPage(this);
         frame.add(createOfficeManagerAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = createOfficeManagerAccountPage.getMainPanel();
     }
 
     public void transitionToEditOfficeManagerAccountPage(){
-        frame.remove(manageOfficeManagerPage.getMainPanel());
+        frame.remove(currentPanel);
+        editOfficeManagerAccountPage = new EditOfficeManagerAccountPage(this);
         frame.add(editOfficeManagerAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = editOfficeManagerAccountPage.getMainPanel();
     }
 
     public void transitionToRemoveOfficeManagerAccountPage(){
-        frame.remove(manageOfficeManagerPage.getMainPanel());
+        frame.remove(currentPanel);
+        removeOfficeManagerAccountPage = new RemoveOfficeManagerAccountPage(this);
         frame.add(removeOfficeManagerAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = removeOfficeManagerAccountPage.getMainPanel();
     }
 
 
     public void transitionToManageTravelAdvisorPage(){
-        frame.remove(manageUsersPage.getMainPanel());
+        frame.remove(currentPanel);
+        manageTravelAdvisorPage = new ManageTravelAdvisorPage(this);
         frame.add(manageTravelAdvisorPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = manageTravelAdvisorPage.getMainPanel();
     }
 
     public void transitionToCreateTravelAdvisorAccountPage(){
-        frame.remove(manageTravelAdvisorPage.getMainPanel());
+        frame.remove(currentPanel);
+        createTravelAdvisorAccountPage = new CreateTravelAdvisorAccountPage(this);
         frame.add(createTravelAdvisorAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = createTravelAdvisorAccountPage.getMainPanel();
     }
+
     public void transitionToEditTravelAdvisorAccountPage(){
-        frame.remove(manageTravelAdvisorPage.getMainPanel());
+        frame.remove(currentPanel);
+        editTravelAdvisorAccountPage = new EditTravelAdvisorAccountPage(this);
         frame.add(editTravelAdvisorAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = editTravelAdvisorAccountPage.getMainPanel();
     }
+
     public void transitionToRemoveTravelAdvisorAccountPage(){
-        frame.remove(manageTravelAdvisorPage.getMainPanel());
+        frame.remove(currentPanel);
+        removeTravelAdvisorAccountPage = new RemoveTravelAdvisorAccountPage(this);
         frame.add(removeTravelAdvisorAccountPage.getMainPanel());
         frame.setVisible(true);
+        currentPanel = removeTravelAdvisorAccountPage.getMainPanel();
+    }
+
+    public void transitionToHomepage(){
+        frame.remove(currentPanel);
+        removeTables();
+        frame.add(newHomepage());
+        frame.setVisible(true);
+        currentPanel = getCurrentHomepage();
     }
 
     public JPanel getCurrentHomepage(){
@@ -304,23 +368,61 @@ public class AirViaLtd {
         } else return travelAdvisorHomePage.getMainPanel();
     }
 
+    public JPanel newHomepage(){
+        if (loginPage.getUser().equals("Administrator")){
+            administratorHomePage = new AdministratorHomePage(this);
+            return administratorHomePage.getMainPanel();
+        } else if (loginPage.getUser().equals("Office Manager")){
+            officeManagerHomePage = new OfficeManagerHomePage(this);
+            return officeManagerHomePage.getMainPanel();
+        } else {
+            travelAdvisorHomePage = new TravelAdvisorHomePage(this);
+            return travelAdvisorHomePage.getMainPanel();}
+    }
+
+    public void removeTables(){
+
+        if (allocateBlankPage.getNotAssignedBlanksScrollPane() != null){
+            frame.remove(allocateBlankPage.getNotAssignedBlanksScrollPane());
+        }
+
+        if (removeBlankPage.getBlankStockScrollPane() != null){
+            frame.remove(removeBlankPage.getBlankStockScrollPane());
+        }
+
+        if (editBlankPage.getBlankStockScrollPane() != null){
+            frame.remove(editBlankPage.getBlankStockScrollPane());
+        }
+
+        if (reallocateBlankPage.getAssignedBlanksScrollPane() != null){
+            frame.remove(reallocateBlankPage.getAssignedBlanksScrollPane());
+        }
+
+        if (blankStockPage.getBlankStockScrollPane() != null){
+            frame.remove(blankStockPage.getBlankStockScrollPane());
+        }
+
+
+    }
+
     public void doLogout(){
         if (JOptionPane.showConfirmDialog(getCurrentHomepage(), "Are you sure you want to log out?", "Logout", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             JOptionPane.showConfirmDialog(getCurrentHomepage(), "You have successfully logged out", "Logout", JOptionPane.PLAIN_MESSAGE);
 
             frame.remove(getCurrentHomepage());
 
-
             loginPage = new LoginPage(this);
 
             frame.add(loginPage.getMainPanel());
             frame.setVisible(true);
+            currentPanel = loginPage.getMainPanel();
         };
     }
 
     public void addReportToPage(){
         frame.add(createReportPage.getReportScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
+        currentPanel.add(createReportPage.getReportScrollPane());
     }
 
     public SellTicketPage getSellTicketPage() {

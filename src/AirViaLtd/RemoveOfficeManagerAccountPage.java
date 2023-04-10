@@ -21,6 +21,9 @@ public class RemoveOfficeManagerAccountPage {
     private JTextField emailAddressTextField;
     private JTextField passwordTextField;
     private JButton removeButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private int selectedID;
 
@@ -28,7 +31,7 @@ public class RemoveOfficeManagerAccountPage {
 
     public RemoveOfficeManagerAccountPage(AirViaLtd a) {
         this.app = a;
-
+        addMenuButtonsListener();
         addOfficeManagers();
         addOfficeManagerComboBoxListener();
         addRemoveButtonListener();
@@ -36,6 +39,22 @@ public class RemoveOfficeManagerAccountPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addOfficeManagers(){

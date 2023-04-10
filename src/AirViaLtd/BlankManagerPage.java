@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 public class BlankManagerPage {
     private JPanel mainPanel;
     private JPanel menuPanel;
-    private JButton logoutButton;
     private JLabel manageBlankLabel;
     private JButton addBlankButton;
     private JButton removeBlankButton;
@@ -16,6 +15,8 @@ public class BlankManagerPage {
     private JButton reallocateBlankButton;
     private JPanel titlePanel;
     private JPanel buttonsPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private AirViaLtd app;
 
@@ -30,6 +31,20 @@ public class BlankManagerPage {
     }
 
     public void addButtonsListener(){
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         addBlankButton.addActionListener(new ActionListener() {
             @Override

@@ -24,6 +24,9 @@ public class IssueRefundPage {
     private JComboBox blankComboBox;
     private JLabel advisorCodeLabel;
     private JTextField advisorCodeTextField;
+    private JButton homeButton;
+    private JButton backButton;
+    private JPanel menuPanel;
 
     private String taEmail;
     private int taCode;
@@ -37,12 +40,29 @@ public class IssueRefundPage {
 
     public IssueRefundPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addSaleDetails();
         addIssueRefundButtonListener();
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addAdvisorCode(String email){

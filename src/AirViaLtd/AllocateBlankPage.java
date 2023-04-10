@@ -17,6 +17,9 @@ public class AllocateBlankPage {
     private JButton allocateButton;
     private JLabel selectedBlankLabel;
     private JTextField selectedBlankTextField;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
     private JButton refreshTableButton;
     private JTable table;
     private JScrollPane notAssignedBlanksScrollPane;
@@ -28,6 +31,7 @@ public class AllocateBlankPage {
     public AllocateBlankPage(AirViaLtd a) {
         this.app = a;
 
+        addMenuButtonsListener();
         addTableData();
         addTravelAdvisors();
         addAssignButtonListener();
@@ -41,6 +45,22 @@ public class AllocateBlankPage {
 
     public JScrollPane getNotAssignedBlanksScrollPane() {
         return notAssignedBlanksScrollPane;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addTableData(){

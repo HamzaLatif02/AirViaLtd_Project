@@ -22,6 +22,9 @@ public class RemoveTravelAdvisorAccountPage {
     private JTextField officeManagerTextField;
     private JButton removeButton;
     private JComboBox travelAdvisorComboBox;
+    private JButton homeButton;
+    private JButton backButton;
+    private JPanel menuPanel;
 
     private int selectedAdvisorCode;
 
@@ -29,6 +32,7 @@ public class RemoveTravelAdvisorAccountPage {
 
     public RemoveTravelAdvisorAccountPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addTravelAdvisors();
         addTravelAdvisorComboBoxListener();
         addRemoveButtonListener();
@@ -37,6 +41,22 @@ public class RemoveTravelAdvisorAccountPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addTravelAdvisors(){

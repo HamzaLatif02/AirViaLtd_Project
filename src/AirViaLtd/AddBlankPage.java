@@ -28,6 +28,9 @@ public class AddBlankPage {
     private JComboBox multipleStartBlankTypeComboBox;
     private JTextField multipleStartBlankNumberTextField;
     private JComboBox multipleEndBlankTypeComboBox;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private int selectedID;
 
@@ -35,6 +38,7 @@ public class AddBlankPage {
 
     public AddBlankPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addBlankTypeComboBoxData();
         addSingleButtonListener();
         addMultipleButtonListener();
@@ -42,6 +46,22 @@ public class AddBlankPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addSingleButtonListener(){

@@ -17,6 +17,9 @@ public class ReallocateBlankPage {
     private JTextField selectedBlankTextField;
     private JComboBox travelAdvisorComboBox;
     private JButton reallocateButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private JScrollPane assignedBlanksScrollPane;
     private JTable table;
@@ -26,7 +29,7 @@ public class ReallocateBlankPage {
 
     public ReallocateBlankPage(AirViaLtd a) {
         this.app = a;
-
+        addMenuButtonsListener();
         addTableData();
         addSelectedBlankText();
         addTravelAdvisors();
@@ -39,6 +42,22 @@ public class ReallocateBlankPage {
 
     public JScrollPane getAssignedBlanksScrollPane() {
         return assignedBlanksScrollPane;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addTableData(){

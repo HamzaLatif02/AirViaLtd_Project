@@ -174,7 +174,7 @@ public class LoginPage {
                     this.user = jobTitleComboBox.getSelectedItem().toString();
                     switch (jobTitleComboBox.getSelectedIndex()){
                         case 1:
-                            app.transitionToAdministratoHomePage();
+                            app.transitionToAdministratorHomePage();
                             break;
                         case 2:
                             app.transitionToOfficeManagerHomePage();

@@ -22,6 +22,9 @@ public class EditCustomerAccountPage {
     private JComboBox customerComboBox;
     private JButton editButton;
     private JComboBox typeComboBox;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private String selectedEmail;
 
@@ -29,6 +32,7 @@ public class EditCustomerAccountPage {
 
     public EditCustomerAccountPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addCustomers();
         addCustomerComboBoxListener();
         addEditButtonListener();
@@ -36,6 +40,22 @@ public class EditCustomerAccountPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
 

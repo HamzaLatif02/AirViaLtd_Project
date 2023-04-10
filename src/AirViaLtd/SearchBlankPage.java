@@ -36,6 +36,9 @@ public class SearchBlankPage {
     private JTextField arrivalTimeTextField;
     private JButton previousButton;
     private JButton nextButton;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private DefaultTableModel fcModel;
     private JTable fcTable;
@@ -50,6 +53,7 @@ public class SearchBlankPage {
     public SearchBlankPage(AirViaLtd a) {
         this.app = a;
 
+        addMenuButtonsListener();
         addSearchTypeData();
         addSearchNumberData();
         addSearchButtonListener();
@@ -60,6 +64,22 @@ public class SearchBlankPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addSearchTypeData(){

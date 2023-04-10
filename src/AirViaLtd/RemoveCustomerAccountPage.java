@@ -22,12 +22,16 @@ public class RemoveCustomerAccountPage {
     private JButton removeButton;
     private JLabel selectedCustomerDetailsLabel;
     private JComboBox customerComboBox;
+    private JButton homeButton;
+    private JButton backButton;
+    private JPanel menuPanel;
     private String selectedEmail;
 
     private AirViaLtd app;
 
     public RemoveCustomerAccountPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addCustomers();
         addCustomerComboBoxListener();
         addRemoveButtonListener();
@@ -35,6 +39,22 @@ public class RemoveCustomerAccountPage {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void addCustomers(){

@@ -27,6 +27,9 @@ public class DiscountPlanPage {
     private JButton getSalesButton;
     private JComboBox flexibleDiscountComboBox;
     private JLabel selectFlexibleDiscountPlanLabel;
+    private JPanel menuPanel;
+    private JButton homeButton;
+    private JButton backButton;
 
     private int salesAmount;
     private int fdID;
@@ -36,6 +39,7 @@ public class DiscountPlanPage {
 
     public DiscountPlanPage(AirViaLtd a) {
         this.app = a;
+        addMenuButtonsListener();
         addCustomerComboBoxData();
         addMonthComboBox();
         addYearComboBox();
@@ -49,6 +53,21 @@ public class DiscountPlanPage {
         return mainPanel;
     }
 
+    public void addMenuButtonsListener(){
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
 
     public void addCustomerComboBoxData(){
         customerComboBox.addItem("-- Select --");
