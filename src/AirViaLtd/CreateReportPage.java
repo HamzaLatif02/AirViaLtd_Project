@@ -55,6 +55,8 @@ public class CreateReportPage {
     private String startDate;
     private String endDate;
 
+    private int taCode;
+
     private AirViaLtd app;
 
     public CreateReportPage(AirViaLtd a) {
@@ -181,7 +183,7 @@ public class CreateReportPage {
         selectReportComboBox.addItem("-- Select --");
         selectReportComboBox.addItem("Ticket Stock Turnover");
         selectReportComboBox.addItem("Interline Sales");
-        selectReportComboBox.addItem("Global Sales");
+        selectReportComboBox.addItem("Domestic Sales");
     }
 
     public void addIndividualOrGlobal(){
@@ -231,7 +233,16 @@ public class CreateReportPage {
 
         if (selectReportComboBox.getSelectedIndex() == 1){
             createTicketStockReport();
-            index = 1;
+            index = 0;
+        } else if (selectReportComboBox.getSelectedIndex() == 2 && individualGlobalComboBox.getSelectedIndex() == 1){
+            createInterlineIndividualSalesReport();
+            index = 0;
+        } else if (selectReportComboBox.getSelectedIndex() == 2 && individualGlobalComboBox.getSelectedIndex() == 2){
+            createInterlineGlobalSalesReport();
+        } else if (selectReportComboBox.getSelectedIndex() == 3 && individualGlobalComboBox.getSelectedIndex() == 1){
+            createDomesticIndividualSalesReport();
+        } else if (selectReportComboBox.getSelectedIndex() == 3 && individualGlobalComboBox.getSelectedIndex() == 2){
+            createDomesticGlobalSalesReport();
         }
 
     }
@@ -375,11 +386,106 @@ public class CreateReportPage {
             table5.setDefaultEditor(Object.class, null);
 
             reportScrollPane = new JScrollPane();
-            reportScrollPane.setViewportView(table1);
+            reportScrollPane.setViewportView(table);
 
             con.close();
 
         }catch (Exception e) { System.out.println(e);}
+    }
+
+    public void createInterlineIndividualSalesReport(){
+
+        String ta = (String) travelAdvisorComboBox.getSelectedItem();
+        String[] splitTAselected = ta.split("\\s+");
+        taCode = Integer.valueOf(splitTAselected[0]);
+
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(
+                    "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                    "in2018g16_d",
+                    "35cnYJLB");
+
+
+            String sql = "select in2018g16.Blank.Type, in2018g16.Blank.Number, in2018g16.Sale.SaleUSD, in2018g16.Sale.ConversionRate, in2018g16.Sale.Taxes, in2018g16.Sale.TotalSale, in2018g16.Sale.CommissionRate, in2018g16.Sale.CommissionAmount from in2018g16.Sale inner join in2018g16.Ticket on in2018g16.Sale.TicketNumber = in2018g16.Ticket.TicketNumber inner join in2018g16.Blank on in2018g16.Ticket.BlankID = in2018g16.Blank.ID where in2018g16.Sale.AdvisorCode = ? and in2018g16.Sale.SaleDate between ? and ? and in2018g16.Sale.SaleType = 'Interline'";
+            String sql1 = "select sum(in2018g16.Sale.TotalSale), sum(in2018g16.Sale.CommissionAmount) from in2018g16.Sale where in2018g16.Sale.AdvisorCode = ? and in2018g16.Sale.SaleDate between ? and ? and in2018g16.Sale.SaleType = 'Interline'";
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, taCode);
+            stmt.setString(2, startDate);
+            stmt.setString(3, endDate);
+            ResultSet rs = stmt.executeQuery();
+
+            PreparedStatement stmt1 = con.prepareStatement(sql1);
+            stmt1.setInt(1, taCode);
+            stmt1.setString(2, startDate);
+            stmt1.setString(3, endDate);
+            ResultSet rs1 = stmt1.executeQuery();
+
+            model = new DefaultTableModel();
+            model.addColumn("Blank Type");
+            model.addColumn("Blank Number");
+            model.addColumn("Price USD");
+            model.addColumn("Conversion Rate");
+            model.addColumn("Total Taxes");
+            model.addColumn("Total Sale");
+            model.addColumn("Commission Rate");
+            model.addColumn("Commission Amount");
+            model.addColumn("Profit");
+
+            model1 = new DefaultTableModel();
+            model1.addColumn("Total Sale");
+            model1.addColumn("Total Commission");
+            model1.addColumn("Total Profit");
+
+            while(rs.next()){
+                Object[] row = new Object[9];
+                row[0] = rs.getInt(1);
+                row[1] = rs.getInt(2);
+                row[2] = rs.getInt(3);
+                row[3] = rs.getDouble(4);
+                row[4] = rs.getInt(5);
+                row[5] = rs.getInt(6);
+                row[6] = rs.getInt(7);
+                row[7] = rs.getInt(8);
+                row[8] = rs.getInt(6) - rs.getInt(8);
+                model.addRow(row);
+            }
+
+            while (rs1.next()){
+                Object[] row = new Object[3];
+                row[0] = rs1.getInt(1);
+                row[1] = rs1.getInt(2);
+                row[2] = rs1.getInt(1) - rs1.getInt(2);
+                model1.addRow(row);
+            }
+
+            table = new JTable();
+            table.setModel(model);
+            table.setDefaultEditor(Object.class, null);
+
+            table1 = new JTable();
+            table1.setModel(model1);
+            table1.setDefaultEditor(Object.class, null);
+
+            reportScrollPane = new JScrollPane();
+            reportScrollPane.setViewportView(table);
+
+            con.close();
+
+        }catch (Exception e) { System.out.println(e);}
+    }
+
+    public void createInterlineGlobalSalesReport(){
+
+    }
+
+    public void createDomesticIndividualSalesReport(){
+    }
+
+    public void createDomesticGlobalSalesReport(){
+
     }
 
     public void addNextButtonListener(){
@@ -387,9 +493,12 @@ public class CreateReportPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (selectReportComboBox.getSelectedIndex() == 1){
-                    if (reportCreated = true && index < 5){
+                    if (reportCreated = true && index < 6){
                         index++;
                         switch (index){
+                            case 1:
+                                reportScrollPane.setViewportView(table1);
+                                break;
                             case 2:
                                 reportScrollPane.setViewportView(table2);
                                 break;
@@ -404,6 +513,15 @@ public class CreateReportPage {
                                 break;
                         }
                     }
+                } else if (selectReportComboBox.getSelectedIndex() == 2 && individualGlobalComboBox.getSelectedIndex() == 1){
+                    if (reportCreated = true && index < 1){
+                        index++;
+                        switch (index){
+                            case 1:
+                                reportScrollPane.setViewportView(table1);
+                                break;
+                        }
+                    }
                 }
             }
         });
@@ -414,9 +532,12 @@ public class CreateReportPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (selectReportComboBox.getSelectedIndex() == 1){
-                    if (reportCreated = true && index > 1){
+                    if (reportCreated = true && index > 0){
                         index--;
                         switch (index){
+                            case 0:
+                                reportScrollPane.setViewportView(table);
+                                break;
                             case 1:
                                 reportScrollPane.setViewportView(table1);
                                 break;
@@ -428,6 +549,15 @@ public class CreateReportPage {
                                 break;
                             case 4:
                                 reportScrollPane.setViewportView(table4);
+                                break;
+                        }
+                    }
+                } else if (selectReportComboBox.getSelectedIndex() == 2 && individualGlobalComboBox.getSelectedIndex() == 1){
+                    if (reportCreated = true && index > 0){
+                        index--;
+                        switch (index){
+                            case 0:
+                                reportScrollPane.setViewportView(table);
                                 break;
                         }
                     }
