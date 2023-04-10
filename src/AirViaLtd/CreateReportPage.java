@@ -4,10 +4,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.*;
 
 public class CreateReportPage {
     private JPanel mainPanel;
@@ -30,6 +29,8 @@ public class CreateReportPage {
     private JComboBox endMonthComboBox;
     private JButton nextButton;
     private JButton previousButton;
+    private JComboBox startDayComboBox;
+    private JComboBox endDayComboBox;
 
     private JScrollPane reportScrollPane;
     private DefaultTableModel model;
@@ -51,6 +52,9 @@ public class CreateReportPage {
 
     private int index;
 
+    private String startDate;
+    private String endDate;
+
     private AirViaLtd app;
 
     public CreateReportPage(AirViaLtd a) {
@@ -58,6 +62,7 @@ public class CreateReportPage {
         this.reportCreated = false;
 
         addDateComboBoxData();
+        addDaysComboBoxData();
         addSelectReportData();
         addIndividualOrGlobal();
         addTravelAdvisorData();
@@ -121,6 +126,57 @@ public class CreateReportPage {
 
     }
 
+    public void addDaysComboBoxData(){
+
+        startDayComboBox.addItem("-- Select Day --");
+        startMonthComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+                startDayComboBox.removeAllItems();
+                startDayComboBox.addItem("-- Select Day --");
+                if (startMonthComboBox.getSelectedIndex() == 2){
+                    addDaysUntil(28, "start");
+                } else if (startMonthComboBox.getSelectedIndex() == 4 || startMonthComboBox.getSelectedIndex() == 6 || startMonthComboBox.getSelectedIndex() == 9 || startMonthComboBox.getSelectedIndex() == 11){
+                    addDaysUntil(30, "start");
+                } else if (startMonthComboBox.getSelectedIndex() != 0){
+                    addDaysUntil(31, "start");
+                }
+            }
+        });
+
+        endDayComboBox.addItem("-- Select Day --");
+
+        endMonthComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+                endDayComboBox.removeAllItems();
+                endDayComboBox.addItem("-- Select Day --");
+                if (endMonthComboBox.getSelectedIndex() == 2){
+                    addDaysUntil(28, "end");
+                } else if (endMonthComboBox.getSelectedIndex() == 4 || endMonthComboBox.getSelectedIndex() == 6 || endMonthComboBox.getSelectedIndex() == 9 || endMonthComboBox.getSelectedIndex() == 11){
+                    addDaysUntil(30, "end");
+                } else if (endMonthComboBox.getSelectedIndex() != 0){
+                    addDaysUntil(31, "end");
+                }
+            }
+        });
+    }
+
+    public void addDaysUntil(int max, String type){
+        if (type.equals("start")){
+            for (int i = 1; i <= max; i++){
+                startDayComboBox.addItem(i);
+            }
+        } else if (type.equals("end")){
+            for (int i = 1; i <= max; i++){
+                endDayComboBox.addItem(i);
+            }
+        }
+
+    }
+
     public void addSelectReportData(){
         selectReportComboBox.addItem("-- Select --");
         selectReportComboBox.addItem("Ticket Stock Turnover");
@@ -169,6 +225,10 @@ public class CreateReportPage {
     }
 
     public void createReport(){
+
+        startDate = startYearComboBox.getSelectedItem().toString() + "-" + startMonthComboBox.getSelectedIndex() + "-" + startDayComboBox.getSelectedItem().toString();
+        endDate = endYearComboBox.getSelectedItem().toString() + "-" + endMonthComboBox.getSelectedIndex() + "-" + endDayComboBox.getSelectedItem().toString();
+
         if (selectReportComboBox.getSelectedIndex() == 1){
             createTicketStockReport();
             index = 1;
@@ -185,30 +245,40 @@ public class CreateReportPage {
                     "35cnYJLB");
 
 
-            String sql = "select Type,Number From in2018g16.Blank Where NewlyReceived = 1 And ReceivedDate BETWEEN '2017-01-01' and '2024-01-01' order by Type";
-            String sql1 = "select Type,Number From in2018g16.Blank Where NewlyReceived = 1 And ReceivedDate BETWEEN '2017-01-01' and '2024-01-01' And AdvisorCode != 1 order by Type";
-            String sql2 = "select AdvisorCode,Type,Number From in2018g16.Blank Where NewlyReceived = 0 And AssignedDate BETWEEN '2017-01-01' and '2024-01-01' And AdvisorCode != 1";
-            String sql3 = "select Type,Number From in2018g16.Blank Where UsedDate BETWEEN '2017-01-01' and '2024-01-01' And AdvisorCode != 1";
-            String sql4 = "select Type,Number From in2018g16.Blank Where ReceivedDate <= '2024-01-01' And UsedDate IS NULL";
-            String sql5 = "select AdvisorCode,Type,Number From in2018g16.Blank Where ReceivedDate <= '2024-01-01' And UsedDate IS NULL";
+            String sql = "select Type,Number From in2018g16.Blank Where NewlyReceived = 1 And ReceivedDate BETWEEN ? and ? order by Type";
+            String sql1 = "select Type,Number From in2018g16.Blank Where NewlyReceived = 1 And ReceivedDate BETWEEN ? and ? And AdvisorCode != 1 order by Type";
+            String sql2 = "select AdvisorCode,Type,Number From in2018g16.Blank Where NewlyReceived = 0 And AssignedDate BETWEEN ? and ? And AdvisorCode != 1";
+            String sql3 = "select Type,Number From in2018g16.Blank Where UsedDate BETWEEN ? and ? And AdvisorCode != 1";
+            String sql4 = "select Type,Number From in2018g16.Blank Where ReceivedDate <= ? And UsedDate IS NULL";
+            String sql5 = "select AdvisorCode,Type,Number From in2018g16.Blank Where ReceivedDate <= ? And UsedDate IS NULL";
 
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, startDate);
+            stmt.setString(2, endDate);
+            ResultSet rs = stmt.executeQuery();
 
-            Statement stmt1 = con.createStatement();
-            ResultSet rs1 = stmt1.executeQuery(sql1);
+            PreparedStatement stmt1 = con.prepareStatement(sql1);
+            stmt1.setString(1, startDate);
+            stmt1.setString(2, endDate);
+            ResultSet rs1 = stmt1.executeQuery();
 
-            Statement stmt2 = con.createStatement();
-            ResultSet rs2 = stmt2.executeQuery(sql2);
+            PreparedStatement stmt2 = con.prepareStatement(sql2);
+            stmt2.setString(1, startDate);
+            stmt2.setString(2, endDate);
+            ResultSet rs2 = stmt2.executeQuery();
 
-            Statement stmt3 = con.createStatement();
-            ResultSet rs3 = stmt3.executeQuery(sql3);
+            PreparedStatement stmt3 = con.prepareStatement(sql3);
+            stmt3.setString(1, startDate);
+            stmt3.setString(2, endDate);
+            ResultSet rs3 = stmt3.executeQuery();
 
-            Statement stmt4 = con.createStatement();
-            ResultSet rs4 = stmt4.executeQuery(sql4);
+            PreparedStatement stmt4 = con.prepareStatement(sql4);
+            stmt4.setString(1, endDate);
+            ResultSet rs4 = stmt4.executeQuery();
 
-            Statement stmt5 = con.createStatement();
-            ResultSet rs5 = stmt5.executeQuery(sql5);
+            PreparedStatement stmt5 = con.prepareStatement(sql5);
+            stmt5.setString(1, endDate);
+            ResultSet rs5 = stmt5.executeQuery();
 
             model = new DefaultTableModel();
             model.addColumn("Received Blank Type");
