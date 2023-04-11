@@ -934,9 +934,10 @@ public class CreateReportPage {
                             }
 
                             try {
-                                ExcelExporter exp=new ExcelExporter();
+                                ExcelExporter exp = new ExcelExporter();
 
-                                if (reportType.equals("Ticket Stock Report")){
+                                if (reportType.equals("Ticket Stock")){
+                                    tables.removeAll(tables);
                                     tables.add(table);
                                     tables.add(table1);
                                     tables.add(table2);
@@ -944,6 +945,7 @@ public class CreateReportPage {
                                     tables.add(table4);
                                     tables.add(table5);
                                 } else {
+                                    tables.removeAll(tables);
                                     tables.add(table);
                                     tables.add(table1);
                                 }
