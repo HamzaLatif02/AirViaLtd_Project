@@ -1,32 +1,42 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.*;
 
-public class LoginPage {
+public class LoginPage extends JPanel {
     private JPanel mainPanel;
     private JTextField emailTextField;
     private JPasswordField passwordTextField;
     private JPanel detailsPanel;
     private JPanel buttonsPanel;
     private JButton loginButton;
-    private JLabel jobTitleLabel;
+    private JLabel jobTitleIcon;
     private JComboBox jobTitleComboBox;
     private JPanel titlePanel;
     private JLabel emailIcon;
     private JLabel passwordIcon;
+    private JLabel airViaLtdIcon;
 
     private AirViaLtd app;
     private String user;
 
     private String loginEmail;
 
+    private ImageIcon staffIcon;
     private ImageIcon userIcon;
     private ImageIcon lockIcon;
+
+    private ImageIcon bgIcon;
+
+    private ImageIcon airviaIcon;
+
+    private JLabel imageLabel;
 
 
     public LoginPage(AirViaLtd a) {
@@ -35,19 +45,34 @@ public class LoginPage {
 
         this.user = "";
 
+        staffIcon = new ImageIcon("data/staff.png");
         userIcon = new ImageIcon("data/user.png");
         lockIcon = new ImageIcon("data/lock.png");
+        bgIcon = new ImageIcon("data/background2.png");
+        airviaIcon = new ImageIcon("data/airvialogo.png");
+
+        emailTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        passwordTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+
+        //loginButton.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.WHITE));
+        loginButton.setPreferredSize(new Dimension(250, 50));
+        loginButton.setBorder(new LineBorder(Color.WHITE, 1));
 
         addJobTitles();
         addEmailTextListener();
         addPasswordTextListener();
 
+        jobTitleIcon.setIcon(staffIcon);
         emailIcon.setIcon(userIcon);
         passwordIcon.setIcon(lockIcon);
+        airViaLtdIcon.setIcon(airviaIcon);
 
         loginListener();
 
     }
+
+
+
     public JPanel getMainPanel() {
         return mainPanel;
     }
