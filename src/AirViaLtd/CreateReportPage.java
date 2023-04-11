@@ -1,12 +1,18 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class CreateReportPage {
     private JPanel mainPanel;
@@ -64,11 +70,14 @@ public class CreateReportPage {
     private int totalTotalCommission;
     private int totalTotalProfit;
 
+    private String reportType;
+
     private AirViaLtd app;
 
     public CreateReportPage(AirViaLtd a) {
         this.app = a;
         this.reportCreated = false;
+        this.reportType = "";
 
         addMenuButtonsListener();
         addDateComboBoxData();
@@ -77,6 +86,7 @@ public class CreateReportPage {
         addIndividualOrGlobal();
         addTravelAdvisorData();
         addCreateButtonListener();
+        addDownloadButtonListener();
         addNextButtonListener();
         addPreviousButtonListener();
     }
@@ -257,18 +267,23 @@ public class CreateReportPage {
 
         if (selectReportComboBox.getSelectedIndex() == 1){
             createTicketStockReport();
+            reportType = "Ticket Stock";
             index = 0;
         } else if (selectReportComboBox.getSelectedIndex() == 2 && individualGlobalComboBox.getSelectedIndex() == 1){
             createInterlineIndividualSalesReport();
+            reportType = "Interline Individual Sales";
             index = 0;
         } else if (selectReportComboBox.getSelectedIndex() == 2 && individualGlobalComboBox.getSelectedIndex() == 2){
             createInterlineGlobalSalesReport();
+            reportType = "Interline Global Sales";
             index = 0;
         } else if (selectReportComboBox.getSelectedIndex() == 3 && individualGlobalComboBox.getSelectedIndex() == 1){
             createDomesticIndividualSalesReport();
+            reportType = "Domestic Individual Sales";
             index = 0;
         } else if (selectReportComboBox.getSelectedIndex() == 3 && individualGlobalComboBox.getSelectedIndex() == 2){
             createDomesticGlobalSalesReport();
+            reportType = "Domestic Global Sales";
             index = 0;
         }
 
@@ -879,5 +894,74 @@ public class CreateReportPage {
                 }
             }
         });
+    }
+
+    public void addDownloadButtonListener(){
+            downloadButton.addActionListener(new ActionListener() {
+
+                ArrayList<JTable> tables= new ArrayList<JTable>();
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JFileChooser fileChooser = new JFileChooser();
+
+                    fileChooser.setAcceptAllFileFilterUsed(false);
+                    fileChooser.addChoosableFileFilter(new FileFilter() {
+                        @Override
+                        public boolean accept(File f) {
+                            if (f.isDirectory()){
+                                return true;
+                            } else {
+                                return f.getName().toLowerCase().endsWith(".xls");
+                            }
+                        }
+
+                        @Override
+                        public String getDescription() {
+                            return "Excel (.xls)";
+                        }
+                    });
+
+                    int retval = fileChooser.showSaveDialog(downloadButton);
+
+                    File file = null;
+                    if (retval == JFileChooser.APPROVE_OPTION) {
+                        file = fileChooser.getSelectedFile();
+                        if (file != null) {
+                            if (!file.getName().toLowerCase().endsWith(".xls")) {
+                                file = new File(file.getParentFile(), file.getName() + ".xls");
+                                //System.out.println(file);
+                            }
+
+                            try {
+                                ExcelExporter exp=new ExcelExporter();
+
+                                if (reportType.equals("Ticket Stock Report")){
+                                    tables.add(table);
+                                    tables.add(table1);
+                                    tables.add(table2);
+                                    tables.add(table3);
+                                    tables.add(table4);
+                                    tables.add(table5);
+                                } else {
+                                    tables.add(table);
+                                    tables.add(table1);
+                                }
+
+                                exp.exportTable(tables, file);
+
+                                JOptionPane.showMessageDialog(null, "Report exported successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            } catch (FileNotFoundException ex) {
+                                ex.printStackTrace();
+                                System.out.println("not found");
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+
+                    //System.out.println(file);
+                }
+            });
     }
 }

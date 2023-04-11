@@ -49,11 +49,6 @@ public class AirViaLtd {
 
     private JPanel currentPanel;
 
-    private JPanel previousPanel;
-
-    private JPanel homepage;
-
-
     public AirViaLtd() {
 
         loginPage = new LoginPage(this);
@@ -94,8 +89,6 @@ public class AirViaLtd {
         removeTravelAdvisorAccountPage = new RemoveTravelAdvisorAccountPage(this);
 
         currentPanel = new JPanel();
-        previousPanel = new JPanel();
-        homepage = new JPanel();
 
         frame = new JFrame("AirViaLtd");
 
@@ -266,7 +259,6 @@ public class AirViaLtd {
     }
 
     public void transitionToManageUsersPage(){
-        previousPanel = currentPanel;
         frame.remove(currentPanel);
         manageUsersPage = new ManageUsersPage(this);
         frame.add(manageUsersPage.getMainPanel());
@@ -406,6 +398,10 @@ public class AirViaLtd {
             frame.remove(blankStockPage.getBlankStockScrollPane());
         }
 
+        if (createReportPage.getReportScrollPane() != null){
+            frame.remove(createReportPage.getReportScrollPane());
+        }
+
 
     }
 
@@ -426,7 +422,6 @@ public class AirViaLtd {
     public void addReportToPage(){
         frame.add(createReportPage.getReportScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
-        currentPanel.add(createReportPage.getReportScrollPane());
     }
 
     public SellTicketPage getSellTicketPage() {
