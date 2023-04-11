@@ -42,7 +42,7 @@ public class BlankManagerPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                app.transitionToHomepage();
             }
         });
 

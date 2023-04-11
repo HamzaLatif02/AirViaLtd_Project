@@ -64,7 +64,7 @@ public class BlankStockPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                app.transitionToHomepage();
             }
         });
     }

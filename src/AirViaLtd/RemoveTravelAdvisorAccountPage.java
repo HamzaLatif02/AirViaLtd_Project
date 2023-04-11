@@ -54,7 +54,7 @@ public class RemoveTravelAdvisorAccountPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                app.transitionToManageTravelAdvisorPage();
             }
         });
     }

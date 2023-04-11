@@ -46,7 +46,7 @@ public class SecurityPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                app.transitionToHomepage();
             }
         });
     }

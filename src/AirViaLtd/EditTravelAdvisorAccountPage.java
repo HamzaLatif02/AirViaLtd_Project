@@ -53,7 +53,7 @@ public class EditTravelAdvisorAccountPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                app.transitionToManageTravelAdvisorPage();
             }
         });
     }

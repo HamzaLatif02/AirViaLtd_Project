@@ -48,6 +48,9 @@ public class AirViaLtd {
     private RemoveTravelAdvisorAccountPage removeTravelAdvisorAccountPage;
 
     private JPanel currentPanel;
+
+    private JPanel previousPanel;
+
     private JPanel homepage;
 
 
@@ -91,6 +94,7 @@ public class AirViaLtd {
         removeTravelAdvisorAccountPage = new RemoveTravelAdvisorAccountPage(this);
 
         currentPanel = new JPanel();
+        previousPanel = new JPanel();
         homepage = new JPanel();
 
         frame = new JFrame("AirViaLtd");
@@ -107,7 +111,6 @@ public class AirViaLtd {
     }
 
     public void transitionToOfficeManagerHomePage(){
-        //frame.dispose();
         frame.remove(loginPage.getMainPanel());
         officeManagerHomePage = new OfficeManagerHomePage(this);
         frame.add(officeManagerHomePage.getMainPanel());
@@ -263,6 +266,7 @@ public class AirViaLtd {
     }
 
     public void transitionToManageUsersPage(){
+        previousPanel = currentPanel;
         frame.remove(currentPanel);
         manageUsersPage = new ManageUsersPage(this);
         frame.add(manageUsersPage.getMainPanel());
@@ -431,6 +435,18 @@ public class AirViaLtd {
 
     public IssueRefundPage getIssueRefundPage() {
         return issueRefundPage;
+    }
+
+    public OfficeManagerHomePage getOfficeManagerHomePage() {
+        return officeManagerHomePage;
+    }
+
+    public TravelAdvisorHomePage getTravelAdvisorHomePage() {
+        return travelAdvisorHomePage;
+    }
+
+    public AdministratorHomePage getAdministratorHomePage() {
+        return administratorHomePage;
     }
 
     public static void main(String[] args){

@@ -40,6 +40,13 @@ public class CommissionPage {
                 app.transitionToHomepage();
             }
         });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.transitionToHomepage();
+            }
+        });
     }
 
     public void addCommissionRates(){

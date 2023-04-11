@@ -50,6 +50,11 @@ public class CreateCustomerAccountPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (app.getCurrentHomepage().equals(app.getAdministratorHomePage().getMainPanel()) || app.getCurrentHomepage().equals(app.getOfficeManagerHomePage().getMainPanel())){
+                    app.transitionToManageCustomerPage();
+                } else if (app.getCurrentHomepage().equals(app.getTravelAdvisorHomePage().getMainPanel())){
+                    app.transitionToHomepage();
+                }
 
             }
         });

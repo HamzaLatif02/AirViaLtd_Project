@@ -38,7 +38,11 @@ public class ManageCustomerPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if (app.getCurrentHomepage().equals(app.getAdministratorHomePage().getMainPanel())){
+                    app.transitionToManageUsersPage();
+                } else if (app.getCurrentHomepage().equals(app.getOfficeManagerHomePage().getMainPanel())){
+                    app.transitionToHomepage();
+                }
             }
         });
         createCustomerAccountButton.addActionListener(new ActionListener() {

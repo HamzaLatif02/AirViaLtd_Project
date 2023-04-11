@@ -59,7 +59,8 @@ public class AddBlankPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                app.removeTables();
+                app.transitionToBlankManagerPage();
             }
         });
     }

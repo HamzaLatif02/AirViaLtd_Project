@@ -55,7 +55,8 @@ public class ReallocateBlankPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                app.removeTables();
+                app.transitionToBlankManagerPage();
             }
         });
     }

@@ -39,7 +39,7 @@ public class ManageTravelAdvisorPage {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                app.transitionToManageUsersPage();
             }
         });
 
