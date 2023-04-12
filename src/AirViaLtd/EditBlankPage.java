@@ -1,7 +1,9 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -30,14 +32,46 @@ public class EditBlankPage {
     private JScrollPane blankStockScrollPane;
     private DefaultTableModel model;
     private JTable table;
+
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
+
     private AirViaLtd app;
     public EditBlankPage(AirViaLtd a) {
         this.app = a;
-
+        setGraphics();
         addMenuButtonsListener();
         addTableData();
         addBlankSelectedFieldsText();
         addApplyChangesButtonListener();
+    }
+
+    public void setGraphics(){
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        IDTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        typeTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        numberTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        newlyReceivedTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        receivedDateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        assignedDateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        usedDateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        advisorCodeTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        auditCouponIDTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+
+        applyChangesButton.setPreferredSize(new Dimension(250, 50));
+        applyChangesButton.setBorder(new LineBorder(Color.WHITE, 1));
+
+
     }
 
     public JPanel getMainPanel() {

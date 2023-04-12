@@ -1,6 +1,8 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,12 +20,40 @@ public class BlankManagerPage {
     private JButton homeButton;
     private JButton backButton;
 
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
     private AirViaLtd app;
 
     public BlankManagerPage(AirViaLtd a) {
         this.app = a;
-
+        setGraphics();
         addButtonsListener();
+    }
+
+    public void setGraphics(){
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+
+        addBlankButton.setPreferredSize(new Dimension(250, 50));
+        addBlankButton.setBorder(new LineBorder(Color.WHITE, 1));
+        editBlankButton.setPreferredSize(new Dimension(250, 50));
+        editBlankButton.setBorder(new LineBorder(Color.WHITE, 1));
+        removeBlankButton.setPreferredSize(new Dimension(250, 50));
+        removeBlankButton.setBorder(new LineBorder(Color.WHITE, 1));
+        allocateBlankButton.setPreferredSize(new Dimension(250, 50));
+        allocateBlankButton.setBorder(new LineBorder(Color.WHITE, 1));
+        reallocateBlankButton.setPreferredSize(new Dimension(250, 50));
+        reallocateBlankButton.setBorder(new LineBorder(Color.WHITE, 1));
+
     }
 
     public JPanel getMainPanel() {

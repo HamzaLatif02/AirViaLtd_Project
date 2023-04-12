@@ -3,10 +3,10 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="500" height="427"/>
     </constraints>
     <properties>
-      <background color="-1"/>
+      <background color="-16772025"/>
     </properties>
     <border type="none"/>
     <children>
@@ -15,149 +15,212 @@
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16769429"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="40829" class="javax.swing.JLabel">
+          <component id="40829" class="javax.swing.JLabel" binding="discountPlanLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="48" style="0"/>
+              <foreground color="-1"/>
               <text value="DISCOUNT PLAN"/>
             </properties>
           </component>
         </children>
       </grid>
-      <grid id="10108" binding="featurePanel" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="10108" binding="featurePanel" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16772025"/>
+          <font/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="971f0" class="javax.swing.JLabel" binding="selectCustomerLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
               <text value="Select Customer"/>
             </properties>
           </component>
           <component id="70911" class="javax.swing.JComboBox" binding="customerComboBox">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-16772025"/>
+            </properties>
           </component>
           <component id="d93f" class="javax.swing.JLabel" binding="selectMonthLabel">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
               <text value="Select Month"/>
             </properties>
           </component>
           <component id="b40d8" class="javax.swing.JLabel" binding="salesDuringThisPeriodLabel">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
               <text value="Sales during this period:"/>
             </properties>
           </component>
           <component id="78076" class="javax.swing.JTextField" binding="salesTextField">
             <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
             <properties>
+              <background color="-16772025"/>
               <editable value="false"/>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
             </properties>
           </component>
           <component id="d681b" class="javax.swing.JLabel" binding="selectDiscountPlanLabel">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
               <text value="Select Discount Plan"/>
             </properties>
           </component>
           <component id="d35fe" class="javax.swing.JComboBox" binding="discountPlanComboBox">
             <constraints>
-              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-16772025"/>
+            </properties>
           </component>
           <component id="f4ea5" class="javax.swing.JLabel" binding="discountPercentageLabel">
             <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
               <text value="Discount Percentage"/>
             </properties>
           </component>
           <component id="b996b" class="javax.swing.JTextField" binding="discountPercentageTextField">
             <constraints>
-              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
             <properties>
+              <background color="-16772025"/>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
               <text value=""/>
             </properties>
           </component>
           <component id="eaff1" class="javax.swing.JButton" binding="setDiscountButton" default-binding="true">
             <constraints>
-              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Set Discount"/>
+              <background color="-1"/>
+              <font name="Inter" size="20" style="0"/>
+              <foreground color="-1"/>
+              <text value="SET DISCOUNT"/>
             </properties>
           </component>
           <component id="3b7ce" class="javax.swing.JComboBox" binding="monthComboBox">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-16772025"/>
+            </properties>
           </component>
           <component id="f0989" class="javax.swing.JLabel" binding="selectYearLabel">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
               <text value="Select Year"/>
             </properties>
           </component>
           <component id="e6d17" class="javax.swing.JComboBox" binding="yearComboBox">
             <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-16772025"/>
+            </properties>
           </component>
           <component id="aba28" class="javax.swing.JButton" binding="getSalesButton" default-binding="true">
             <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Get Sales"/>
+              <background color="-1"/>
+              <font name="Inter" size="20" style="0"/>
+              <foreground color="-1"/>
+              <text value="GET SALES"/>
             </properties>
           </component>
           <component id="8c574" class="javax.swing.JLabel" binding="selectFlexibleDiscountPlanLabel">
             <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-1"/>
               <text value="View Flexible Discount Plans"/>
             </properties>
           </component>
           <component id="d2a0c" class="javax.swing.JComboBox" binding="flexibleDiscountComboBox">
             <constraints>
-              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <font name="Inter" size="16" style="0"/>
+              <foreground color="-16772025"/>
+            </properties>
           </component>
+          <hspacer id="d3b91">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="1aac3">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
         </children>
       </grid>
       <grid id="2e3f7" binding="menuPanel" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -165,7 +228,9 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16766834"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="90137" class="javax.swing.JButton" binding="homeButton" default-binding="true">
@@ -173,7 +238,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Home"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="dbcad" class="javax.swing.JButton" binding="backButton" default-binding="true">
@@ -181,7 +246,7 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Back"/>
+              <text value=""/>
             </properties>
           </component>
           <hspacer id="19ebb">

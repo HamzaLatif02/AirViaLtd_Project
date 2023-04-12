@@ -1,7 +1,9 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -25,18 +27,39 @@ public class AllocateBlankPage {
     private JScrollPane notAssignedBlanksScrollPane;
     private DefaultTableModel model;
 
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
+
     private AirViaLtd app;
 
 
     public AllocateBlankPage(AirViaLtd a) {
         this.app = a;
-
+        setGraphics();
         addMenuButtonsListener();
         addTableData();
         addTravelAdvisors();
         addAssignButtonListener();
         addSelectedBlankText();
 
+    }
+
+    public void setGraphics() {
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        selectedBlankTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+
+        allocateButton.setPreferredSize(new Dimension(250, 50));
+        allocateButton.setBorder(new LineBorder(Color.WHITE, 1));
     }
 
     public JPanel getMainPanel() {

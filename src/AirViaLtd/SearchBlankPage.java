@@ -1,7 +1,9 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -48,17 +50,58 @@ public class SearchBlankPage {
 
     private int searchedBlankID;
 
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
+
     private AirViaLtd app;
 
     public SearchBlankPage(AirViaLtd a) {
         this.app = a;
-
+        setGraphics();
         addMenuButtonsListener();
         addSearchTypeData();
         addSearchNumberData();
         addSearchButtonListener();
         addNextButtonListener();
         addPreviousButtonListener();
+
+    }
+
+    public void setGraphics(){
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        IDTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        typeTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        numberTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        newlyReceivedTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        receivedDateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        assignedDateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        usedDateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        advisorCodeTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        auditCouponIDTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        fcIDTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        departureCityTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        arrivalCityTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        departureDateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        arrivalDateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        departureTimeTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        arrivalTimeTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+
+        searchButton.setPreferredSize(new Dimension(250, 50));
+        searchButton.setBorder(new LineBorder(Color.WHITE, 1));
+        previousButton.setPreferredSize(new Dimension(250, 50));
+        previousButton.setBorder(new LineBorder(Color.WHITE, 1));
+        nextButton.setPreferredSize(new Dimension(250, 50));
+        nextButton.setBorder(new LineBorder(Color.WHITE, 1));
 
     }
 

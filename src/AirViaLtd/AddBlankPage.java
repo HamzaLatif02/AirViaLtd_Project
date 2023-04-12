@@ -1,6 +1,8 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -34,14 +36,41 @@ public class AddBlankPage {
 
     private int selectedID;
 
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
     private AirViaLtd app;
 
     public AddBlankPage(AirViaLtd a) {
         this.app = a;
+        setGraphics();
         addMenuButtonsListener();
         addBlankTypeComboBoxData();
         addSingleButtonListener();
         addMultipleButtonListener();
+    }
+
+    public void setGraphics(){
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        singleBlankNumberTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        multipleStartBlankNumberTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        multipleEndBlankNumberTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+
+
+        addSingleButton.setPreferredSize(new Dimension(250, 50));
+        addSingleButton.setBorder(new LineBorder(Color.WHITE, 1));
+        addMultipleButton.setPreferredSize(new Dimension(250, 50));
+        addMultipleButton.setBorder(new LineBorder(Color.WHITE, 1));
+
     }
 
     public JPanel getMainPanel() {
