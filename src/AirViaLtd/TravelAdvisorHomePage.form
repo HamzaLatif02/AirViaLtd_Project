@@ -6,7 +6,7 @@
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties>
-      <background color="-1"/>
+      <background color="-16772025"/>
     </properties>
     <border type="none"/>
     <children>
@@ -15,7 +15,9 @@
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16769429"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="4ea30" class="javax.swing.JLabel" binding="homepageLabel">
@@ -23,6 +25,9 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Inter" size="48" style="0"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
               <text value="HOMEPAGE"/>
             </properties>
           </component>
@@ -33,39 +38,53 @@
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16772025"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="2638" class="javax.swing.JButton" binding="issueRefundButton" default-binding="true">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Issue Refund"/>
+              <background color="-1"/>
+              <font name="Inter" size="20" style="0"/>
+              <foreground color="-1"/>
+              <text value="ISSUE REFUND"/>
             </properties>
           </component>
           <component id="e422a" class="javax.swing.JButton" binding="createReportButton" default-binding="true">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Create Report"/>
+              <background color="-1"/>
+              <font name="Inter" size="20" style="0"/>
+              <foreground color="-1"/>
+              <text value="CREATE REPORT"/>
             </properties>
           </component>
           <component id="83392" class="javax.swing.JButton" binding="sellTicketButton" default-binding="true">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Sell Ticket"/>
+              <background color="-1"/>
+              <font name="Inter" size="20" style="0"/>
+              <foreground color="-1"/>
+              <text value="SELL TICKET"/>
             </properties>
           </component>
           <component id="f4196" class="javax.swing.JButton" binding="createCustomerAccountButton" default-binding="true">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Create Customer Account"/>
+              <background color="-1"/>
+              <font name="Inter" size="20" style="0"/>
+              <foreground color="-1"/>
+              <text value="CREATE CUSTOMER"/>
             </properties>
           </component>
         </children>
@@ -75,15 +94,17 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16766834"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="9cd9f" class="javax.swing.JButton" binding="logOutButton" default-binding="true">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Log Out"/>
+              <text value=""/>
             </properties>
           </component>
           <hspacer id="e68b0">

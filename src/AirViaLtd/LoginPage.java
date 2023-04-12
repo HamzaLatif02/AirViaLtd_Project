@@ -54,7 +54,7 @@ public class LoginPage extends JPanel {
         emailTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
         passwordTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
 
-        //loginButton.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.WHITE));
+
         loginButton.setPreferredSize(new Dimension(250, 50));
         loginButton.setBorder(new LineBorder(Color.WHITE, 1));
 

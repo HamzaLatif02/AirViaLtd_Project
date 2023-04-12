@@ -1,6 +1,8 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,12 +18,36 @@ public class TravelAdvisorHomePage {
     private JPanel menuPanel;
     private JButton logOutButton;
 
+    private ImageIcon logoutIcon;
+
     private AirViaLtd app;
 
     public TravelAdvisorHomePage(AirViaLtd a) {
         this.app = a;
 
+        setGraphics();
         addButtonsListener();
+    }
+
+    public void setGraphics(){
+
+        logoutIcon = new ImageIcon("data/logout.png");
+        logOutButton.setPreferredSize(new Dimension(100, 30));
+        logOutButton.setBorderPainted(false);
+        logOutButton.setIcon(logoutIcon);
+
+        homepageLabel.setPreferredSize(new Dimension(500, 100));
+        homepageLabel.setBorder(new LineBorder(Color.WHITE, 1));
+
+        sellTicketButton.setPreferredSize(new Dimension(250, 50));
+        sellTicketButton.setBorder(new LineBorder(Color.WHITE, 1));
+        issueRefundButton.setPreferredSize(new Dimension(250, 50));
+        issueRefundButton.setBorder(new LineBorder(Color.WHITE, 1));
+        createReportButton.setPreferredSize(new Dimension(250, 50));
+        createReportButton.setBorder(new LineBorder(Color.WHITE, 1));
+        createCustomerAccountButton.setPreferredSize(new Dimension(250, 50));
+        createCustomerAccountButton.setBorder(new LineBorder(Color.WHITE, 1));
+
     }
 
     public JPanel getMainPanel() {
