@@ -79,6 +79,9 @@ public class LoginPage extends JPanel {
 
     public String getUser() { return user; }
 
+    public JTextField getEmailTextField() {
+        return emailTextField;
+    }
 
     public void addJobTitles(){
         jobTitleComboBox.addItem("-- Select --");
@@ -192,10 +195,7 @@ public class LoginPage extends JPanel {
                 if (!rs.isBeforeFirst() ) {
                     JOptionPane.showMessageDialog(getMainPanel(), "Invalid login, please try again", "Invalid Login", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    app.getSellTicketPage().addAdvisorCode(emailTextField.getText());
-                    app.getSellTicketPage().addBlanks();
-                    app.getIssueRefundPage().addAdvisorCode(emailTextField.getText());
-                    app.getIssueRefundPage().addBlanks();
+
                     this.user = jobTitleComboBox.getSelectedItem().toString();
                     switch (jobTitleComboBox.getSelectedIndex()){
                         case 1:

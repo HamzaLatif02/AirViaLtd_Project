@@ -2,6 +2,8 @@ package AirViaLtd;
 
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
@@ -13,7 +15,6 @@ public class SellTicketPage {
     private JLabel selectBlankLabel;
     private JTextField interlineDomesticTextField;
     private JTextField basePriceTextField;
-    private JLabel customerEmailAddressLabel;
     private JTextField customerEmailAddressTextField;
     private JComboBox commissionRateComboBox;
     private JLabel selectCommissionRateLabel;
@@ -57,8 +58,12 @@ public class SellTicketPage {
 
     private int selectedTicketNumber;
 
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
+
     public SellTicketPage(AirViaLtd a) {
         this.app = a;
+        setGraphics();
         addMenuButtonsListener();
         addBlankComboBoxListener();
         addCalculateButtonTotalListener();
@@ -68,6 +73,42 @@ public class SellTicketPage {
         addPaymentDetails();
         addDiscountedPrice();
         addSellButtonListener();
+    }
+
+    public void setGraphics() {
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        interlineDomesticTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        basePriceTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        customerEmailAddressTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        firstNameTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        lastNameTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        advisorCodeTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        localTaxesTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        otherTaxesTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        totalPriceTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        discountedPriceTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        commissionAmountTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        cardTypeTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        cardNumberTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        conversionRateTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+
+
+        calculateTotalButton.setPreferredSize(new Dimension(250, 50));
+        calculateTotalButton.setBorder(new LineBorder(Color.WHITE, 1));
+        searchButton.setPreferredSize(new Dimension(250, 50));
+        searchButton.setBorder(new LineBorder(Color.WHITE, 1));
+        sellButton.setPreferredSize(new Dimension(250, 50));
+        sellButton.setBorder(new LineBorder(Color.WHITE, 1));
     }
 
     public JPanel getMainPanel() {

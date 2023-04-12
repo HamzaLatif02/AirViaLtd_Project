@@ -238,6 +238,8 @@ public class AirViaLtd {
     public void transitionToIssueRefundPage(){
         frame.remove(currentPanel);
         issueRefundPage = new IssueRefundPage(this);
+        issueRefundPage.addAdvisorCode(loginPage.getEmailTextField().getText());
+        issueRefundPage.addBlanks();
         frame.add(issueRefundPage.getMainPanel());
         frame.setVisible(true);
         currentPanel = issueRefundPage.getMainPanel();
@@ -246,6 +248,8 @@ public class AirViaLtd {
     public void transitionToSellTicketPage(){
         frame.remove(currentPanel);
         sellTicketPage = new SellTicketPage(this);
+        sellTicketPage.addAdvisorCode(loginPage.getEmailTextField().getText());
+        sellTicketPage.addBlanks();
         frame.add(sellTicketPage.getMainPanel());
         frame.setVisible(true);
         currentPanel = sellTicketPage.getMainPanel();
