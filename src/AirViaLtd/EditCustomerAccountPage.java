@@ -1,6 +1,8 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -28,14 +30,41 @@ public class EditCustomerAccountPage {
 
     private String selectedEmail;
 
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
+
     private AirViaLtd app;
 
     public EditCustomerAccountPage(AirViaLtd a) {
         this.app = a;
+        setGraphics();
         addMenuButtonsListener();
         addCustomers();
         addCustomerComboBoxListener();
         addEditButtonListener();
+    }
+
+    public void setGraphics(){
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        firstNameTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        lastNameTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        emailAddressTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        fixedDiscountTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        flexibleDiscountTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+
+        editButton.setPreferredSize(new Dimension(250, 50));
+        editButton.setBorder(new LineBorder(Color.WHITE, 1));
+
     }
 
     public JPanel getMainPanel() {

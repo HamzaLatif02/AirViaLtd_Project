@@ -42,33 +42,33 @@ public class LoginPage extends JPanel {
     public LoginPage(AirViaLtd a) {
 
         this.app = a;
-
         this.user = "";
 
+        setGraphics();
+        addJobTitles();
+        addEmailTextListener();
+        addPasswordTextListener();
+        loginListener();
+
+    }
+
+    public void setGraphics(){
         staffIcon = new ImageIcon("data/staff.png");
         userIcon = new ImageIcon("data/user.png");
         lockIcon = new ImageIcon("data/lock.png");
         bgIcon = new ImageIcon("data/background2.png");
         airviaIcon = new ImageIcon("data/airvialogo.png");
 
-        emailTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
-        passwordTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
-
-
-        loginButton.setPreferredSize(new Dimension(250, 50));
-        loginButton.setBorder(new LineBorder(Color.WHITE, 1));
-
-        addJobTitles();
-        addEmailTextListener();
-        addPasswordTextListener();
-
         jobTitleIcon.setIcon(staffIcon);
         emailIcon.setIcon(userIcon);
         passwordIcon.setIcon(lockIcon);
         airViaLtdIcon.setIcon(airviaIcon);
 
-        loginListener();
+        emailTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+        passwordTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
 
+        loginButton.setPreferredSize(new Dimension(250, 50));
+        loginButton.setBorder(new LineBorder(Color.WHITE, 1));
     }
 
 

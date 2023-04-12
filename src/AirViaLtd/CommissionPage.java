@@ -1,6 +1,8 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -17,15 +19,39 @@ public class CommissionPage {
     private JPanel menuPanel;
     private JButton homeButton;
     private JButton backButton;
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
 
     private AirViaLtd app;
 
     public CommissionPage(AirViaLtd a) {
         this.app = a;
+        setGraphics();
         addMenuButtonsListener();
         addCommissionRates();
         addAddButtonListener();
         addDeleteButtonListener();
+
+    }
+
+    public void setGraphics(){
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        commissionRateTextField.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
+
+        addButton.setPreferredSize(new Dimension(250, 50));
+        addButton.setBorder(new LineBorder(Color.WHITE, 1));
+        deleteButton.setPreferredSize(new Dimension(250, 50));
+        deleteButton.setBorder(new LineBorder(Color.WHITE, 1));
 
     }
 

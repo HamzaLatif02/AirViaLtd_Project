@@ -1,6 +1,8 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -19,15 +21,38 @@ public class SecurityPage {
     private JButton homeButton;
     private JButton backButton;
 
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
+
 
     private AirViaLtd app;
 
     public SecurityPage(AirViaLtd a) {
 
         this.app = a;
+        setGraphics();
         addMenuButtonsListener();
         addBackupButtonListener();
         //addRestoreButtonListener();
+
+    }
+
+    public void setGraphics(){
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        backUpDataButton.setPreferredSize(new Dimension(250, 50));
+        backUpDataButton.setBorder(new LineBorder(Color.WHITE, 1));
+        restoreDataButton.setPreferredSize(new Dimension(250, 50));
+        restoreDataButton.setBorder(new LineBorder(Color.WHITE, 1));
 
     }
 

@@ -1,7 +1,9 @@
 package AirViaLtd;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -28,11 +30,14 @@ public class BlankStockPage {
 
     private int counter;
 
+    private ImageIcon homeIcon;
+    private ImageIcon backIcon;
+
     private AirViaLtd app;
 
     public BlankStockPage(AirViaLtd a) {
         this.app = a;
-
+        setGraphics();
         addMenuButtonsListener();
         addTableData();
         addIDButtonListener();
@@ -42,6 +47,32 @@ public class BlankStockPage {
         addNotAssignedButtonListener();
         addUsedButtonListener();
 
+    }
+
+    public void setGraphics(){
+
+        homeIcon = new ImageIcon("data/home.png");
+        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setBorderPainted(false);
+        homeButton.setIcon(homeIcon);
+
+        backIcon = new ImageIcon("data/back.png");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setBorderPainted(false);
+        backButton.setIcon(backIcon);
+
+        IDButton.setPreferredSize(new Dimension(250, 50));
+        IDButton.setBorder(new LineBorder(Color.WHITE, 1));
+        typeButton.setPreferredSize(new Dimension(250, 50));
+        typeButton.setBorder(new LineBorder(Color.WHITE, 1));
+        dateButton.setPreferredSize(new Dimension(250, 50));
+        dateButton.setBorder(new LineBorder(Color.WHITE, 1));
+        travelAdvisorButton.setPreferredSize(new Dimension(250, 50));
+        travelAdvisorButton.setBorder(new LineBorder(Color.WHITE, 1));
+        notAssignedButton.setPreferredSize(new Dimension(250, 50));
+        notAssignedButton.setBorder(new LineBorder(Color.WHITE, 1));
+        usedButton.setPreferredSize(new Dimension(250, 50));
+        usedButton.setBorder(new LineBorder(Color.WHITE, 1));
 
     }
 

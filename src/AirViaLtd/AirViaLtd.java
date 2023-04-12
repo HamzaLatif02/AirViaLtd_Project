@@ -420,6 +420,7 @@ public class AirViaLtd {
     }
 
     public void addReportToPage(){
+        frame.remove(createReportPage.getReportScrollPane());
         frame.add(createReportPage.getReportScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
     }
