@@ -160,12 +160,14 @@ public class ReallocateBlankPage {
 
                     if (reply == JOptionPane.YES_OPTION){
 
-                        int blankID = (int) table.getValueAt(table.getSelectedRow(), 0);
+
                         String ta = (String) travelAdvisorComboBox.getSelectedItem();
                         String[] splitTaSelected = ta.split("\\s+");
                         int taID = Integer.valueOf(splitTaSelected[0]);
 
                         String date = java.time.LocalDate.now().toString();
+
+                        int[] selection = table.getSelectedRows();
 
                         Connection con = null;
 
@@ -177,23 +179,28 @@ public class ReallocateBlankPage {
                                     "35cnYJLB");
                             con.setAutoCommit(false);
 
-                            String sql = "update in2018g16.Blank set AdvisorCode = ?, AssignedDate = ? where ID = ? ";
+                            for (int i=0; i< selection.length; i++){
 
-                            PreparedStatement stmt = con.prepareStatement(sql);
+                                int blankID = (int) table.getValueAt(selection[i], 0);
 
-                            stmt.setInt(1, taID);
-                            stmt.setString(2, date);
-                            stmt.setInt(3, blankID);
+                                String sql = "update in2018g16.Blank set AdvisorCode = ?, AssignedDate = ? where ID = ? ";
 
-                            int rs = stmt.executeUpdate();
+                                PreparedStatement stmt = con.prepareStatement(sql);
 
-                            con.commit();
+                                stmt.setInt(1, taID);
+                                stmt.setString(2, date);
+                                stmt.setInt(3, blankID);
 
-                            if (rs != 0){
-                                JOptionPane.showMessageDialog(null, rs + " rows updated", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
-                            } else {
-                                JOptionPane.showMessageDialog(null, "No rows were updated, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
+                                int rs = stmt.executeUpdate();
+
+                                con.commit();
+
+                                if (rs == 0){
+                                    JOptionPane.showMessageDialog(null, "No rows were updated, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
+                                }
                             }
+
+                            JOptionPane.showMessageDialog(null, selection.length + " rows updated", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
 
 
                         }catch(Exception ex){
@@ -222,9 +229,14 @@ public class ReallocateBlankPage {
     }
 
     public boolean validSelectedItems(){
-        if (travelAdvisorComboBox.getSelectedIndex() == 0 || table.getSelectedRow() == -1){
-            return false;
+        int[] selection = table.getSelectedRows();
+
+        for (int i = 0; i < selection.length; i++){
+            if (travelAdvisorComboBox.getSelectedIndex() == 0 || table.getSelectedRow() == -1){
+                return false;
+            }
         }
+
         return true;
     }
 
