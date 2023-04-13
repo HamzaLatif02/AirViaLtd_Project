@@ -262,8 +262,8 @@ public class AddBlankPage {
                         }
 
                         if (successfulQuery){
-                            JOptionPane.showMessageDialog(null, difference + " blanks added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
-                            JOptionPane.showMessageDialog(null, difference + " tickets added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, difference+1 + " blanks added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, difference+1 + " tickets added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
 
                             multipleStartBlankTypeComboBox.setSelectedIndex(0);
                             multipleEndBlankTypeComboBox.setSelectedIndex(0);
@@ -302,6 +302,8 @@ public class AddBlankPage {
         singleBlankTypeComboBox.addItem(420);
         singleBlankTypeComboBox.addItem(201);
         singleBlankTypeComboBox.addItem(101);
+        singleBlankTypeComboBox.addItem(451);
+        singleBlankTypeComboBox.addItem(452);
 
         multipleEndBlankTypeComboBox.addItem("-- Select --");
         multipleEndBlankTypeComboBox.addItem(444);
@@ -309,6 +311,8 @@ public class AddBlankPage {
         multipleEndBlankTypeComboBox.addItem(420);
         multipleEndBlankTypeComboBox.addItem(201);
         multipleEndBlankTypeComboBox.addItem(101);
+        multipleEndBlankTypeComboBox.addItem(451);
+        multipleEndBlankTypeComboBox.addItem(452);
 
         multipleStartBlankTypeComboBox.addItem("-- Select --");
         multipleStartBlankTypeComboBox.addItem(444);
@@ -316,6 +320,8 @@ public class AddBlankPage {
         multipleStartBlankTypeComboBox.addItem(420);
         multipleStartBlankTypeComboBox.addItem(201);
         multipleStartBlankTypeComboBox.addItem(101);
+        multipleStartBlankTypeComboBox.addItem(451);
+        multipleStartBlankTypeComboBox.addItem(452);
 
     }
 
