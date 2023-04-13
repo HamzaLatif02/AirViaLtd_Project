@@ -234,65 +234,78 @@ public class DiscountPlanPage {
 
                 Connection con = null;
 
-                try{
-                    Class.forName("com.mysql.jdbc.Driver");
-                    con= DriverManager.getConnection(
-                            "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
-                            "in2018g16_d",
-                            "35cnYJLB");
-                    con.setAutoCommit(false);
+                if (validInput()){
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        con= DriverManager.getConnection(
+                                "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                                "in2018g16_d",
+                                "35cnYJLB");
+                        con.setAutoCommit(false);
 
-                    String sql = "";
-
-
-                    if (discountPlanComboBox.getSelectedIndex() == 1){
-                        sql = "update in2018g16.Customer Set FixedDiscount = ? Where EmailAddress = ?";
-                    } else if (discountPlanComboBox.getSelectedIndex() == 2){
-                        sql = "update in2018g16.Customer Set FlexibleDiscountID = ? Where EmailAddress = ?";
-                    }
-
-                    PreparedStatement stmt=con.prepareStatement(sql);
+                        String sql = "";
 
 
-                    if (discountPlanComboBox.getSelectedIndex() == 1){
-                        stmt.setInt(1, Integer.valueOf(discountPercentageTextField.getText()));
-                        stmt.setString(2, email);
-                    } else if (discountPlanComboBox.getSelectedIndex() == 2){
-                        stmt.setInt(1, fdID);
-                        stmt.setString(2, email);
-                    }
+                        if (discountPlanComboBox.getSelectedIndex() == 1){
+                            sql = "update in2018g16.Customer Set FixedDiscount = ? Where EmailAddress = ?";
+                        } else if (discountPlanComboBox.getSelectedIndex() == 2){
+                            sql = "update in2018g16.Customer Set FlexibleDiscountID = ? Where EmailAddress = ?";
+                        }
 
-                    int rs=stmt.executeUpdate();
-                    con.commit();
+                        PreparedStatement stmt=con.prepareStatement(sql);
 
-                    if (rs != 0){
-                        JOptionPane.showMessageDialog(null, "Discount added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        customerComboBox.setSelectedIndex(0);
-                        monthComboBox.setSelectedIndex(0);
-                        yearComboBox.setSelectedIndex(0);
-                        salesTextField.setText("");
-                        discountPlanComboBox.setSelectedIndex(0);
-                        discountPercentageTextField.setText("");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Could not add discount at the moment, please retry", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
 
-                } catch (Exception x) {
-                    System.out.println(x);
-                    try {
-                        con.rollback();
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } finally {
-                    try {
-                        con.setAutoCommit(true);
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
+                        if (discountPlanComboBox.getSelectedIndex() == 1){
+                            stmt.setInt(1, Integer.valueOf(discountPercentageTextField.getText()));
+                            stmt.setString(2, email);
+                        } else if (discountPlanComboBox.getSelectedIndex() == 2){
+                            stmt.setInt(1, fdID);
+                            stmt.setString(2, email);
+                        }
+
+                        int rs=stmt.executeUpdate();
+                        con.commit();
+
+                        if (rs != 0){
+                            JOptionPane.showMessageDialog(null, "Discount added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            customerComboBox.setSelectedIndex(0);
+                            monthComboBox.setSelectedIndex(0);
+                            yearComboBox.setSelectedIndex(0);
+                            salesTextField.setText("");
+                            discountPlanComboBox.setSelectedIndex(0);
+                            discountPercentageTextField.setText("");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Could not add discount at the moment, please retry", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
+
+
+
             }
         });
+    }
+
+    public boolean validInput(){
+            if (Integer.valueOf(discountPercentageTextField.getText()) > -1 && Integer.valueOf(discountPercentageTextField.getText()) < 101){
+                return true;
+            }
+            JOptionPane.showMessageDialog(null, "Value must be between 0 and 100", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
     }
 
     public void addDiscountPlanComboBoxListener(){
