@@ -74,6 +74,8 @@ public class CreateReportPage {
     private String reportType;
     private ImageIcon homeIcon;
     private ImageIcon backIcon;
+
+
     private AirViaLtd app;
 
     public CreateReportPage(AirViaLtd a) {

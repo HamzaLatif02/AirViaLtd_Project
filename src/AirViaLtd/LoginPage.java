@@ -194,13 +194,13 @@ public class LoginPage extends JPanel {
                 stmt.setString(2, new String(passwordTextField.getPassword()));
 
                 ResultSet rs = stmt.executeQuery();
+
                 con.commit();
 
                 //check empty result
                 if (!rs.isBeforeFirst()) {
                     JOptionPane.showMessageDialog(getMainPanel(), "Invalid login, please try again", "Invalid Login", JOptionPane.ERROR_MESSAGE);
                 } else {
-
                     this.user = jobTitleComboBox.getSelectedItem().toString();
                     switch (jobTitleComboBox.getSelectedIndex()) {
                         case 1:
