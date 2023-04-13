@@ -34,6 +34,7 @@ public class EditTravelAdvisorAccountPage {
     private ImageIcon backIcon;
     private AirViaLtd app;
 
+    //constructor
     public EditTravelAdvisorAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -43,6 +44,7 @@ public class EditTravelAdvisorAccountPage {
         addEditButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -71,6 +73,7 @@ public class EditTravelAdvisorAccountPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -144,6 +147,7 @@ public class EditTravelAdvisorAccountPage {
         });
     }
 
+    //show data of selected travel advisor
     public void addTravelAdvisorData(){
 
         String ta = (String) travelAdvisorComboBox.getSelectedItem();
@@ -196,6 +200,7 @@ public class EditTravelAdvisorAccountPage {
         }
     }
 
+    //insert user changes into travel advisor table in database
     public void addEditButtonListener(){
         editButton.addActionListener(new ActionListener() {
             @Override

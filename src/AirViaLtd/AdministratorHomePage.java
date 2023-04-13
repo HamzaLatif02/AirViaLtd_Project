@@ -22,6 +22,7 @@ public class AdministratorHomePage {
 
     private AirViaLtd app;
 
+    //constructor
     public AdministratorHomePage(AirViaLtd a) {
 
         this.app = a;
@@ -32,6 +33,7 @@ public class AdministratorHomePage {
 
     }
 
+    //set page graphics
     public void setGraphics(){
 
         logoutIcon = new ImageIcon("data/logout.png");
@@ -57,6 +59,7 @@ public class AdministratorHomePage {
         return mainPanel;
     }
 
+    //add functionality to all buttons
     public void addButtonsListener(){
         logOutButton.addActionListener(new ActionListener() {
             @Override

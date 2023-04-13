@@ -34,6 +34,7 @@ public class RemoveCustomerAccountPage {
 
     private AirViaLtd app;
 
+    //constructor
     public RemoveCustomerAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -43,6 +44,7 @@ public class RemoveCustomerAccountPage {
         addRemoveButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -71,6 +73,7 @@ public class RemoveCustomerAccountPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -137,6 +140,7 @@ public class RemoveCustomerAccountPage {
         });
     }
 
+    //add details of selected blanks
     public void addCustomerData(){
 
         String c = (String) customerComboBox.getSelectedItem();
@@ -187,6 +191,7 @@ public class RemoveCustomerAccountPage {
         }
     }
 
+    //remove selected customer from database
     public void addRemoveButtonListener(){
         removeButton.addActionListener(new ActionListener() {
             @Override
@@ -248,6 +253,7 @@ public class RemoveCustomerAccountPage {
         });
     }
 
+    //update text fields after removing
     public void updateData(){
         customerComboBox.removeItem(customerComboBox.getSelectedItem());
         emailAddressTextField.setText("");

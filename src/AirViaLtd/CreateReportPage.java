@@ -78,6 +78,7 @@ public class CreateReportPage {
 
     private AirViaLtd app;
 
+    //constructor
     public CreateReportPage(AirViaLtd a) {
         this.app = a;
         this.reportCreated = false;
@@ -95,6 +96,7 @@ public class CreateReportPage {
         addPreviousButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -127,6 +129,7 @@ public class CreateReportPage {
         return reportScrollPane;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -190,6 +193,7 @@ public class CreateReportPage {
 
     }
 
+    //add days depending on month selected
     public void addDaysComboBoxData(){
 
         startDayComboBox.addItem("-- Select Day --");
@@ -295,6 +299,7 @@ public class CreateReportPage {
         }
     }
 
+    //add functionality to create button
     public void addCreateButtonListener(){
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -306,6 +311,7 @@ public class CreateReportPage {
         });
     }
 
+    //crate report based on user selection
     public void createReport(){
 
         startDate = startYearComboBox.getSelectedItem().toString() + "-" + startMonthComboBox.getSelectedIndex() + "-" + startDayComboBox.getSelectedItem().toString();
@@ -494,6 +500,7 @@ public class CreateReportPage {
             }
         }
     }
+
 
     public void createInterlineIndividualSalesReport(){
 
@@ -880,6 +887,7 @@ public class CreateReportPage {
         }
     }
 
+    //get next page in report
     public void addNextButtonListener(){
         nextButton.addActionListener(new ActionListener() {
             @Override
@@ -946,6 +954,7 @@ public class CreateReportPage {
         });
     }
 
+    //get previous page in report
     public void addPreviousButtonListener(){
         previousButton.addActionListener(new ActionListener() {
             @Override
@@ -1012,6 +1021,7 @@ public class CreateReportPage {
         });
     }
 
+    //export report created to excel
     public void addDownloadButtonListener(){
             downloadButton.addActionListener(new ActionListener() {
 

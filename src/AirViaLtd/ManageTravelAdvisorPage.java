@@ -23,12 +23,14 @@ public class ManageTravelAdvisorPage {
 
     private AirViaLtd app;
 
+    //constructor
     public ManageTravelAdvisorPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
         addButtonsListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -54,6 +56,7 @@ public class ManageTravelAdvisorPage {
         return mainPanel;
     }
 
+    //add functionality to all buttons
     public void addButtonsListener(){
 
         homeButton.addActionListener(new ActionListener() {

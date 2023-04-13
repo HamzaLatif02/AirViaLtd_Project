@@ -37,6 +37,8 @@ public class EditBlankPage {
     private ImageIcon backIcon;
 
     private AirViaLtd app;
+
+    //constructor
     public EditBlankPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -46,6 +48,7 @@ public class EditBlankPage {
         addApplyChangesButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -82,6 +85,7 @@ public class EditBlankPage {
         return blankStockScrollPane;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -99,6 +103,7 @@ public class EditBlankPage {
         });
     }
 
+    //add all unused blanks into table
     public void addTableData(){
 
         Connection con = null;
@@ -167,6 +172,7 @@ public class EditBlankPage {
 
     }
 
+    //change the blank selected
     public void addApplyChangesButtonListener(){
         applyChangesButton.addActionListener(new ActionListener() {
             @Override
@@ -275,7 +281,7 @@ public class EditBlankPage {
         return true;
     }
 
-
+    //update table after edit
     public void updateTable(){
         Connection con = null;
 
@@ -337,7 +343,7 @@ public class EditBlankPage {
         }
     }
 
-
+    //set text based on user selection
     public void addBlankSelectedFieldsText(){
         table.addMouseListener(new MouseListener() {
             @Override

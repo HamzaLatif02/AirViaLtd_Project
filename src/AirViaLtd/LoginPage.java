@@ -39,7 +39,7 @@ public class LoginPage extends JPanel {
 
     private JLabel imageLabel;
 
-
+    //constructor
     public LoginPage(AirViaLtd a) {
 
         this.app = a;
@@ -53,6 +53,7 @@ public class LoginPage extends JPanel {
 
     }
 
+    //set page graphics
     public void setGraphics(){
         staffIcon = new ImageIcon("data/staff.png");
         userIcon = new ImageIcon("data/user.png");
@@ -72,8 +73,6 @@ public class LoginPage extends JPanel {
         loginButton.setBorder(new LineBorder(Color.WHITE, 1));
     }
 
-
-
     public JPanel getMainPanel() {
         return mainPanel;
     }
@@ -91,6 +90,7 @@ public class LoginPage extends JPanel {
         jobTitleComboBox.addItem("Travel Advisor");
     }
 
+    //for visual effects
     public void addEmailTextListener(){
 
         emailTextField.addFocusListener(new FocusAdapter() {
@@ -114,6 +114,7 @@ public class LoginPage extends JPanel {
         });
     }
 
+    //for visual effects
     public void addPasswordTextListener(){
 
         passwordTextField.addFocusListener(new FocusAdapter() {
@@ -138,7 +139,7 @@ public class LoginPage extends JPanel {
 
     }
 
-
+    //add functionality to lgin button
     public void loginListener(){
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -148,6 +149,8 @@ public class LoginPage extends JPanel {
             }
         });
     }
+
+    //execute login with values inserted by the user
     public void login(){
 
 
@@ -233,6 +236,7 @@ public class LoginPage extends JPanel {
         }
     }
 
+    //check if user entered a value
     public boolean validInput(){
 
         if (jobTitleComboBox.getSelectedIndex() == 0){

@@ -28,6 +28,7 @@ public class CreateOfficeManagerAccountPage {
 
     private AirViaLtd app;
 
+    //constructor
     public CreateOfficeManagerAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -36,6 +37,7 @@ public class CreateOfficeManagerAccountPage {
         addTextListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -62,6 +64,7 @@ public class CreateOfficeManagerAccountPage {
         return mainPanel;
     }
 
+    //add functionality menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -78,6 +81,7 @@ public class CreateOfficeManagerAccountPage {
         });
     }
 
+    //add user input data into office manager table in database
     public void addCreateButtonListener(){
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -133,6 +137,7 @@ public class CreateOfficeManagerAccountPage {
         });
     }
 
+    //check that the input is valid
     public boolean checkInputData(){
 
         if (firstNameTextField.getText().toString().equals("First Name") || firstNameTextField.getText().toString().equals("")){
@@ -158,6 +163,7 @@ public class CreateOfficeManagerAccountPage {
         return true;
     }
 
+    //for visual effect
     public void addTextListener(){
         firstNameTextField.addFocusListener(new FocusAdapter() {
             @Override

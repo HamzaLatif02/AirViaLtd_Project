@@ -34,6 +34,7 @@ public class EditOfficeManagerAccountPage {
 
     private AirViaLtd app;
 
+    //constructor
     public EditOfficeManagerAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -43,6 +44,7 @@ public class EditOfficeManagerAccountPage {
         addEditButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -70,6 +72,7 @@ public class EditOfficeManagerAccountPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -85,6 +88,7 @@ public class EditOfficeManagerAccountPage {
             }
         });
     }
+
 
     public void addOfficeManagers(){
 
@@ -141,6 +145,7 @@ public class EditOfficeManagerAccountPage {
         });
     }
 
+    //show data of selected office manager
     public void addOfficeManagerData(){
 
         String om = (String) officeManagerComboBox.getSelectedItem();
@@ -191,6 +196,7 @@ public class EditOfficeManagerAccountPage {
         }
     }
 
+    //add user input into office manager table in database
     public void addEditButtonListener(){
         editButton.addActionListener(new ActionListener() {
             @Override

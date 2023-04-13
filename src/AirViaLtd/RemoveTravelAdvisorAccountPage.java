@@ -35,6 +35,7 @@ public class RemoveTravelAdvisorAccountPage {
 
     private AirViaLtd app;
 
+    //constructor
     public RemoveTravelAdvisorAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -45,6 +46,7 @@ public class RemoveTravelAdvisorAccountPage {
 
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -73,6 +75,7 @@ public class RemoveTravelAdvisorAccountPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -146,6 +149,7 @@ public class RemoveTravelAdvisorAccountPage {
         });
     }
 
+    //add details of selected travel advisor
     public void addOfficeManagerData(){
 
         String ta = (String) travelAdvisorComboBox.getSelectedItem();
@@ -197,7 +201,7 @@ public class RemoveTravelAdvisorAccountPage {
         }
     }
 
-
+    //remove selected travel advisor from database
     public void addRemoveButtonListener(){
         removeButton.addActionListener(new ActionListener() {
             @Override

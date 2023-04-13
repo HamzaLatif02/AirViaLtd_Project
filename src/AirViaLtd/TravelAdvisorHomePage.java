@@ -22,6 +22,7 @@ public class TravelAdvisorHomePage {
 
     private AirViaLtd app;
 
+    //constructor
     public TravelAdvisorHomePage(AirViaLtd a) {
         this.app = a;
 
@@ -29,6 +30,7 @@ public class TravelAdvisorHomePage {
         addButtonsListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         logoutIcon = new ImageIcon("data/logout.png");
@@ -54,6 +56,7 @@ public class TravelAdvisorHomePage {
         return mainPanel;
     }
 
+    //add functionality to all buttons
     public void addButtonsListener(){
         logOutButton.addActionListener(new ActionListener() {
             @Override

@@ -55,6 +55,7 @@ public class SearchBlankPage {
 
     private AirViaLtd app;
 
+    //constructor
     public SearchBlankPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -67,6 +68,7 @@ public class SearchBlankPage {
 
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -109,6 +111,7 @@ public class SearchBlankPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -187,6 +190,7 @@ public class SearchBlankPage {
         });
     }
 
+    //add functionality to search button
     public void addSearchButtonListener(){
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -197,6 +201,7 @@ public class SearchBlankPage {
         });
     }
 
+    //add details of searched blank
     public void addSearchedBlankData(){
         Connection con = null;
 
@@ -248,6 +253,7 @@ public class SearchBlankPage {
         }
     }
 
+    //add flight coupon details of selected blank
     public void addSearchedFlightCouponData(){
 
         fcIDTextField.setText("ID: ");
@@ -346,6 +352,7 @@ public class SearchBlankPage {
 
     }
 
+    //show next flight coupon
     public void addNextButtonListener(){
         nextButton.addActionListener(new ActionListener() {
             @Override
@@ -364,6 +371,7 @@ public class SearchBlankPage {
         });
     }
 
+    //show previous flight coupon
     public void addPreviousButtonListener(){
         previousButton.addActionListener(new ActionListener() {
             @Override
@@ -383,6 +391,7 @@ public class SearchBlankPage {
         });
     }
 
+    //add data into text fields
     public void addFCData(int i){
         fcIDTextField.setText("ID: " + fcTable.getValueAt(i, 0).toString());
         departureCityTextField.setText("Departure City: " + fcTable.getValueAt(i,1).toString());

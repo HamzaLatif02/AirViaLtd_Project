@@ -34,6 +34,7 @@ public class RemoveOfficeManagerAccountPage {
 
     private AirViaLtd app;
 
+    //constructor
     public RemoveOfficeManagerAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -43,6 +44,7 @@ public class RemoveOfficeManagerAccountPage {
         addRemoveButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -70,6 +72,7 @@ public class RemoveOfficeManagerAccountPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -142,6 +145,7 @@ public class RemoveOfficeManagerAccountPage {
         });
     }
 
+    //add details of selected office manager
     public void addOfficeManagerData(){
 
         String om = (String) officeManagerComboBox.getSelectedItem();
@@ -192,7 +196,7 @@ public class RemoveOfficeManagerAccountPage {
         }
     }
 
-
+    //remove selected office manager from database
     public void addRemoveButtonListener(){
         removeButton.addActionListener(new ActionListener() {
             @Override

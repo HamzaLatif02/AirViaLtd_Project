@@ -24,12 +24,14 @@ public class BlankManagerPage {
     private ImageIcon backIcon;
     private AirViaLtd app;
 
+    //constructor
     public BlankManagerPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
         addButtonsListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -60,6 +62,7 @@ public class BlankManagerPage {
         return mainPanel;
     }
 
+    //add functionality to all buttons
     public void addButtonsListener(){
 
         homeButton.addActionListener(new ActionListener() {

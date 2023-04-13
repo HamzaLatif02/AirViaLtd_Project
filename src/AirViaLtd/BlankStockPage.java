@@ -35,6 +35,8 @@ public class BlankStockPage {
 
     private AirViaLtd app;
 
+
+    //constructor
     public BlankStockPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -49,6 +51,7 @@ public class BlankStockPage {
 
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -84,6 +87,7 @@ public class BlankStockPage {
         return blankStockScrollPane;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -100,6 +104,7 @@ public class BlankStockPage {
         });
     }
 
+    //add blanks data to table
     public void addTableData(){
 
         Connection con= null;
@@ -170,6 +175,7 @@ public class BlankStockPage {
         }
     }
 
+    //sort by ID
     public void addIDButtonListener(){
 
         counter = 0;
@@ -310,6 +316,7 @@ public class BlankStockPage {
         });
     }
 
+    //sort by type
     public void addTypeButtonListener(){
         counter = 0;
         typeButton.addActionListener(new ActionListener() {
@@ -447,6 +454,7 @@ public class BlankStockPage {
         });
     }
 
+    //sort by received date
     public void addDateButtonListener(){
         counter = 0;
         dateButton.addActionListener(new ActionListener() {
@@ -583,6 +591,7 @@ public class BlankStockPage {
         });
     }
 
+    //sort by travel advisor
     public void addTravelAdvisorButtonListener(){
         counter = 0;
         travelAdvisorButton.addActionListener(new ActionListener() {
@@ -719,6 +728,7 @@ public class BlankStockPage {
         });
     }
 
+    //filter by not assigned
     public void addNotAssignedButtonListener(){
         notAssignedButton.addActionListener(new ActionListener() {
             @Override
@@ -787,6 +797,8 @@ public class BlankStockPage {
         });
     }
 
+
+    //filter by used blanks only
     public void addUsedButtonListener(){
         usedButton.addActionListener(new ActionListener() {
             @Override

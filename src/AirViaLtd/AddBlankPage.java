@@ -40,6 +40,7 @@ public class AddBlankPage {
     private ImageIcon backIcon;
     private AirViaLtd app;
 
+    //constructor
     public AddBlankPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -49,6 +50,7 @@ public class AddBlankPage {
         addMultipleButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -77,6 +79,7 @@ public class AddBlankPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -94,6 +97,9 @@ public class AddBlankPage {
         });
     }
 
+    //add functionality to single button
+    //retrieve data from input
+    //add data to database
     public void addSingleButtonListener(){
         addSingleButton.addActionListener(new ActionListener() {
             @Override
@@ -161,6 +167,7 @@ public class AddBlankPage {
         });
     }
 
+    //create ticket based on blank added
     public void addTicket(Connection con) throws SQLException {
 
         int randomnumber = (int) (Math.floor(Math.random()*11)*10);
@@ -190,6 +197,7 @@ public class AddBlankPage {
         }
     }
 
+    //creates tickets based on multiple blanks
     public void addTickets(Connection con, int type, int number) throws SQLException {
 
         int randomnumber = (int) (Math.floor(Math.random()*11)*10);
@@ -214,7 +222,9 @@ public class AddBlankPage {
 
     }
 
-
+    //add functionality to multiple button
+    //retrieve data from user input
+    //add data to database
     public void addMultipleButtonListener(){
         addMultipleButton.addActionListener(new ActionListener() {
             @Override
@@ -325,6 +335,7 @@ public class AddBlankPage {
 
     }
 
+    //check if user input is valid
     public boolean checkSingleValues(){
         if (singleBlankTypeComboBox.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(null, "Please select a blank type", "Error", JOptionPane.ERROR_MESSAGE);
@@ -339,6 +350,7 @@ public class AddBlankPage {
         return true;
     }
 
+    //check if user input is valid
     public boolean checkMultipleValues() {
 
         if (multipleEndBlankTypeComboBox.getSelectedIndex() == 0 || multipleStartBlankTypeComboBox.getSelectedIndex() == 0) {

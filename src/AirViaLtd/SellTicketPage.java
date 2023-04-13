@@ -63,6 +63,7 @@ public class SellTicketPage {
     private ImageIcon homeIcon;
     private ImageIcon backIcon;
 
+    //constructor
     public SellTicketPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -79,6 +80,7 @@ public class SellTicketPage {
         addNameTextListener();
     }
 
+    //set page graphics
     public void setGraphics() {
 
         homeIcon = new ImageIcon("data/home.png");
@@ -119,6 +121,7 @@ public class SellTicketPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -422,6 +425,7 @@ public class SellTicketPage {
         });
     }
 
+    //search for customer in database
     public void addSearchButtonListener(){
 
         searchButton.addActionListener(new ActionListener() {
@@ -654,6 +658,7 @@ public class SellTicketPage {
 
     }
 
+    //record sale in database
     public void addSellButtonListener(){
 
         conversionRateTextField.setText("0");

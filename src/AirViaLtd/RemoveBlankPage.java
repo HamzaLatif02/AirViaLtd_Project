@@ -30,6 +30,7 @@ public class RemoveBlankPage {
     private ImageIcon backIcon;
     private AirViaLtd app;
 
+    //constructor
     public RemoveBlankPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -40,6 +41,7 @@ public class RemoveBlankPage {
 
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -68,6 +70,7 @@ public class RemoveBlankPage {
         return blankStockScrollPane;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -85,6 +88,7 @@ public class RemoveBlankPage {
         });
     }
 
+    //add not assigned blanks in table
     public void addTableData(){
 
         Connection con = null;
@@ -156,6 +160,7 @@ public class RemoveBlankPage {
 
     }
 
+    //remove selected blanks from database
     public void addRemoveButtonListener(){
         removeButton.addActionListener(new ActionListener() {
             @Override
@@ -226,7 +231,7 @@ public class RemoveBlankPage {
         return true;
     }
 
-
+    //update table after removing
     public void updateTable(){
 
         Connection con = null;
@@ -290,6 +295,7 @@ public class RemoveBlankPage {
         }
     }
 
+    //add details of selected blanks
     public void addBlankSelectedText(){
         table.addMouseListener(new MouseListener() {
             @Override

@@ -24,12 +24,14 @@ public class ManageOfficeManagerPage {
 
     private AirViaLtd app;
 
+    //constructor
     public ManageOfficeManagerPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
         addButtonsListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -55,6 +57,7 @@ public class ManageOfficeManagerPage {
         return mainPanel;
     }
 
+    //add functionality to all buttons
     public void addButtonsListener(){
 
         homeButton.addActionListener(new ActionListener() {

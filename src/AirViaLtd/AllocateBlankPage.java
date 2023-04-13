@@ -32,7 +32,7 @@ public class AllocateBlankPage {
 
     private AirViaLtd app;
 
-
+    //allocate
     public AllocateBlankPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -44,6 +44,7 @@ public class AllocateBlankPage {
 
     }
 
+    //set page graphics
     public void setGraphics() {
 
         homeIcon = new ImageIcon("data/home.png");
@@ -70,6 +71,7 @@ public class AllocateBlankPage {
         return notAssignedBlanksScrollPane;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -87,6 +89,7 @@ public class AllocateBlankPage {
         });
     }
 
+    //add blanks data into table
     public void addTableData(){
 
         Connection con = null;
@@ -150,6 +153,8 @@ public class AllocateBlankPage {
         }
 
     }
+
+
     public void addTravelAdvisors(){
         travelAdvisorComboBox.addItem("-- Select a Travel Advisor --");
 
@@ -168,10 +173,10 @@ public class AllocateBlankPage {
             }
             con.close();
         } catch (Exception e) { System.out.println(e);}
-
-
     }
 
+    //retrieve selected data from table
+    //assign those blank to the selected travel advisor
     public void addAssignButtonListener(){
 
         allocateButton.addActionListener(new ActionListener() {
@@ -247,6 +252,7 @@ public class AllocateBlankPage {
 
     }
 
+    //check if user has selected any values
     public boolean validSelectedItems(){
 
         int[] selection = table.getSelectedRows();
@@ -260,7 +266,7 @@ public class AllocateBlankPage {
         return true;
     }
 
-
+    //update table after allocating blanks
     public void updateTable(){
 
         Connection con = null;
@@ -321,6 +327,7 @@ public class AllocateBlankPage {
         }
     }
 
+    //add text listener, for visual improvements
     public void addSelectedBlankText(){
         table.addMouseListener(new MouseListener() {
             @Override

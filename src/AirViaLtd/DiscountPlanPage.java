@@ -42,6 +42,7 @@ public class DiscountPlanPage {
 
     private AirViaLtd app;
 
+    //constructor
     public DiscountPlanPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -55,6 +56,7 @@ public class DiscountPlanPage {
         addDiscountPlanComboBoxListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -81,6 +83,7 @@ public class DiscountPlanPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -167,8 +170,9 @@ public class DiscountPlanPage {
                 addSalesDuringPeriodData();
             }
         });
-
     }
+
+    //get discount plan based on how many sales the user made
     public void addSalesDuringPeriodData(){
 
         String cu = customerComboBox.getSelectedItem().toString();
@@ -223,6 +227,7 @@ public class DiscountPlanPage {
         discountPlanComboBox.addItem("Flexible");
     }
 
+    //set discount selected to the customer selected
     public void addSetDiscountButtonListener(){
         setDiscountButton.addActionListener(new ActionListener() {
             @Override
@@ -300,6 +305,7 @@ public class DiscountPlanPage {
         });
     }
 
+    //check if input is valid
     public boolean validInput(){
             if (Integer.valueOf(discountPercentageTextField.getText()) > -1 && Integer.valueOf(discountPercentageTextField.getText()) < 101){
                 return true;

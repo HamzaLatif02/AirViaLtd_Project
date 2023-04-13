@@ -23,6 +23,7 @@ public class ManageUsersPage {
 
     private AirViaLtd app;
 
+    //constructor
     public ManageUsersPage(AirViaLtd a) {
         this.app = a;
 
@@ -30,6 +31,7 @@ public class ManageUsersPage {
         addButtonsListener();
     }
 
+    //set pages graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -55,6 +57,7 @@ public class ManageUsersPage {
         return mainPanel;
     }
 
+    //add functionality to all buttons
     public void addButtonsListener(){
 
         homeButton.addActionListener(new ActionListener() {

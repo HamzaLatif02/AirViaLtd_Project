@@ -35,6 +35,7 @@ public class EditCustomerAccountPage {
 
     private AirViaLtd app;
 
+    //constructor
     public EditCustomerAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -44,6 +45,7 @@ public class EditCustomerAccountPage {
         addEditButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -71,6 +73,7 @@ public class EditCustomerAccountPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -140,6 +143,7 @@ public class EditCustomerAccountPage {
             }
         });
     }
+
     public void addCustomerData(){
 
         String c = (String) customerComboBox.getSelectedItem();
@@ -196,6 +200,7 @@ public class EditCustomerAccountPage {
         }
     }
 
+    //apply changes to selected customer
     public void addEditButtonListener(){
         editButton.addActionListener(new ActionListener() {
             @Override

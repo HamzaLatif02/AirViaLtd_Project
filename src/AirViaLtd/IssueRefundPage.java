@@ -39,6 +39,7 @@ public class IssueRefundPage {
     private ImageIcon backIcon;
     private AirViaLtd app;
 
+    //constructor
     public IssueRefundPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -47,6 +48,7 @@ public class IssueRefundPage {
         addIssueRefundButtonListener();
     }
 
+    //set page graphics
     public void setGraphics() {
 
         homeIcon = new ImageIcon("data/home.png");
@@ -71,6 +73,7 @@ public class IssueRefundPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -132,6 +135,7 @@ public class IssueRefundPage {
         advisorCodeTextField.setText("" + taCode);
     }
 
+    //add sold blanks
     public void addBlanks(){
         blankComboBox.addItem("-- Select Blank --");
 
@@ -174,6 +178,7 @@ public class IssueRefundPage {
         }
     }
 
+    //add sale details of the selected blank
     public void addSaleDetails(){
         blankComboBox.addItemListener(new ItemListener() {
             @Override
@@ -251,6 +256,7 @@ public class IssueRefundPage {
         });
     }
 
+    //set blank as not sold and insert refund into the database
     public void addIssueRefundButtonListener(){
         issueRefundButton.addActionListener(new ActionListener() {
             @Override

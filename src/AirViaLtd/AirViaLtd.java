@@ -7,6 +7,7 @@ import java.security.CodeSource;
 
 public class AirViaLtd {
 
+    //declare all variables
     private final JFrame frame;
 
     private LoginPage loginPage;
@@ -51,6 +52,8 @@ public class AirViaLtd {
 
     public AirViaLtd() {
 
+        //initialise all pages
+
         loginPage = new LoginPage(this);
 
         officeManagerHomePage = new OfficeManagerHomePage(this);
@@ -90,6 +93,8 @@ public class AirViaLtd {
 
         currentPanel = new JPanel();
 
+
+        //create a new frame and add login page as the first page
         frame = new JFrame("AirViaLtd");
 
         frame.add(loginPage.getMainPanel());
@@ -102,6 +107,13 @@ public class AirViaLtd {
         currentPanel = loginPage.getMainPanel();
 
     }
+
+    //comment for all transition functions:
+    //remove current panel from frame
+    //create a new object of the new page
+    //add panel of new page to the frame
+    //if necessary, add scrollpane with tables
+    //set current panel as the new added panel
 
     public void transitionToOfficeManagerHomePage(){
         frame.remove(loginPage.getMainPanel());
@@ -360,6 +372,7 @@ public class AirViaLtd {
         currentPanel = getCurrentHomepage();
     }
 
+    //get what tpe of user is logged in
     public JPanel getCurrentHomepage(){
         if (loginPage.getUser().equals("Administrator")){
             return administratorHomePage.getMainPanel();
@@ -368,6 +381,7 @@ public class AirViaLtd {
         } else return travelAdvisorHomePage.getMainPanel();
     }
 
+    //create new homepage
     public JPanel newHomepage(){
         if (loginPage.getUser().equals("Administrator")){
             administratorHomePage = new AdministratorHomePage(this);
@@ -380,6 +394,7 @@ public class AirViaLtd {
             return travelAdvisorHomePage.getMainPanel();}
     }
 
+    //remove any tables that are present in the frame
     public void removeTables(){
 
         if (allocateBlankPage.getNotAssignedBlanksScrollPane() != null){
@@ -409,6 +424,8 @@ public class AirViaLtd {
 
     }
 
+
+    //remove current panel. create a new login page and add to the frame
     public void doLogout(){
         if (JOptionPane.showConfirmDialog(getCurrentHomepage(), "Are you sure you want to log out?", "Logout", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             JOptionPane.showConfirmDialog(getCurrentHomepage(), "You have successfully logged out", "Logout", JOptionPane.PLAIN_MESSAGE);
@@ -423,18 +440,11 @@ public class AirViaLtd {
         };
     }
 
+    //add report tables to the frame
     public void addReportToPage(){
         frame.remove(createReportPage.getReportScrollPane());
         frame.add(createReportPage.getReportScrollPane(), BorderLayout.EAST);
         frame.setVisible(true);
-    }
-
-    public SellTicketPage getSellTicketPage() {
-        return sellTicketPage;
-    }
-
-    public IssueRefundPage getIssueRefundPage() {
-        return issueRefundPage;
     }
 
     public OfficeManagerHomePage getOfficeManagerHomePage() {
@@ -449,6 +459,7 @@ public class AirViaLtd {
         return administratorHomePage;
     }
 
+    //initialise a new AirViaLtd object to start the program
     public static void main(String[] args){
         new AirViaLtd();
     }

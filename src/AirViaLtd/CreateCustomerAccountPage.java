@@ -31,6 +31,7 @@ public class CreateCustomerAccountPage {
 
     private AirViaLtd app;
 
+    //constructor
     public CreateCustomerAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -42,6 +43,7 @@ public class CreateCustomerAccountPage {
         addCreateButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -67,6 +69,7 @@ public class CreateCustomerAccountPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -88,6 +91,7 @@ public class CreateCustomerAccountPage {
         });
     }
 
+    //enter user input into the customer table in database
     public void addCreateButtonListener(){
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -144,6 +148,7 @@ public class CreateCustomerAccountPage {
         });
     }
 
+    //for visual effect
     public void addNameTextListener(){
         nameTextField.addFocusListener(new FocusAdapter() {
             @Override
@@ -166,6 +171,7 @@ public class CreateCustomerAccountPage {
         });
     }
 
+    //for visual effect
     public void addSurnameTextListener(){
         surnameTextField.addFocusListener(new FocusAdapter() {
             @Override
@@ -188,6 +194,7 @@ public class CreateCustomerAccountPage {
         });
     }
 
+    //for visual effect
     public void addEmailTextListener(){
         emailAddressTextField.addFocusListener(new FocusAdapter() {
             @Override
@@ -216,6 +223,7 @@ public class CreateCustomerAccountPage {
         regularValuedComboBox.addItem("Valued");
     }
 
+    //check that user input is valid
     public boolean checkInputData(){
 
         if (nameTextField.getText().toString().equals("Name") || nameTextField.getText().toString().equals("")){

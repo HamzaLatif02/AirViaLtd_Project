@@ -23,6 +23,7 @@ public class OfficeManagerHomePage {
     private ImageIcon logoutIcon;
     private AirViaLtd app;
 
+    //constructor
     public OfficeManagerHomePage(AirViaLtd a) {
 
         this.app = a;
@@ -31,6 +32,7 @@ public class OfficeManagerHomePage {
         addButtonsListener();
     }
 
+    //set page graphic
     public void setGraphics(){
 
         logoutIcon = new ImageIcon("data/logout.png");
@@ -60,6 +62,7 @@ public class OfficeManagerHomePage {
         return mainPanel;
     }
 
+    //add functionality to all buttons
     public void addButtonsListener(){
 
         logOutButton.addActionListener(new ActionListener() {

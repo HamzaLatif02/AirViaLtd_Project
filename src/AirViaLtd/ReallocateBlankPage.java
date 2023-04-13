@@ -32,6 +32,7 @@ public class ReallocateBlankPage {
 
     private AirViaLtd app;
 
+    //constructor
     public ReallocateBlankPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -42,6 +43,7 @@ public class ReallocateBlankPage {
         addReallocateButtonListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -70,6 +72,7 @@ public class ReallocateBlankPage {
         return assignedBlanksScrollPane;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -87,6 +90,7 @@ public class ReallocateBlankPage {
         });
     }
 
+    //add assigned blanks
     public void addTableData(){
 
         Connection con = null;
@@ -151,6 +155,7 @@ public class ReallocateBlankPage {
 
     }
 
+    //reallocate selected blanks to selected travel advisor
     public void addReallocateButtonListener(){
         reallocateButton.addActionListener(new ActionListener() {
             @Override
@@ -228,6 +233,7 @@ public class ReallocateBlankPage {
         });
     }
 
+
     public boolean validSelectedItems(){
         int[] selection = table.getSelectedRows();
 
@@ -240,6 +246,7 @@ public class ReallocateBlankPage {
         return true;
     }
 
+    //update table after reallocation
     public void updateTable(){
 
         Connection con = null;
@@ -342,6 +349,7 @@ public class ReallocateBlankPage {
 
     }
 
+    //add details about selected blanks
     public void addSelectedBlankText(){
 
         table.addMouseListener(new MouseListener() {

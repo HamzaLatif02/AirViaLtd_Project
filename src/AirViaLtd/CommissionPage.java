@@ -24,6 +24,7 @@ public class CommissionPage {
 
     private AirViaLtd app;
 
+    //constructor
     public CommissionPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -34,6 +35,7 @@ public class CommissionPage {
 
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -59,6 +61,7 @@ public class CommissionPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -111,6 +114,7 @@ public class CommissionPage {
         }
     }
 
+    //add input commission to databse if valid
     public void addAddButtonListener(){
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -165,6 +169,7 @@ public class CommissionPage {
         });
     }
 
+    //check that the values entered is between 0 and 100
     public boolean validInput(){
         if (Integer.valueOf(commissionRateTextField.getText()) > 0 && Integer.valueOf(commissionRateTextField.getText()) < 101){
                return true;
@@ -173,6 +178,7 @@ public class CommissionPage {
         return false;
     }
 
+    //remove the selected commission from the blank
     public void addDeleteButtonListener(){
         deleteButton.addActionListener(new ActionListener() {
             @Override

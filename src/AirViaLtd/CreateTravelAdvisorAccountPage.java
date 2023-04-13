@@ -32,6 +32,7 @@ public class CreateTravelAdvisorAccountPage {
     private ImageIcon backIcon;
     private AirViaLtd app;
 
+    //constructor
     public CreateTravelAdvisorAccountPage(AirViaLtd a) {
         this.app = a;
         setGraphics();
@@ -40,6 +41,7 @@ public class CreateTravelAdvisorAccountPage {
         addTextListener();
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -68,6 +70,7 @@ public class CreateTravelAdvisorAccountPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -84,6 +87,7 @@ public class CreateTravelAdvisorAccountPage {
         });
     }
 
+    //add user input into travel advisor table in database
     public void addCreateButtonListener(){
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -143,6 +147,7 @@ public class CreateTravelAdvisorAccountPage {
         });
     }
 
+    //check if the user input is valid
     public boolean checkInputData(){
 
         if (firstNameTextField.getText().toString().equals("First Name") || firstNameTextField.getText().toString().equals("")){
@@ -178,6 +183,7 @@ public class CreateTravelAdvisorAccountPage {
         return true;
     }
 
+    //for visual effects
     public void addTextListener(){
         firstNameTextField.addFocusListener(new FocusAdapter() {
             @Override

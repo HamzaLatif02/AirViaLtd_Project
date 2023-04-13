@@ -27,16 +27,18 @@ public class SecurityPage {
 
     private AirViaLtd app;
 
+    //constructor
     public SecurityPage(AirViaLtd a) {
 
         this.app = a;
         setGraphics();
         addMenuButtonsListener();
         addBackupButtonListener();
-        //addRestoreButtonListener();
+        addRestoreButtonListener();
 
     }
 
+    //set page graphics
     public void setGraphics(){
 
         homeIcon = new ImageIcon("data/home.png");
@@ -60,6 +62,7 @@ public class SecurityPage {
         return mainPanel;
     }
 
+    //add functionality to menu buttons
     public void addMenuButtonsListener(){
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -76,13 +79,11 @@ public class SecurityPage {
         });
     }
 
+    //add functionality to backup button
     public void addBackupButtonListener(){
         backUpDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                //openWebPage("https://smcse.city.ac.uk/phpmyadmin/index.php?route=/database/export&db=in2018g16");
-
                 try {
                     backup("smcse-stuproj00.city.ac.uk", "3306", "in2018g16","in2018g16_a", "FJ7BjC1x", "db_backup");
                 } catch (IOException ex) {
@@ -93,15 +94,7 @@ public class SecurityPage {
         });
     }
 
-    /*public void openWebPage(String url){
-        try {
-            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
-        }
-        catch (java.io.IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
-
+    //add functionality to restore button
     public void addRestoreButtonListener(){
         restoreDataButton.addActionListener(new ActionListener() {
             @Override
@@ -111,6 +104,7 @@ public class SecurityPage {
         });
     }
 
+    //backup database using mysqldump command
     public static void backup(String host, String port, String database, String user, String password, String filename) throws IOException {
         // Create date formatter for timestamp in backup file name
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
@@ -132,6 +126,7 @@ public class SecurityPage {
         inputStream.close();
     }
 
+    //restore database from file
     public static void restore(String dbName, String dbUser, String dbPass, String filePath) {
         try {
             /*Establishing MySQL Connection*/
