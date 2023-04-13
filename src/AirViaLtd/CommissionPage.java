@@ -115,48 +115,62 @@ public class CommissionPage {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Connection con = null;
-                try{
-                    Class.forName("com.mysql.jdbc.Driver");
-                    con= DriverManager.getConnection(
-                            "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
-                            "in2018g16_d",
-                            "35cnYJLB");
-                    con.setAutoCommit(false);
 
-                    String sql = "insert into in2018g16.Commission values (?, 1)";
-                    PreparedStatement stmt=con.prepareStatement(sql);
+                if (validInput()) {
 
-                    stmt.setInt(1, Integer.valueOf(commissionRateTextField.getText()));
+                    Connection con = null;
 
-                    int rs=stmt.executeUpdate();
-                    con.commit();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        con= DriverManager.getConnection(
+                                "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
+                                "in2018g16_d",
+                                "35cnYJLB");
+                        con.setAutoCommit(false);
 
-                    if (rs != 0 ){
-                        JOptionPane.showMessageDialog(null, "Commission Rate Added", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        commissionRateTextField.setText("");
-                        commissionComboBox.removeAllItems();
-                        addCommissionRates();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Could not add commission rate, please retry", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                        String sql = "insert into in2018g16.Commission values (?, 1)";
+                        PreparedStatement stmt=con.prepareStatement(sql);
 
-                } catch (Exception x) {
-                    System.out.println(x);
-                    try {
-                        con.rollback();
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } finally {
-                    try {
-                        con.setAutoCommit(true);
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
+                        stmt.setInt(1, Integer.valueOf(commissionRateTextField.getText()));
+
+                        int rs=stmt.executeUpdate();
+                        con.commit();
+
+                        if (rs != 0 ){
+                            JOptionPane.showMessageDialog(null, "Commission Rate Added", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            commissionRateTextField.setText("");
+                            commissionComboBox.removeAllItems();
+                            addCommissionRates();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Could not add commission rate, please retry", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
+
             }
         });
+    }
+
+    public boolean validInput(){
+        if (Integer.valueOf(commissionRateTextField.getText()) > 0 && Integer.valueOf(commissionRateTextField.getText()) < 101){
+               return true;
+        }
+        JOptionPane.showMessageDialog(null, "Value must be between 1 and 100", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
     }
 
     public void addDeleteButtonListener(){
