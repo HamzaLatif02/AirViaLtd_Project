@@ -10,6 +10,7 @@ import java.awt.event.FocusEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class CreateCustomerAccountPage {
     private JPanel mainPanel;
@@ -93,16 +94,16 @@ public class CreateCustomerAccountPage {
             public void actionPerformed(ActionEvent e) {
 
                 if (checkInputData()){
+                    Connection con = null;
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con= DriverManager.getConnection(
+                        con= DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
-
-
-                        String sql = "insert into in2018g16.Customer (EmailAddress, FirstName, LastName, Type, FixedDiscount, FlexibleDiscount) values (?, ?, ?, ?, null, null)";
+                        String sql = "insert into in2018g16.Customer (EmailAddress, FirstName, LastName, Type, FixedDiscount, FlexibleDiscountID) values (?, ?, ?, ?, null, null)";
 
                         PreparedStatement stmt= con.prepareStatement(sql);
 
@@ -112,6 +113,7 @@ public class CreateCustomerAccountPage {
                         stmt.setString(4, regularValuedComboBox.getSelectedItem().toString());
 
                         int rs=stmt.executeUpdate();
+                        con.commit();
 
                         if (rs != 0){
                             JOptionPane.showMessageDialog(null, "Customer account created", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
@@ -123,10 +125,20 @@ public class CreateCustomerAccountPage {
                             JOptionPane.showMessageDialog(null, "Could not create customer account, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                         }
 
-
-                        con.close();
-
-                    }catch(Exception x){ System.out.println(x);}
+                    }catch(Exception x){
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
         });

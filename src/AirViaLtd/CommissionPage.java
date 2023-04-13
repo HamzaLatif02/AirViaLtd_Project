@@ -78,34 +78,51 @@ public class CommissionPage {
     public void addCommissionRates(){
         commissionComboBox.addItem("-- Select a Commission --");
 
+        Connection con = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select CommissionRate FROM in2018g16.Commission where TravelAgentID = 1");
+            con.commit();
 
             while (rs.next()){
                 commissionComboBox.addItem(rs.getInt(1));
             }
 
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addAddButtonListener(){
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Connection con = null;
                 try{
                     Class.forName("com.mysql.jdbc.Driver");
-                    Connection con= DriverManager.getConnection(
+                    con= DriverManager.getConnection(
                             "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                             "in2018g16_d",
                             "35cnYJLB");
+                    con.setAutoCommit(false);
 
                     String sql = "insert into in2018g16.Commission values (?, 1)";
                     PreparedStatement stmt=con.prepareStatement(sql);
@@ -113,6 +130,7 @@ public class CommissionPage {
                     stmt.setInt(1, Integer.valueOf(commissionRateTextField.getText()));
 
                     int rs=stmt.executeUpdate();
+                    con.commit();
 
                     if (rs != 0 ){
                         JOptionPane.showMessageDialog(null, "Commission Rate Added", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -123,8 +141,20 @@ public class CommissionPage {
                         JOptionPane.showMessageDialog(null, "Could not add commission rate, please retry", "Error", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    con.close();
-                } catch (Exception x) { System.out.println(x);}
+                } catch (Exception x) {
+                    System.out.println(x);
+                    try {
+                        con.rollback();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } finally {
+                    try {
+                        con.setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
     }
@@ -138,13 +168,15 @@ public class CommissionPage {
 
                     if (reply == JOptionPane.YES_OPTION) {
 
+                        Connection con = null;
 
                         try{
                             Class.forName("com.mysql.jdbc.Driver");
-                            Connection con= DriverManager.getConnection(
+                            con= DriverManager.getConnection(
                                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                     "in2018g16_d",
                                     "35cnYJLB");
+                            con.setAutoCommit(false);
 
                             String sql = "delete from in2018g16.Commission where CommissionRate = ? ";
 
@@ -153,6 +185,7 @@ public class CommissionPage {
                             stmt.setInt(1, Integer.valueOf(commissionComboBox.getSelectedItem().toString()));
 
                             int rs = stmt.executeUpdate();
+                            con.commit();
 
                             if (rs != 0){
                                 JOptionPane.showMessageDialog(null, rs + " commission deleted", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
@@ -161,9 +194,20 @@ public class CommissionPage {
                                 JOptionPane.showMessageDialog(null, "No commission was deleted, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                             }
 
-                            con.close();
-
-                        }catch(Exception ex){ System.out.println(ex);}
+                        }catch(Exception ex){
+                            System.out.println(ex);
+                            try {
+                                con.rollback();
+                            } catch (SQLException x) {
+                                throw new RuntimeException(x);
+                            }
+                        } finally {
+                            try {
+                                con.setAutoCommit(true);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
 
                     }
 

@@ -143,12 +143,15 @@ public class SearchBlankPage {
                     numberComboBox.removeAllItems();
                     numberComboBox.addItem("-- Select Number --");
 
+                    Connection con = null;
+
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con= DriverManager.getConnection(
+                        con= DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select Number from in2018g16.Blank where Type = ? order by Number ASC";
                         PreparedStatement stmt=con.prepareStatement(sql);
@@ -156,12 +159,26 @@ public class SearchBlankPage {
                         stmt.setInt(1, Integer.valueOf(typeComboBox.getSelectedItem().toString()));
 
                         ResultSet rs=stmt.executeQuery();
+                        con.commit();
 
                         while (rs.next()){
                             numberComboBox.addItem(rs.getInt(1));
                         }
-                        con.close();
-                    } catch (Exception x) { System.out.println(x);}
+
+                    } catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 } else {
                     numberComboBox.removeAllItems();
                     numberComboBox.addItem("-- Select Type Number First --");
@@ -181,12 +198,15 @@ public class SearchBlankPage {
     }
 
     public void addSearchedBlankData(){
+        Connection con = null;
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select * from in2018g16.Blank where Type = ? and Number = ?";
 
@@ -196,6 +216,8 @@ public class SearchBlankPage {
             stmt.setInt(2, Integer.valueOf(numberComboBox.getSelectedItem().toString()));
 
             ResultSet rs = stmt.executeQuery();
+
+            con.commit();
 
             while(rs.next()){
                 searchedBlankID = rs.getInt(1);
@@ -210,9 +232,20 @@ public class SearchBlankPage {
                 auditCouponIDTextField.setText("Audit Coupon ID: " + rs.getInt(9));
             }
 
-            con.close();
-
-        }catch (Exception x) { System.out.println(x);}
+        }catch (Exception x) {
+            System.out.println(x);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addSearchedFlightCouponData(){
@@ -225,12 +258,15 @@ public class SearchBlankPage {
         departureTimeTextField.setText("Departure Time: ");
         arrivalTimeTextField.setText("Arrival Time: ");
 
+        Connection con = null;
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "Select count(*) from in2018g16.FlightCoupon where BlankID = ?";
 
@@ -239,6 +275,8 @@ public class SearchBlankPage {
             stmt.setInt(1, searchedBlankID);
 
             ResultSet rs = stmt.executeQuery();
+
+            con.commit();
 
             tLength = 0;
 
@@ -291,11 +329,20 @@ public class SearchBlankPage {
                 JOptionPane.showMessageDialog(null, "This blank has no flight coupon associated with it", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
 
-
-
-            con.close();
-
-        }catch (Exception x) { System.out.println(x);}
+        }catch (Exception x) {
+            System.out.println(x);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
     }
 

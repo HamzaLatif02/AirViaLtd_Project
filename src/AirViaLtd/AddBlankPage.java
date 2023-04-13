@@ -102,13 +102,15 @@ public class AddBlankPage {
                 String date = java.time.LocalDate.now().toString();
 
                 if (checkSingleValues()){
+                    Connection con = null;
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con= DriverManager.getConnection(
+                        con= DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
 
+                        con.setAutoCommit(false);
 
                         Statement stmt1 = con.createStatement();
                         int rs1 = stmt1.executeUpdate("update in2018g16.Blank set NewlyReceived = 0 where NewlyReceived = 1");
@@ -123,8 +125,7 @@ public class AddBlankPage {
 
 
                         int rs=stmt.executeUpdate();
-
-
+                        con.commit();
 
                         if (rs != 0){
                             JOptionPane.showMessageDialog(null, rs + " blank added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
@@ -139,16 +140,31 @@ public class AddBlankPage {
                             JOptionPane.showMessageDialog(null, "Could not add blank, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                         }
 
-
-                        con.close();
-
-                    }catch(Exception x){ System.out.println(x);}
+                    }catch(Exception x){
+                        System.out.println(x);
+                        if (con != null){
+                            try {
+                                con.rollback();
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
         });
     }
 
     public void addTicket(Connection con) throws SQLException {
+
+        int randomnumber = (int) (Math.floor(Math.random()*11)*10);
+
         String sql1 = "select ID from in2018g16.Blank where Type = ? and Number = ?";
         PreparedStatement stmt2 = con.prepareStatement(sql1);
         stmt2.setInt(1, Integer.valueOf(singleBlankTypeComboBox.getSelectedItem().toString()));
@@ -162,7 +178,7 @@ public class AddBlankPage {
 
         String sql3 = "insert into in2018g16.Ticket (Price, BlankID) values (?,?)";
         PreparedStatement stmt3 = con.prepareStatement(sql3);
-        stmt3.setInt(1, 0);
+        stmt3.setInt(1, randomnumber);
         stmt3.setInt(2, selectedID);
 
         int rs3 = stmt3.executeUpdate();
@@ -181,14 +197,17 @@ public class AddBlankPage {
             public void actionPerformed(ActionEvent e) {
                 String date = java.time.LocalDate.now().toString();
 
+
                 if (checkMultipleValues()){
+                    Connection con = null;
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con= DriverManager.getConnection(
+                        con= DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
 
+                        con.setAutoCommit(false);
 
                         Statement stmt1 = con.createStatement();
                         int rs1 = stmt1.executeUpdate("update in2018g16.Blank set NewlyReceived = 0 where NewlyReceived = 1");
@@ -209,12 +228,12 @@ public class AddBlankPage {
                             stmt.setString(3, date);
 
                             int rs = stmt.executeUpdate();
+                            con.commit();
 
                             if (rs == 0){
                                 successfulQuery = false;
                             }
                         }
-
 
                         if (successfulQuery){
                             JOptionPane.showMessageDialog(null, difference + " blanks added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
@@ -226,10 +245,22 @@ public class AddBlankPage {
                             JOptionPane.showMessageDialog(null, "Could not add blanks, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                         }
 
+                    } catch(Exception x){
+                        System.out.println(x);
 
-                        con.close();
+                            try {
+                                con.rollback();
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
 
-                    }catch(Exception x){ System.out.println(x);}
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
         });

@@ -136,13 +136,15 @@ public class SellTicketPage {
 
         this.taEmail = email;
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
-
+            con.setAutoCommit(false);
 
             String sql = "select AdvisorCode from in2018g16.TravelAdvisor where EmailAddress = ?";
 
@@ -152,13 +154,27 @@ public class SellTicketPage {
 
             ResultSet rs = stmt.executeQuery();
 
+            con.commit();
+
             while (rs.next()){
                 taCode = rs.getInt(1);
             }
 
-            con.close();
 
-        }catch(Exception x){ System.out.println(x);}
+        }catch(Exception x){
+            System.out.println(x);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
         advisorCodeTextField.setText("" + taCode);
     }
@@ -166,12 +182,15 @@ public class SellTicketPage {
     public void addBlanks(){
         blankComboBox.addItem("-- Select Blank --");
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select Type, Number FROM in2018g16.Blank INNER JOIN in2018g16.Ticket on in2018g16.Blank.ID = in2018g16.Ticket.BlankID where in2018g16.Blank.AdvisorCode = ? and in2018g16.Blank.UsedDate is null";
 
@@ -180,11 +199,26 @@ public class SellTicketPage {
 
             ResultSet rs=stmt.executeQuery();
 
+            con.commit();
+
             while (rs.next()){
                 blankComboBox.addItem(rs.getInt(1) + " " + rs.getInt(2));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addBlankComboBoxListener(){
@@ -215,12 +249,15 @@ public class SellTicketPage {
             interlineDomesticTextField.setText("MCO");
         }
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select Price FROM in2018g16.Ticket INNER JOIN in2018g16.Blank on in2018g16.Ticket.BlankID = in2018g16.Blank.ID where in2018g16.Blank.Type = ? and in2018g16.Blank.Number = ?";
 
@@ -230,11 +267,26 @@ public class SellTicketPage {
 
             ResultSet rs=stmt.executeQuery();
 
+            con.commit();
+
             while (rs.next()){
                 basePriceTextField.setText("" + rs.getInt(1));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
     }
 
@@ -263,12 +315,15 @@ public class SellTicketPage {
 
         commissionRateComboBox.addItem("-- Select Commission --");
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select CommissionRate FROM in2018g16.Commission where TravelAgentID = 1 ";
 
@@ -276,11 +331,26 @@ public class SellTicketPage {
 
             ResultSet rs=stmt.executeQuery(sql);
 
+            con.commit();
+
             while (rs.next()){
                 commissionRateComboBox.addItem(rs.getInt(1));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
 
@@ -311,18 +381,24 @@ public class SellTicketPage {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                Connection con = null;
+
                 try{
                     Class.forName("com.mysql.jdbc.Driver");
-                    Connection con= DriverManager.getConnection(
+                    con= DriverManager.getConnection(
                             "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                             "in2018g16_d",
                             "35cnYJLB");
+                    con.setAutoCommit(false);
 
                     String sql = "select FirstName, LastName, Type, FixedDiscount, Rate FROM in2018g16.Customer inner join in2018g16.FlexibleDiscount on in2018g16.Customer.FlexibleDiscountID = in2018g16.FlexibleDiscount.ID where EmailAddress = ?";
 
                     PreparedStatement stmt = con.prepareStatement(sql);
                     stmt.setString(1, customerEmailAddressTextField.getText());
                     ResultSet rs=stmt.executeQuery();
+
+                    con.commit();
 
                     if (!rs.isBeforeFirst() ) {
                         JOptionPane.showMessageDialog(null, "This is not an existing customer", "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -348,8 +424,20 @@ public class SellTicketPage {
                         }
                     }
 
-                    con.close();
-                } catch (Exception ex) { System.out.println(ex);}
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                    try {
+                        con.rollback();
+                    } catch (SQLException x) {
+                        throw new RuntimeException(x);
+                    }
+                } finally {
+                    try {
+                        con.setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
 
@@ -463,13 +551,15 @@ public class SellTicketPage {
             public void actionPerformed(ActionEvent e) {
                 String date = java.time.LocalDate.now().toString();
 
+                Connection con = null;
 
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
-                    Connection con = DriverManager.getConnection(
+                    con = DriverManager.getConnection(
                             "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                             "in2018g16_d",
                             "35cnYJLB");
+                    con.setAutoCommit(false);
 
 
                     String sql = "select TicketNumber from in2018g16.Ticket inner join in2018g16.Blank on in2018g16.Ticket.BlankID = in2018g16.Blank.ID where in2018g16.Blank.Type = ? and in2018g16.Blank.Number = ?";
@@ -546,10 +636,19 @@ public class SellTicketPage {
                         JOptionPane.showMessageDialog(null, "Could not update blank", "Error", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    con.close();
-
                 } catch (Exception x) {
                     System.out.println(x);
+                    try {
+                        con.rollback();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } finally {
+                    try {
+                        con.setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
 

@@ -22,6 +22,7 @@ public class LoginPage extends JPanel {
     private JLabel emailIcon;
     private JLabel passwordIcon;
     private JLabel airViaLtdIcon;
+    private JLabel airViaLtdLabel;
 
     private AirViaLtd app;
     private String user;
@@ -149,31 +150,33 @@ public class LoginPage extends JPanel {
     }
     public void login(){
 
-        if (validInput()){
 
+        if (validInput()) {
 
+            Connection con = null;
 
-            try{
+            try {
 
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection con;
 
-                switch (jobTitleComboBox.getSelectedIndex()){
+                switch (jobTitleComboBox.getSelectedIndex()) {
                     case 1:
-                        con= DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_a",
                                 "FJ7BjC1x");
                     default:
-                        con= DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
                 }
 
+                con.setAutoCommit(false);
+
                 String sql = null;
 
-                switch (jobTitleComboBox.getSelectedIndex()){
+                switch (jobTitleComboBox.getSelectedIndex()) {
                     case 1:
                         sql = "select * from in2018g16.Administrator where EmailAddress = ? and Password = ?";
                         break;
@@ -191,13 +194,15 @@ public class LoginPage extends JPanel {
                 stmt.setString(2, new String(passwordTextField.getPassword()));
 
                 ResultSet rs = stmt.executeQuery();
+                con.commit();
+
                 //check empty result
-                if (!rs.isBeforeFirst() ) {
+                if (!rs.isBeforeFirst()) {
                     JOptionPane.showMessageDialog(getMainPanel(), "Invalid login, please try again", "Invalid Login", JOptionPane.ERROR_MESSAGE);
                 } else {
 
                     this.user = jobTitleComboBox.getSelectedItem().toString();
-                    switch (jobTitleComboBox.getSelectedIndex()){
+                    switch (jobTitleComboBox.getSelectedIndex()) {
                         case 1:
                             app.transitionToAdministratorHomePage();
                             break;
@@ -209,9 +214,22 @@ public class LoginPage extends JPanel {
                             break;
                     }
                 }
-                con.close();
-
-            }catch(Exception ex){ System.out.println(ex);}
+            } catch (Exception ex) {
+                System.out.println(ex);
+                if (con != null){
+                    try {
+                        con.rollback();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            } finally {
+                try {
+                    con.setAutoCommit(true);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
@@ -227,7 +245,6 @@ public class LoginPage extends JPanel {
             JOptionPane.showMessageDialog(getMainPanel(), "Please enter a password", "Invalid Login", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
         return true;
     }
 

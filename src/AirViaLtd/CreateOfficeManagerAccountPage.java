@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class CreateOfficeManagerAccountPage {
     private JPanel mainPanel;
@@ -82,14 +83,14 @@ public class CreateOfficeManagerAccountPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (checkInputData()){
+                    Connection con = null;
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con= DriverManager.getConnection(
+                        con= DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
-
-
+                        con.setAutoCommit(false);
 
                         String sql = "insert into in2018g16.OfficeManager (FirstName, LastName, EmailAddress, Password, TravelAgentID) values (?, ?, ?, ?, 1)";
 
@@ -101,6 +102,7 @@ public class CreateOfficeManagerAccountPage {
                         stmt.setString(4, passwordTextField.getText().toString());
 
                         int rs=stmt.executeUpdate();
+                        con.commit();
 
                         if (rs != 0){
                             JOptionPane.showMessageDialog(null, "Office Manager account created", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
@@ -112,10 +114,20 @@ public class CreateOfficeManagerAccountPage {
                             JOptionPane.showMessageDialog(null, "Could not create office manager account, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                         }
 
-
-                        con.close();
-
-                    }catch(Exception x){ System.out.println(x);}
+                    }catch(Exception x){
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
         });

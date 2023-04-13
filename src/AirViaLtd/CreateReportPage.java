@@ -258,21 +258,36 @@ public class CreateReportPage {
 
         travelAdvisorComboBox.addItem("-- Select -- ");
 
+        Connection con = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select AdvisorCode, FirstName, LastName FROM in2018g16.TravelAdvisor WHERE AdvisorCode != 1");
+            con.commit();
 
             while (rs.next()){
                 travelAdvisorComboBox.addItem(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getString(3));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addCreateButtonListener(){
@@ -316,12 +331,14 @@ public class CreateReportPage {
     }
 
     public void createTicketStockReport(){
+        Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
 
             String sql = "select Type,Number From in2018g16.Blank Where NewlyReceived = 1 And ReceivedDate BETWEEN ? and ? order by Type";
@@ -358,6 +375,7 @@ public class CreateReportPage {
             PreparedStatement stmt5 = con.prepareStatement(sql5);
             stmt5.setString(1, endDate);
             ResultSet rs5 = stmt5.executeQuery();
+            con.commit();
 
             model = new DefaultTableModel();
             model.addColumn("Received Blank Type");
@@ -456,9 +474,20 @@ public class CreateReportPage {
             reportScrollPane = new JScrollPane();
             reportScrollPane.setViewportView(table);
 
-            con.close();
-
-        }catch (Exception e) { System.out.println(e);}
+        }catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void createInterlineIndividualSalesReport(){
@@ -467,13 +496,14 @@ public class CreateReportPage {
         String[] splitTAselected = ta.split("\\s+");
         taCode = Integer.valueOf(splitTAselected[0]);
 
-
+        Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
 
             String sql = "select in2018g16.Blank.Type, in2018g16.Blank.Number, in2018g16.Sale.SaleUSD, in2018g16.Sale.ConversionRate, in2018g16.Sale.Taxes, in2018g16.Sale.TotalSale, in2018g16.Sale.CommissionRate, in2018g16.Sale.CommissionAmount from in2018g16.Sale inner join in2018g16.Ticket on in2018g16.Sale.TicketNumber = in2018g16.Ticket.TicketNumber inner join in2018g16.Blank on in2018g16.Ticket.BlankID = in2018g16.Blank.ID where in2018g16.Sale.AdvisorCode = ? and in2018g16.Sale.SaleDate between ? and ? and in2018g16.Sale.SaleType = 'Interline'";
@@ -491,6 +521,8 @@ public class CreateReportPage {
             stmt1.setString(3, endDate);
             ResultSet rs1 = stmt1.executeQuery();
 
+            con.commit();
+
             model = new DefaultTableModel();
             model.addColumn("Blank Type");
             model.addColumn("Blank Number");
@@ -540,9 +572,20 @@ public class CreateReportPage {
             reportScrollPane = new JScrollPane();
             reportScrollPane.setViewportView(table);
 
-            con.close();
-
-        }catch (Exception e) { System.out.println(e);}
+        }catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void createInterlineGlobalSalesReport(){
@@ -550,12 +593,14 @@ public class CreateReportPage {
         totalTotalCommission = 0;
         totalTotalProfit = 0;
 
+        Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
 
             String sql = "select in2018g16.Sale.AdvisorCode, sum(in2018g16.Sale.TicketNumber), sum(in2018g16.Sale.SaleUSD), sum(in2018g16.Sale.Taxes), sum(in2018g16.Sale.TotalSale), sum(in2018g16.Sale.CommissionAmount) from in2018g16.Sale where in2018g16.Sale.SaleDate between ? and ? and in2018g16.Sale.SaleType = 'Interline'";
@@ -571,6 +616,7 @@ public class CreateReportPage {
             stmt1.setString(2, startDate);
             stmt1.setString(3, endDate);
             ResultSet rs1 = stmt1.executeQuery();
+            con.commit();
 
             model = new DefaultTableModel();
             model.addColumn("Advisor Code");
@@ -621,9 +667,20 @@ public class CreateReportPage {
             reportScrollPane = new JScrollPane();
             reportScrollPane.setViewportView(table);
 
-            con.close();
-
-        }catch (Exception e) { System.out.println(e);}
+        }catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void createDomesticIndividualSalesReport(){
@@ -631,14 +688,14 @@ public class CreateReportPage {
         String[] splitTAselected = ta.split("\\s+");
         taCode = Integer.valueOf(splitTAselected[0]);
 
-
+        Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
-
+            con.setAutoCommit(false);
 
             String sql = "select in2018g16.Blank.Type, in2018g16.Blank.Number, in2018g16.Sale.SaleUSD, in2018g16.Sale.ConversionRate, in2018g16.Sale.Taxes, in2018g16.Sale.TotalSale, in2018g16.Sale.CommissionRate, in2018g16.Sale.CommissionAmount from in2018g16.Sale inner join in2018g16.Ticket on in2018g16.Sale.TicketNumber = in2018g16.Ticket.TicketNumber inner join in2018g16.Blank on in2018g16.Ticket.BlankID = in2018g16.Blank.ID where in2018g16.Sale.AdvisorCode = ? and in2018g16.Sale.SaleDate between ? and ? and in2018g16.Sale.SaleType = 'Domestic'";
             String sql1 = "select sum(in2018g16.Sale.TotalSale), sum(in2018g16.Sale.CommissionAmount) from in2018g16.Sale where in2018g16.Sale.AdvisorCode = ? and in2018g16.Sale.SaleDate between ? and ? and in2018g16.Sale.SaleType = 'Domestic'";
@@ -655,6 +712,8 @@ public class CreateReportPage {
             stmt1.setString(3, endDate);
             ResultSet rs1 = stmt1.executeQuery();
 
+            con.commit();
+
             model = new DefaultTableModel();
             model.addColumn("Blank Type");
             model.addColumn("Blank Number");
@@ -704,9 +763,20 @@ public class CreateReportPage {
             reportScrollPane = new JScrollPane();
             reportScrollPane.setViewportView(table);
 
-            con.close();
-
-        }catch (Exception e) { System.out.println(e);}
+        }catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void createDomesticGlobalSalesReport(){
@@ -714,12 +784,14 @@ public class CreateReportPage {
         totalTotalCommission = 0;
         totalTotalProfit = 0;
 
+        Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
 
             String sql = "select in2018g16.Sale.AdvisorCode, sum(in2018g16.Sale.TicketNumber), sum(in2018g16.Sale.SaleUSD), sum(in2018g16.Sale.Taxes), sum(in2018g16.Sale.TotalSale), sum(in2018g16.Sale.CommissionAmount) from in2018g16.Sale where in2018g16.Sale.SaleDate between ? and ? and in2018g16.Sale.SaleType = 'Domestic'";
@@ -735,6 +807,8 @@ public class CreateReportPage {
             stmt1.setString(2, startDate);
             stmt1.setString(3, endDate);
             ResultSet rs1 = stmt1.executeQuery();
+
+            con.commit();
 
             model = new DefaultTableModel();
             model.addColumn("Advisor Code");
@@ -785,9 +859,20 @@ public class CreateReportPage {
             reportScrollPane = new JScrollPane();
             reportScrollPane.setViewportView(table);
 
-            con.close();
-
-        }catch (Exception e) { System.out.println(e);}
+        }catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addNextButtonListener(){
@@ -956,7 +1041,6 @@ public class CreateReportPage {
                         if (file != null) {
                             if (!file.getName().toLowerCase().endsWith(".xls")) {
                                 file = new File(file.getParentFile(), file.getName() + ".xls");
-                                //System.out.println(file);
                             }
 
                             try {
@@ -987,8 +1071,6 @@ public class CreateReportPage {
                             }
                         }
                     }
-
-                    //System.out.println(file);
                 }
             });
     }

@@ -89,15 +89,19 @@ public class ReallocateBlankPage {
 
     public void addTableData(){
 
+        Connection con = null;
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate, AdvisorCode FROM in2018g16.Blank where AdvisorCode != 1 and UsedDate is null");
+            con.commit();
 
             model = new DefaultTableModel();
             model.addColumn("ID");
@@ -129,9 +133,21 @@ public class ReallocateBlankPage {
             assignedBlanksScrollPane = new JScrollPane();
             assignedBlanksScrollPane.setViewportView(table);
 
-            con.close();
 
-        }catch (Exception e) { System.out.println(e);}
+        }catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
     }
 
@@ -151,15 +167,17 @@ public class ReallocateBlankPage {
 
                         String date = java.time.LocalDate.now().toString();
 
+                        Connection con = null;
+
                         try{
                             Class.forName("com.mysql.jdbc.Driver");
-                            Connection con= DriverManager.getConnection(
+                            con= DriverManager.getConnection(
                                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                     "in2018g16_d",
                                     "35cnYJLB");
+                            con.setAutoCommit(false);
 
                             String sql = "update in2018g16.Blank set AdvisorCode = ?, AssignedDate = ? where ID = ? ";
-
 
                             PreparedStatement stmt = con.prepareStatement(sql);
 
@@ -169,15 +187,29 @@ public class ReallocateBlankPage {
 
                             int rs = stmt.executeUpdate();
 
+                            con.commit();
+
                             if (rs != 0){
                                 JOptionPane.showMessageDialog(null, rs + " rows updated", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
                             } else {
                                 JOptionPane.showMessageDialog(null, "No rows were updated, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                             }
 
-                            con.close();
 
-                        }catch(Exception ex){ System.out.println(ex);}
+                        }catch(Exception ex){
+                            System.out.println(ex);
+                            try {
+                                con.rollback();
+                            } catch (SQLException x) {
+                                throw new RuntimeException(x);
+                            }
+                        } finally {
+                            try {
+                                con.setAutoCommit(true);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
                     }
 
                     updateTable();
@@ -198,15 +230,20 @@ public class ReallocateBlankPage {
 
     public void updateTable(){
 
+        Connection con = null;
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select ID, Type, Number, NewlyReceived, ReceivedDate, AssignedDate, UsedDate, AdvisorCode FROM in2018g16.Blank where AdvisorCode != 1 and UsedDate is null");
+
+            con.commit();
 
             model = new DefaultTableModel();
             model.addColumn("ID");
@@ -236,29 +273,59 @@ public class ReallocateBlankPage {
 
             assignedBlanksScrollPane.repaint();
 
-            con.close();
-
-        }catch (Exception e) { System.out.println(e);}
+        }catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addTravelAdvisors(){
         travelAdvisorComboBox.addItem("-- Select a Travel Advisor --");
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select AdvisorCode, FirstName, LastName FROM in2018g16.TravelAdvisor WHERE AdvisorCode != 1");
 
+
+            con.commit();
+
             while (rs.next()){
                 travelAdvisorComboBox.addItem(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getString(3));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
 
     }

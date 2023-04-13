@@ -7,10 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class IssueRefundPage {
     private JPanel mainPanel;
@@ -93,13 +90,15 @@ public class IssueRefundPage {
     public void addAdvisorCode(String email){
         this.taEmail = email;
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
-
+            con.setAutoCommit(false);
 
             String sql = "select AdvisorCode from in2018g16.TravelAdvisor where EmailAddress = ?";
 
@@ -109,13 +108,26 @@ public class IssueRefundPage {
 
             ResultSet rs = stmt.executeQuery();
 
+            con.commit();
+
             while (rs.next()){
                 taCode = rs.getInt(1);
             }
 
-            con.close();
-
-        }catch(Exception x){ System.out.println(x);}
+        }catch(Exception x){
+            System.out.println(x);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
         advisorCodeTextField.setText("" + taCode);
     }
@@ -123,12 +135,15 @@ public class IssueRefundPage {
     public void addBlanks(){
         blankComboBox.addItem("-- Select Blank --");
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select Type, Number FROM in2018g16.Blank INNER JOIN in2018g16.Ticket on in2018g16.Blank.ID = in2018g16.Ticket.BlankID where in2018g16.Blank.AdvisorCode = ? and in2018g16.Blank.UsedDate is not null";
 
@@ -137,11 +152,26 @@ public class IssueRefundPage {
 
             ResultSet rs=stmt.executeQuery();
 
+            con.commit();
+
             while (rs.next()){
                 blankComboBox.addItem(rs.getInt(1) + " " + rs.getInt(2));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addSaleDetails(){
@@ -155,12 +185,15 @@ public class IssueRefundPage {
                     selectedBlankType = Integer.valueOf(splitBSelected[0]);
                     selectedBlankNumber = Integer.valueOf(splitBSelected[1]);
 
+                    Connection con = null;
+
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con= DriverManager.getConnection(
+                        con= DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select PaymentType FROM in2018g16.Payment INNER JOIN in2018g16.Sale on in2018g16.Payment.TicketNumber = in2018g16.Sale.TicketNumber inner join in2018g16.Ticket on in2018g16.Sale.TicketNumber = in2018g16.Ticket.TicketNumber inner join in2018g16.Blank on in2018g16.Ticket.BlankID = in2018g16.Blank.ID where in2018g16.Blank.Type = ? and in2018g16.Blank.Number = ?";
 
@@ -192,12 +225,26 @@ public class IssueRefundPage {
 
                         ResultSet rs2 = stmt2.executeQuery();
 
+                        con.commit();
+
                         while (rs2.next()){
                             tNumber = rs2.getInt(1);
                         }
 
-                        con.close();
-                    } catch (Exception ex) { System.out.println(ex);}
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                        try {
+                            con.rollback();
+                        } catch (SQLException x) {
+                            throw new RuntimeException(x);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
 
                 }
             }
@@ -212,12 +259,16 @@ public class IssueRefundPage {
                     JOptionPane.showMessageDialog(null, "Select a blank to refund", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     String date = java.time.LocalDate.now().toString();
+
+                    Connection con = null;
+
                     try{
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con= DriverManager.getConnection(
+                        con= DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "insert into in2018g16.Refund values (?,?,?,?,?)";
                         PreparedStatement stmt=con.prepareStatement(sql);
@@ -242,6 +293,8 @@ public class IssueRefundPage {
 
                         int rs1 = stmt1.executeUpdate();
 
+                        con.commit();
+
                         if (rs1 != 0){
                             JOptionPane.showMessageDialog(null, "Blank Updated", "Blank Updated", JOptionPane.INFORMATION_MESSAGE);
                         } else {
@@ -255,8 +308,20 @@ public class IssueRefundPage {
                             refundAmountTextField.setText("");
                         }
 
-                        con.close();
-                    } catch (Exception ex) { System.out.println(ex);}
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                        try {
+                            con.rollback();
+                        } catch (SQLException x) {
+                            throw new RuntimeException(x);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
         });

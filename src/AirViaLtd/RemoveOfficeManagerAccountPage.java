@@ -89,21 +89,39 @@ public class RemoveOfficeManagerAccountPage {
     public void addOfficeManagers(){
 
         officeManagerComboBox.addItem("-- Select --");
+
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select ID, FirstName, LastName FROM in2018g16.OfficeManager");
+            con.commit();
 
             while (rs.next()){
                 officeManagerComboBox.addItem(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getString(3));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
     }
 
@@ -130,12 +148,15 @@ public class RemoveOfficeManagerAccountPage {
         String[] splitOMSelected = om.split("\\s+");
         selectedID = Integer.valueOf(splitOMSelected[0]);
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select * FROM in2018g16.OfficeManager where ID = ?";
             PreparedStatement stmt=con.prepareStatement(sql);
@@ -143,6 +164,8 @@ public class RemoveOfficeManagerAccountPage {
             stmt.setInt(1, selectedID);
 
             ResultSet rs=stmt.executeQuery();
+
+            con.commit();
 
             while (rs.next()){
 
@@ -153,8 +176,20 @@ public class RemoveOfficeManagerAccountPage {
                 passwordTextField.setText(rs.getString(5));
             }
 
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
 
@@ -167,14 +202,15 @@ public class RemoveOfficeManagerAccountPage {
 
                     if (reply == JOptionPane.YES_OPTION) {
 
-
+                        Connection con = null;
 
                         try{
                             Class.forName("com.mysql.jdbc.Driver");
-                            Connection con= DriverManager.getConnection(
+                            con= DriverManager.getConnection(
                                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                     "in2018g16_d",
                                     "35cnYJLB");
+                            con.setAutoCommit(false);
 
                             String sql = "delete from in2018g16.OfficeManager WHERE ID = ?";
 
@@ -184,6 +220,8 @@ public class RemoveOfficeManagerAccountPage {
 
                             int rs = stmt.executeUpdate();
 
+                            con.commit();
+
                             if (rs != 0){
                                 JOptionPane.showMessageDialog(null, rs + " office manager deleted", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
                                 officeManagerComboBox.setSelectedIndex(0);
@@ -191,9 +229,20 @@ public class RemoveOfficeManagerAccountPage {
                                 JOptionPane.showMessageDialog(null, "No office manager was deleted, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                             }
 
-                            con.close();
-
-                        }catch(Exception ex){ System.out.println(ex);}
+                        }catch(Exception ex){
+                            System.out.println(ex);
+                            try {
+                                con.rollback();
+                            } catch (SQLException x) {
+                                throw new RuntimeException(x);
+                            }
+                        } finally {
+                            try {
+                                con.setAutoCommit(true);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
 
                     }
 

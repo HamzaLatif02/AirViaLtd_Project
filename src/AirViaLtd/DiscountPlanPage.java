@@ -100,21 +100,37 @@ public class DiscountPlanPage {
     public void addCustomerComboBoxData(){
         customerComboBox.addItem("-- Select --");
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select EmailAddress, FirstName, LastName FROM in2018g16.Customer");
+            con.commit();
 
             while (rs.next()){
                 customerComboBox.addItem(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addMonthComboBox(){
@@ -159,12 +175,14 @@ public class DiscountPlanPage {
         String[] splitCuSelected = cu.split("\\s+");
         String email = (splitCuSelected[0]);
 
+        Connection con = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select count(TicketNumber) from in2018g16.Sale where CustomerEmailAddress = ? and SaleDate > ?-? and SaleDate < ?-?;";
             PreparedStatement stmt=con.prepareStatement(sql);
@@ -176,12 +194,27 @@ public class DiscountPlanPage {
             stmt.setInt(5, monthComboBox.getSelectedIndex() + 1);
 
             ResultSet rs=stmt.executeQuery();
+            con.commit();
 
             while (rs.next()){
                 salesTextField.setText(rs.getString(1));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addDiscountPlanComboBoxData(){
@@ -199,14 +232,15 @@ public class DiscountPlanPage {
                 String[] splitCuSelected = cu.split("\\s+");
                 String email = (splitCuSelected[0]);
 
-
+                Connection con = null;
 
                 try{
                     Class.forName("com.mysql.jdbc.Driver");
-                    Connection con= DriverManager.getConnection(
+                    con= DriverManager.getConnection(
                             "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                             "in2018g16_d",
                             "35cnYJLB");
+                    con.setAutoCommit(false);
 
                     String sql = "";
 
@@ -229,6 +263,7 @@ public class DiscountPlanPage {
                     }
 
                     int rs=stmt.executeUpdate();
+                    con.commit();
 
                     if (rs != 0){
                         JOptionPane.showMessageDialog(null, "Discount added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -241,8 +276,21 @@ public class DiscountPlanPage {
                     } else {
                         JOptionPane.showMessageDialog(null, "Could not add discount at the moment, please retry", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    con.close();
-                } catch (Exception x) { System.out.println(x);}
+
+                } catch (Exception x) {
+                    System.out.println(x);
+                    try {
+                        con.rollback();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } finally {
+                    try {
+                        con.setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
     }
@@ -267,33 +315,52 @@ public class DiscountPlanPage {
 
         flexibleDiscountComboBox.addItem("-- View --");
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select ID, LowerBound, UpperBound, Rate FROM in2018g16.FlexibleDiscount");
+            con.commit();
 
             while (rs.next()){
                 flexibleDiscountComboBox.addItem(rs.getInt(1) + " LowerBound: " + rs.getInt(2) + " UpperBound: " + rs.getInt(3) + " Rate: " + rs.getInt(4));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addDiscountPercentageText(){
 
         salesAmount = Integer.valueOf(salesTextField.getText());
 
+        Connection con = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select * from in2018g16.FlexibleDiscount where LowerBound <= ? And UpperBound >= ?";
 
@@ -303,13 +370,27 @@ public class DiscountPlanPage {
             stmt.setInt(2, salesAmount);
 
             ResultSet rs=stmt.executeQuery();
+            con.commit();
 
             while (rs.next()){
                 fdID = rs.getInt(1);
                 discountPercentageTextField.setText(rs.getInt(1) + " LowerBound: " + rs.getInt(2) + " UpperBound: " + rs.getInt(3) + " Rate: " + rs.getInt(4));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
         discountPercentageTextField.setEditable(false);
 

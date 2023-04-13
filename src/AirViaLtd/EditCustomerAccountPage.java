@@ -91,21 +91,39 @@ public class EditCustomerAccountPage {
     public void addCustomers(){
 
         customerComboBox.addItem("-- Select --");
+
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select EmailAddress, FirstName, LastName FROM in2018g16.Customer");
+            con.commit();
 
             while (rs.next()){
                 customerComboBox.addItem(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
         typeComboBox.addItem("Regular");
         typeComboBox.addItem("Valued");
@@ -128,12 +146,15 @@ public class EditCustomerAccountPage {
         String[] splitCSelected = c.split("\\s+");
         selectedEmail = splitCSelected[0];
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select * FROM in2018g16.Customer where EmailAddress = ?";
             PreparedStatement stmt=con.prepareStatement(sql);
@@ -141,6 +162,8 @@ public class EditCustomerAccountPage {
             stmt.setString(1, selectedEmail);
 
             ResultSet rs=stmt.executeQuery();
+
+            con.commit();
 
             while (rs.next()){
                 emailAddressTextField.setText(rs.getString(1));
@@ -157,8 +180,20 @@ public class EditCustomerAccountPage {
                 flexibleDiscountTextField.setText("" + rs.getInt(6));
             }
 
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addEditButtonListener(){
@@ -170,16 +205,17 @@ public class EditCustomerAccountPage {
 
                     if (reply == JOptionPane.YES_OPTION) {
 
-
+                        Connection con = null;
 
                         try{
                             Class.forName("com.mysql.jdbc.Driver");
-                            Connection con= DriverManager.getConnection(
+                            con= DriverManager.getConnection(
                                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                     "in2018g16_d",
                                     "35cnYJLB");
+                            con.setAutoCommit(false);
 
-                            String sql = "update in2018g16.Customer Set EmailAddress = ?, FirstName = ?, LastName = ?, Type = ?, FixedDiscount = ?, FlexibleDiscount = ? WHERE EmailAddress = ?";
+                            String sql = "update in2018g16.Customer Set EmailAddress = ?, FirstName = ?, LastName = ?, Type = ?, FixedDiscount = ?, FlexibleDiscountID = ? WHERE EmailAddress = ?";
 
                             PreparedStatement stmt = con.prepareStatement(sql);
 
@@ -193,15 +229,29 @@ public class EditCustomerAccountPage {
 
                             int rs = stmt.executeUpdate();
 
+                            con.commit();
+
                             if (rs != 0){
                                 JOptionPane.showMessageDialog(null, rs + " customer updated", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
                             } else {
                                 JOptionPane.showMessageDialog(null, "No customer was updated, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                             }
 
-                            con.close();
+                        }catch(Exception ex){
 
-                        }catch(Exception ex){ System.out.println(ex);}
+                            System.out.println(ex);
+                            try {
+                                con.rollback();
+                            } catch (SQLException x) {
+                                throw new RuntimeException(x);
+                            }
+                        } finally {
+                            try {
+                                con.setAutoCommit(true);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
 
                     }
 

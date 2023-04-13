@@ -90,21 +90,39 @@ public class RemoveCustomerAccountPage {
     public void addCustomers(){
 
         customerComboBox.addItem("-- Select --");
+
+        Connection con = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select EmailAddress, FirstName, LastName FROM in2018g16.Customer");
 
+            con.commit();
+
             while (rs.next()){
                 customerComboBox.addItem(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
             }
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
     }
 
@@ -125,12 +143,15 @@ public class RemoveCustomerAccountPage {
         String[] splitCSelected = c.split("\\s+");
         selectedEmail = splitCSelected[0];
 
+        Connection con = null;
+
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
+            con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+            con.setAutoCommit(false);
 
             String sql = "select * FROM in2018g16.Customer where EmailAddress = ?";
             PreparedStatement stmt=con.prepareStatement(sql);
@@ -138,6 +159,8 @@ public class RemoveCustomerAccountPage {
             stmt.setString(1, selectedEmail);
 
             ResultSet rs=stmt.executeQuery();
+
+            con.commit();
 
             while (rs.next()){
                 emailAddressTextField.setText(rs.getString(1));
@@ -148,8 +171,20 @@ public class RemoveCustomerAccountPage {
                 flexibleDiscountTextField.setText("" + rs.getInt(6));
             }
 
-            con.close();
-        } catch (Exception e) { System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addRemoveButtonListener(){
@@ -161,13 +196,15 @@ public class RemoveCustomerAccountPage {
 
                     if (reply == JOptionPane.YES_OPTION) {
 
+                        Connection con = null;
 
                         try{
                             Class.forName("com.mysql.jdbc.Driver");
-                            Connection con= DriverManager.getConnection(
+                            con= DriverManager.getConnection(
                                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                     "in2018g16_d",
                                     "35cnYJLB");
+                            con.setAutoCommit(false);
 
                             String sql = "delete from in2018g16.Customer where EmailAddress = ? ";
 
@@ -177,15 +214,28 @@ public class RemoveCustomerAccountPage {
 
                             int rs = stmt.executeUpdate();
 
+                            con.commit();
+
                             if (rs != 0){
                                 JOptionPane.showMessageDialog(null, rs + " customer deleted", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
                             } else {
                                 JOptionPane.showMessageDialog(null, "No customer was deleted, please retry", "Unsuccessful Update", JOptionPane.ERROR_MESSAGE);
                             }
 
-                            con.close();
-
-                        }catch(Exception ex){ System.out.println(ex);}
+                        }catch(Exception ex){
+                            System.out.println(ex);
+                            try {
+                                con.rollback();
+                            } catch (SQLException x) {
+                                throw new RuntimeException(x);
+                            }
+                        } finally {
+                            try {
+                                con.setAutoCommit(true);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
 
                         updateData();
                     }

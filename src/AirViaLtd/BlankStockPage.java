@@ -102,18 +102,24 @@ public class BlankStockPage {
 
     public void addTableData(){
 
+        Connection con= null;
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                     "in2018g16_d",
                     "35cnYJLB");
+
+            con.setAutoCommit(false);
 
 
             String sql = "select * FROM in2018g16.Blank";
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
+
+            con.commit();
 
             model = new DefaultTableModel();
             model.addColumn("ID");
@@ -148,10 +154,20 @@ public class BlankStockPage {
             blankStockScrollPane = new JScrollPane();
             blankStockScrollPane.setViewportView(table);
 
-            con.close();
-
-        }catch (Exception e) { System.out.println(e);}
-
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                con.rollback();
+            } catch (SQLException x) {
+                throw new RuntimeException(x);
+            }
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     public void addIDButtonListener(){
@@ -162,17 +178,21 @@ public class BlankStockPage {
             public void actionPerformed(ActionEvent e) {
 
                 if (counter % 2 == 0){
+
+                    Connection con =null;
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select * FROM in2018g16.Blank ORDER BY ID ASC";
 
                         PreparedStatement stmt = con.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
+                        con.commit();
 
                         model = new DefaultTableModel();
 
@@ -205,23 +225,37 @@ public class BlankStockPage {
 
                         blankStockScrollPane.repaint();
 
-                        con.close();
-
                         counter++;
 
-                    }catch (Exception x) { System.out.println(x);}
+                    }catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 } else {
+                    Connection con = null;
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select * FROM in2018g16.Blank ORDER BY ID DESC";
 
                         PreparedStatement stmt = con.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
+                        con.commit();
 
                         model = new DefaultTableModel();
 
@@ -254,11 +288,22 @@ public class BlankStockPage {
 
                         blankStockScrollPane.repaint();
 
-                        con.close();
-
                         counter++;
 
-                    }catch (Exception x) { System.out.println(x);}
+                    }catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
 
             }
@@ -271,17 +316,21 @@ public class BlankStockPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (counter % 2 == 0){
+
+                    Connection con = null;
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select * FROM in2018g16.Blank ORDER BY Type ASC";
 
                         PreparedStatement stmt = con.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
+                        con.commit();
 
                         model = new DefaultTableModel();
 
@@ -314,23 +363,37 @@ public class BlankStockPage {
 
                         blankStockScrollPane.repaint();
 
-                        con.close();
-
                         counter++;
 
-                    }catch (Exception x) { System.out.println(x);}
+                    }catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 } else {
+                    Connection con = null;
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select * FROM in2018g16.Blank ORDER BY Type DESC";
 
                         PreparedStatement stmt = con.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
+                        con.commit();
 
                         model = new DefaultTableModel();
 
@@ -363,11 +426,22 @@ public class BlankStockPage {
 
                         blankStockScrollPane.repaint();
 
-                        con.close();
-
                         counter++;
 
-                    }catch (Exception x) { System.out.println(x);}
+                    }catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
         });
@@ -379,17 +453,20 @@ public class BlankStockPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (counter % 2 == 0){
+                    Connection con = null;
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select * FROM in2018g16.Blank ORDER BY ReceivedDate ASC";
 
                         PreparedStatement stmt = con.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
+                        con.commit();
 
                         model = new DefaultTableModel();
 
@@ -422,23 +499,37 @@ public class BlankStockPage {
 
                         blankStockScrollPane.repaint();
 
-                        con.close();
-
                         counter++;
 
-                    }catch (Exception x) { System.out.println(x);}
+                    }catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 } else {
+                    Connection con = null;
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select * FROM in2018g16.Blank ORDER BY ReceivedDate DESC";
 
                         PreparedStatement stmt = con.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
+                        con.commit();
 
                         model = new DefaultTableModel();
 
@@ -471,11 +562,22 @@ public class BlankStockPage {
 
                         blankStockScrollPane.repaint();
 
-                        con.close();
-
                         counter++;
 
-                    }catch (Exception x) { System.out.println(x);}
+                    }catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
         });
@@ -487,17 +589,20 @@ public class BlankStockPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (counter % 2 == 0){
+                    Connection con= null;
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select * FROM in2018g16.Blank ORDER BY AdvisorCode ASC";
 
                         PreparedStatement stmt = con.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
+                        con.commit();
 
                         model = new DefaultTableModel();
 
@@ -530,23 +635,37 @@ public class BlankStockPage {
 
                         blankStockScrollPane.repaint();
 
-                        con.close();
-
                         counter++;
 
-                    }catch (Exception x) { System.out.println(x);}
+                    }catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 } else {
+                    Connection con = null;
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection(
+                        con = DriverManager.getConnection(
                                 "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                                 "in2018g16_d",
                                 "35cnYJLB");
+                        con.setAutoCommit(false);
 
                         String sql = "select * FROM in2018g16.Blank ORDER BY AdvisorCode DESC";
 
                         PreparedStatement stmt = con.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
+                        con.commit();
 
                         model = new DefaultTableModel();
 
@@ -579,11 +698,22 @@ public class BlankStockPage {
 
                         blankStockScrollPane.repaint();
 
-                        con.close();
-
                         counter++;
 
-                    }catch (Exception x) { System.out.println(x);}
+                    }catch (Exception x) {
+                        System.out.println(x);
+                        try {
+                            con.rollback();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } finally {
+                        try {
+                            con.setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
         });
@@ -593,21 +723,20 @@ public class BlankStockPage {
         notAssignedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Connection con = null;
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
-                    Connection con = DriverManager.getConnection(
+                    con = DriverManager.getConnection(
                             "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                             "in2018g16_d",
                             "35cnYJLB");
+                    con.setAutoCommit(false);
 
                     String sql = "select * FROM in2018g16.Blank WHERE AdvisorCode = 1";
 
-
-
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(sql);
-
-
+                    con.commit();
 
                     model = new DefaultTableModel();
 
@@ -640,9 +769,20 @@ public class BlankStockPage {
 
                     blankStockScrollPane.repaint();
 
-                    con.close();
-
-                }catch (Exception x) { System.out.println(x);}
+                }catch (Exception x) {
+                    System.out.println(x);
+                    try {
+                        con.rollback();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } finally {
+                    try {
+                        con.setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
     }
@@ -651,20 +791,20 @@ public class BlankStockPage {
         usedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Connection con = null;
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
-                    Connection con = DriverManager.getConnection(
+                    con = DriverManager.getConnection(
                             "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
                             "in2018g16_d",
                             "35cnYJLB");
+                    con.setAutoCommit(false);
 
                     String sql = "select * FROM in2018g16.Blank WHERE UsedDate is not null";
 
-
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(sql);
-
+                    con.commit();
 
                     model = new DefaultTableModel();
 
@@ -697,9 +837,20 @@ public class BlankStockPage {
 
                     blankStockScrollPane.repaint();
 
-                    con.close();
-
-                }catch (Exception x) { System.out.println(x);}
+                }catch (Exception x) {
+                    System.out.println(x);
+                    try {
+                        con.rollback();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } finally {
+                    try {
+                        con.setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
     }
