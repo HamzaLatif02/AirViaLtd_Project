@@ -98,7 +98,7 @@ public class RemoveBlankPage {
 
             con.setAutoCommit(false);
 
-            String sql = "select * FROM in2018g16.Blank where UsedDate is null";
+            String sql = "select * FROM in2018g16.Blank where UsedDate is null and AdvisorCode = 1";
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);

@@ -260,6 +260,9 @@ public class CreateReportPage {
 
         Connection con = null;
         try{
+
+
+
             Class.forName("com.mysql.jdbc.Driver");
             con= DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306",
