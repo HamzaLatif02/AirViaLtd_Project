@@ -243,6 +243,7 @@
             </constraints>
             <properties>
               <background color="-16772025"/>
+              <editable value="false"/>
               <font name="Inter" size="16" style="0"/>
               <foreground color="-1"/>
               <text value="Discounted Price"/>

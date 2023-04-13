@@ -58,6 +58,8 @@ public class SellTicketPage {
 
     private int selectedTicketNumber;
 
+    private boolean existingCustomer;
+
     private ImageIcon homeIcon;
     private ImageIcon backIcon;
 
@@ -73,6 +75,7 @@ public class SellTicketPage {
         addPaymentDetails();
         addDiscountedPrice();
         addSellButtonListener();
+        addNameTextListener();
     }
 
     public void setGraphics() {
@@ -401,6 +404,7 @@ public class SellTicketPage {
                     con.commit();
 
                     if (!rs.isBeforeFirst() ) {
+                        existingCustomer = false;
                         JOptionPane.showMessageDialog(null, "This is not an existing customer", "Info", JOptionPane.INFORMATION_MESSAGE);
                         payLaterComboBox.removeAllItems();
                         payLaterComboBox.addItem("-- Pay Later Not Available --");
@@ -408,8 +412,8 @@ public class SellTicketPage {
                         discountAvailableComboBox.addItem("-- Discount Not Available -- ");
                         firstNameTextField.setText("");
                         lastNameTextField.setText("");
-
                     } else {
+                        existingCustomer = true;
                         while (rs.next()){
                             firstNameTextField.setText(rs.getString(1));
                             lastNameTextField.setText(rs.getString(2));
@@ -441,6 +445,71 @@ public class SellTicketPage {
             }
         });
 
+    }
+
+    public void addNameTextListener(){
+        customerEmailAddressTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+
+                if (customerEmailAddressTextField.getText().equals("Customer Email Address")){
+                    customerEmailAddressTextField.setText("");
+                }
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                 if (customerEmailAddressTextField.getText().equals("")){
+                    customerEmailAddressTextField.setText("Customer Email Address");
+                }
+            }
+        });
+
+
+        firstNameTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+
+                if (firstNameTextField.getText().equals("First Name")){
+                    firstNameTextField.setText("");
+                }
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (firstNameTextField.getText().equals("")){
+                    firstNameTextField.setText("First Name");
+                }
+            }
+        });
+
+        lastNameTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+
+                if (lastNameTextField.getText().equals("Last Name")){
+                    lastNameTextField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (lastNameTextField.getText().equals("")){
+                    lastNameTextField.setText("Last Name");
+                }
+            }
+        });
     }
 
     public void addPaymentDetails(){
@@ -574,6 +643,20 @@ public class SellTicketPage {
                         selectedTicketNumber = rs.getInt(1);
                     }
 
+                    if (existingCustomer == false){
+                        String sql4 = "insert into in2018g16.Customer values (?, ?, ?, 'Casual', null, null)";
+                        PreparedStatement stmt4 = con.prepareStatement(sql4);
+                        stmt4.setString(1,customerEmailAddressTextField.getText());
+                        stmt4.setString(2, firstNameTextField.getText());
+                        stmt4.setString(3, lastNameTextField.getText());
+
+                        int rs4 = stmt4.executeUpdate();
+
+                        if (rs4 == 0){
+                            JOptionPane.showMessageDialog(null, "Could not create new customer", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+
                     String sql1 = "insert into in2018g16.Sale values (?,?,?,?,?,?,?,?,?,?,?,?)";
 
                     PreparedStatement stmt1 = con.prepareStatement(sql1);
@@ -635,6 +718,25 @@ public class SellTicketPage {
                     if (rs3 == 0){
                         JOptionPane.showMessageDialog(null, "Could not update blank", "Error", JOptionPane.ERROR_MESSAGE);
                     }
+
+                    blankComboBox.setSelectedIndex(0);
+                    interlineDomesticTextField.setText("Interline/Domestic");
+                    basePriceTextField.setText("Base Price");
+                    localTaxesTextField.setText("");
+                    otherTaxesTextField.setText("");
+                    totalPriceTextField.setText("Total Price");
+                    customerEmailAddressTextField.setText("Customer Email Address");
+                    firstNameTextField.setText("First Name");
+                    lastNameTextField.setText("Last Name");
+                    paymentTypeComboBox.setSelectedIndex(0);
+                    payLaterComboBox.setSelectedIndex(0);
+                    cardTypeTextField.setText("");
+                    cardNumberTextField.setText("");
+                    discountAvailableComboBox.setSelectedIndex(0);
+                    discountedPriceTextField.setText("Discounted Price");
+                    commissionRateComboBox.setSelectedIndex(0);
+                    commissionAmountTextField.setText("");
+                    conversionRateTextField.setText("0");
 
                 } catch (Exception x) {
                     System.out.println(x);
