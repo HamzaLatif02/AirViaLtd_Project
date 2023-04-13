@@ -190,6 +190,30 @@ public class AddBlankPage {
         }
     }
 
+    public void addTickets(Connection con, int type, int number) throws SQLException {
+
+        int randomnumber = (int) (Math.floor(Math.random()*11)*10);
+
+        String sql1 = "select ID from in2018g16.Blank where Type = ? and Number = ?";
+        PreparedStatement stmt2 = con.prepareStatement(sql1);
+        stmt2.setInt(1, type);
+        stmt2.setInt(2, number);
+
+        ResultSet rs2 = stmt2.executeQuery();
+
+        while (rs2.next()){
+            selectedID = rs2.getInt(1);
+        }
+
+        String sql3 = "insert into in2018g16.Ticket (Price, BlankID) values (?,?)";
+        PreparedStatement stmt3 = con.prepareStatement(sql3);
+        stmt3.setInt(1, randomnumber);
+        stmt3.setInt(2, selectedID);
+
+        int rs3 = stmt3.executeUpdate();
+
+    }
+
 
     public void addMultipleButtonListener(){
         addMultipleButton.addActionListener(new ActionListener() {
@@ -230,6 +254,8 @@ public class AddBlankPage {
                             int rs = stmt.executeUpdate();
                             con.commit();
 
+                            addTickets(con, Integer.valueOf(multipleStartBlankTypeComboBox.getSelectedItem().toString()), Integer.valueOf(multipleStartBlankNumberTextField.getText()) + i);
+
                             if (rs == 0){
                                 successfulQuery = false;
                             }
@@ -237,6 +263,8 @@ public class AddBlankPage {
 
                         if (successfulQuery){
                             JOptionPane.showMessageDialog(null, difference + " blanks added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, difference + " tickets added", "Successful Update", JOptionPane.INFORMATION_MESSAGE);
+
                             multipleStartBlankTypeComboBox.setSelectedIndex(0);
                             multipleEndBlankTypeComboBox.setSelectedIndex(0);
                             multipleStartBlankNumberTextField.setText("");
