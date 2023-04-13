@@ -157,6 +157,7 @@
               <background color="-16772025"/>
               <font name="Inter" size="16" style="0"/>
               <foreground color="-1"/>
+              <text value="Local Taxes"/>
             </properties>
           </component>
           <component id="126" class="javax.swing.JTextField" binding="otherTaxesTextField">
@@ -169,6 +170,7 @@
               <background color="-16772025"/>
               <font name="Inter" size="16" style="0"/>
               <foreground color="-1"/>
+              <text value="Other Taxes"/>
             </properties>
           </component>
           <component id="dc725" class="javax.swing.JButton" binding="calculateTotalButton" default-binding="true">

@@ -68,6 +68,7 @@ public class SellTicketPage {
         setGraphics();
         addMenuButtonsListener();
         addBlankComboBoxListener();
+        addTaxesTextListener();
         addCalculateButtonTotalListener();
         addCommissions();
         addCommissionAmount();
@@ -291,6 +292,48 @@ public class SellTicketPage {
             }
         }
 
+    }
+
+    public void addTaxesTextListener(){
+        localTaxesTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+
+                if (localTaxesTextField.getText().equals("Local Taxes")){
+                    localTaxesTextField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (localTaxesTextField.getText().equals("")){
+                    localTaxesTextField.setText("Local Taxes");
+                }
+            }
+        });
+
+        otherTaxesTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+
+                if (otherTaxesTextField.getText().equals("Other Taxes")){
+                    otherTaxesTextField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (otherTaxesTextField.getText().equals("")){
+                    otherTaxesTextField.setText("Other Taxes");
+                }
+            }
+        });
     }
 
     public void addCalculateButtonTotalListener(){
